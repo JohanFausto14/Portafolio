@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Ari Johan Alvarado Fausto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: white;
+            color: #111827; /* gray-900 */
+        }
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 20mm;
+            box-sizing: border-box;
+            margin: 0 auto;
+            position: relative;
+        }
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        @media print {
+            .a4-page { width: 100%; height: 100%; padding: 15mm 20mm; }
+        }
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #0369a1; /* sky-700 */
+            border-bottom: 2px solid #0369a1;
+            padding-bottom: 2px;
+            margin-bottom: 12px;
+            margin-top: 16px;
+        }
+        .job-title { font-weight: 700; color: #111827; }
+        .job-meta { font-size: 0.85rem; color: #4b5563; font-weight: 500; }
+        .job-desc { font-size: 0.85rem; color: #374151; line-height: 1.4; margin-top: 4px; }
+        .skills-category { font-weight: 600; color: #1f2937; font-size: 0.85rem; }
+        .skills-list { font-size: 0.85rem; color: #374151; }
+    </style>
+</head>
+<body>
+
+<div class="a4-page">
+    <!-- Header -->
+    <header class="text-center mb-5">
+        <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Ari Johan Alvarado Fausto</h1>
+        <h2 class="text-lg font-semibold text-sky-700 mt-1">Software Developer</h2>
+        <p class="text-[0.85rem] text-gray-600 mt-1 flex justify-center items-center gap-2">
+            <span>+52 3320131621</span> | 
+            <span>johanalvarado296@gmail.com</span> | 
+            <span>Guadalajara, Jalisco, Mexico</span>
+        </p>
+    </header>
+
+    <!-- Summary -->
+    <section>
+        <p class="job-desc text-justify">
+            Fullstack developer with experience in web application development using React and Next.js for frontend, and Node.js, NestJS, and Express for backend. Proficient in SQL and NoSQL databases such as PostgreSQL, MongoDB, MySQL, and SQL Server. Developed web applications from scratch tailored to client requirements, migrated desktop systems to web platforms, and integrated REST APIs with existing systems. Experienced in application deployment on cloud environments like Vercel and Render.
+        </p>
+    </section>
+
+    <!-- Education -->
+    <section>
+        <h3 class="section-title">Education</h3>
+        
+        <div class="mb-3">
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">UTZMG University</span>
+                <span class="job-meta">Sep 2022 – Apr 2026</span>
+            </div>
+            <p class="job-meta text-sky-700">B.S. in Software Development and Management, successfully completed</p>
+        </div>
+
+        <div class="mb-3">
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">CONALEP Acatlán de Juárez</span>
+                <span class="job-meta">2019 – 2022</span>
+            </div>
+            <p class="job-meta text-sky-700">Technical High School in Autotronics</p>
+        </div>
+
+        <div>
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">Technical School #87</span>
+                <span class="job-meta">2016 – 2019</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section>
+        <h3 class="section-title">Experience</h3>
+        
+        <div class="mb-3">
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">Private Client <span class="font-normal text-sky-700">— Front End Developer</span></span>
+                <span class="job-meta">Nov 2025 – Present</span>
+            </div>
+            <p class="job-desc">Developed an interactive web reading platform for high school and university institutions. Focused on frontend UX and performance, REST API integration, PDF reporting, and role-based access control (student, teacher, director).</p>
+        </div>
+
+        <div class="mb-3">
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">CONSOL NEGOCIOS SA DE CV <span class="font-normal text-sky-700">— Full Stack Developer</span></span>
+                <span class="job-meta">Jan 2026 – Apr 2026</span>
+            </div>
+            <p class="job-desc">Developed a web system for credit management and centralized financial information administration. Migrated features from desktop systems to web platforms, and built individual, group, and insurance credit modules.</p>
+        </div>
+
+        <div class="mb-3">
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">LIRA Project <span class="font-normal text-sky-700">— Software Developer</span></span>
+                <span class="job-meta">Jan 2025 – Nov 2025</span>
+            </div>
+            <p class="job-desc">Developed the LIRA educational system, a multiplatform project available on Android TV, Alexa, smartwatches, web, and mobile app, designed to improve interactive learning for children. Presented at Innovation Fest 2025.</p>
+        </div>
+
+        <div class="mb-3">
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">MicroGreen Project <span class="font-normal text-sky-700">— Software Developer</span></span>
+                <span class="job-meta">Jan 2024 – Dec 2024</span>
+            </div>
+            <p class="job-desc">Designed and implemented a greenhouse monitoring and automation system measuring humidity, light, and temperature, with irrigation control via a mobile app connected to MongoDB and integrated with IoT (Arduino and ESP32).</p>
+        </div>
+
+        <div class="mb-3">
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">Tecnosol <span class="font-normal text-sky-700">— Full Stack Developer</span></span>
+                <span class="job-meta">Apr 2024 – Aug 2024</span>
+            </div>
+            <p class="job-desc">Developed and implemented a web application for client and order management with an e-commerce focus, including administrative process automation, REST API integration, and deployment on a dedicated server.</p>
+        </div>
+
+        <div class="mb-2">
+            <div class="flex justify-between items-baseline">
+                <span class="job-title text-[0.9rem]">UTZMG <span class="font-normal text-sky-700">— Web Developer</span></span>
+                <span class="job-meta">Sep 2022 – Jan 2023</span>
+            </div>
+            <p class="job-desc">Complete development of the "Take Quick List" web application for student attendance registration and tracking. Involved in frontend, backend, and data validation implementation.</p>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="break-before-page pt-10">
+        <h3 class="section-title mt-2">Skills</h3>
+        <div class="grid grid-cols-1 gap-1">
+            <p><span class="skills-category">Programming:</span> <span class="skills-list">Python, C++, PHP, JavaScript, TypeScript, HTML, CSS</span></p>
+            <p><span class="skills-category">Frameworks:</span> <span class="skills-list">React, Next.js, React Native, Node.js, NestJS, Express</span></p>
+            <p><span class="skills-category">Databases:</span> <span class="skills-list">PostgreSQL, MongoDB, MySQL, SQL Server</span></p>
+            <p><span class="skills-category">Tools:</span> <span class="skills-list">Android Studio, Linux, GitHub, Git, Arduino, ESP32, Postman</span></p>
+            <p><span class="skills-category">Soft Skills:</span> <span class="skills-list">Effective Communication, Leadership, Empathy, Critical Thinking, Emotional Intelligence</span></p>
+            <p><span class="skills-category">Languages:</span> <span class="skills-list">Spanish (Native), English (Intermediate)</span></p>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

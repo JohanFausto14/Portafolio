@@ -23,6 +23,7 @@ export const translations = {
             viewWork: "View My Work",
             contactMe: "Contact Me",
             downloadCv: "Download CV",
+            cvLink: "/CV_en.pdf",
         },
         about: {
             title: "About Me",
@@ -178,6 +179,7 @@ export const translations = {
             viewWork: "Ver Mi Trabajo",
             contactMe: "Contáctame",
             downloadCv: "Descargar CV",
+            cvLink: "/CV_es.pdf",
         },
         about: {
             title: "Sobre Mí",

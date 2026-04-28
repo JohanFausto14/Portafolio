@@ -54,7 +54,7 @@ const Navbar = () => {
                     <div className="flex-shrink-0 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
                         <div className="flex items-center gap-2 text-cyan-400 font-bold text-xl">
                             <Code2 className="w-8 h-8" />
-                            <span>DevPortfolio</span>
+                            <span>Ari Johan</span>
                         </div>
                     </div>
 

@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 
 const Hero = () => {
     const { t, language } = useLanguage();
-    const cvFile = language === 'es' ? '/cv_es.pdf' : '/cv_en.pdf';
+    const cvFile = t.hero.cvLink;
     return (
         <section id="home" className="relative min-h-screen flex items-center justify-center bg-slate-950 overflow-hidden">
             {/* Background Elements */}
