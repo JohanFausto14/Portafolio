@@ -3,7 +3,7 @@ import { ArrowRight, ChevronDown, Download } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Hero = () => {
-    const { t, language } = useLanguage();
+    const { t } = useLanguage();
     const cvFile = t.hero.cvLink;
     return (
         <section id="home" className="relative min-h-screen flex items-center justify-center bg-slate-950 overflow-hidden">
