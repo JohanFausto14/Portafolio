@@ -1,7 +1,127 @@
 import { motion } from "framer-motion";
 import { Database, Layout, Terminal, Users } from "lucide-react";
 import { FaAws, FaDatabase } from "react-icons/fa";
-import { useLanguage } from "../context/LanguageContext";
+
+type Language = "en" | "es";
+
+interface SkillsProps {
+  language: Language;
+}
+
+const translations = {
+  en: {
+    skills: {
+      title: "Technical Skills",
+      subtitle:
+        "A comprehensive toolkit for building modern, scalable web and mobile applications.",
+      categories: {
+        frontend: "Frontend Development",
+        backend: "Backend Development",
+        devops: "DevOps & Tools",
+        management: "Soft Skills",
+      },
+      lists: {
+        frontend: [
+          "React",
+          "Next.js",
+          "TypeScript",
+          "JavaScript",
+          "React Native",
+          "Tailwind CSS",
+          "HTML/CSS",
+          "Responsive Design",
+          "UI/UX",
+          "Performance Optimization",
+        ],
+        backend: [
+          "Node.js",
+          "NestJS",
+          "Express.js",
+          "PHP",
+          "REST APIs",
+          "PostgreSQL",
+          "MongoDB",
+          "MySQL",
+          "SQL Server",
+        ],
+        devops: [
+          "Git",
+          "GitHub",
+          "Linux",
+          "Postman",
+          "Android Studio",
+          "Vercel",
+          "Render",
+          "Docker",
+          "AWS",
+        ],
+        management: [
+          "Leadership",
+          "Problem Solving",
+          "Adaptability",
+          "Communication",
+          "Teamwork",
+        ],
+      },
+    },
+  },
+  es: {
+    skills: {
+      title: "Habilidades Técnicas",
+      subtitle:
+        "Un conjunto completo de herramientas para construir aplicaciones web y móviles modernas y escalables.",
+      categories: {
+        frontend: "Desarrollo Frontend",
+        backend: "Desarrollo Backend",
+        devops: "DevOps y Herramientas",
+        management: "Habilidades Blandas",
+      },
+      lists: {
+        frontend: [
+          "React",
+          "Next.js",
+          "TypeScript",
+          "JavaScript",
+          "React Native",
+          "Tailwind CSS",
+          "HTML/CSS",
+          "Responsive Design",
+          "UI/UX",
+          "Optimización de Rendimiento",
+        ],
+        backend: [
+          "Node.js",
+          "NestJS",
+          "Express.js",
+          "PHP",
+          "REST APIs",
+          "PostgreSQL",
+          "MongoDB",
+          "MySQL",
+          "SQL Server",
+        ],
+        devops: [
+          "Git",
+          "GitHub",
+          "Linux",
+          "Postman",
+          "Android Studio",
+          "Vercel",
+          "Render",
+          "Docker",
+          "AWS",
+        ],
+        management: [
+          "Liderazgo",
+          "Resolución de Problemas",
+          "Adaptabilidad",
+          "Comunicación",
+          "Trabajo en Equipo",
+        ],
+      },
+    },
+  },
+};
 import {
   SiReact,
   SiNextdotjs,
@@ -92,8 +212,8 @@ const categoryStyles = [
   },
 ];
 
-const Skills = () => {
-  const { t } = useLanguage();
+const Skills = ({ language }: SkillsProps) => {
+  const t = translations[language];
 
   const skills = [
     {

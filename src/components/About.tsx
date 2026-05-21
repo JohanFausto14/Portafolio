@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { useLanguage } from "../context/LanguageContext";
 
 const Counter = ({ end, suffix = "+" }: { end: number; suffix?: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
@@ -25,8 +24,39 @@ const Counter = ({ end, suffix = "+" }: { end: number; suffix?: string }) => {
   );
 };
 
-const About = () => {
-  const { t } = useLanguage();
+type Language = "en" | "es";
+
+interface AboutProps {
+  language: Language;
+}
+
+const translations = {
+  en: {
+    about: {
+      title: "About Me",
+      role: "Software Developer",
+      p1: "I am a Software Development and Management Engineer, specialized in web and mobile applications. I have experience in frontend development using React and Next.js, as well as in backend with Node.js, NestJS, and Express.",
+      p2: "I like to understand the problem before writing code. I have worked on projects from scratch, system migrations, REST API integrations, and database connections such as PostgreSQL, MongoDB, and MySQL, always looking for the solution to be practical and easy to maintain.",
+      p3: "I enjoy environments with real challenges and adapt easily to the project's needs. I'm looking for an opportunity to keep growing and contribute real value to the team.",
+      yearsExp: "Years Experience",
+      projectsCompleted: "Projects Completed",
+    },
+  },
+  es: {
+    about: {
+      title: "Sobre Mí",
+      role: "Desarrollador de Software",
+      p1: "Soy Ingeniero en Desarrollo y Gestión de Software, especializado en aplicaciones web y móviles. Cuento con experiencia en desarrollo frontend utilizando React y Next.js, así como en backend con Node.js, NestJS y Express.",
+      p2: "Me gusta entender el problema antes de escribir código. He trabajado en proyectos desde cero, migraciones de sistemas, integraciones con APIs REST y conexión con bases de datos como PostgreSQL, MongoDB y MySQL, siempre buscando que la solución sea práctica y fácil de mantener.",
+      p3: "Disfruto los entornos donde hay retos reales y me adapto con facilidad a lo que el proyecto necesite. Busco una oportunidad donde pueda seguir creciendo y aportar valor real al equipo.",
+      yearsExp: "Años de Experiencia",
+      projectsCompleted: "Proyectos Completados",
+    },
+  },
+};
+
+const About = ({ language }: AboutProps) => {
+  const t = translations[language];
   return (
     <section id="about" className="py-24 bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

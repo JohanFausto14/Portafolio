@@ -1,9 +1,75 @@
 import { motion } from "framer-motion";
 import { Github, Mail, Phone } from "lucide-react";
-import { useLanguage } from "../context/LanguageContext";
 
-const Contact = () => {
-  const { t } = useLanguage();
+type Language = "en" | "es";
+
+interface ContactProps {
+  language: Language;
+}
+
+const translations = {
+  en: {
+    personal: {
+      email: "johanalvarado296@gmail.com",
+      phone: "+52 3320131621",
+      github: "https://github.com/JohanFausto14",
+    },
+    contact: {
+      title: "Get In Touch",
+      subtitle:
+        "Have a project in mind or just want to say hi? I'd love to hear from you.",
+      infoTitle: "Contact Information",
+      email: "Email",
+      phone: "Phone",
+      validationAlert: "Please fill in your name and message.",
+      form: {
+        name: "Name",
+        email: "Email",
+        subject: "Subject",
+        message: "Message",
+        send: "Send Message",
+        placeholders: {
+          name: "John Doe",
+          email: "john@example.com",
+          subject: "Project Inquiry",
+          message: "Your message here...",
+        },
+      },
+    },
+  },
+  es: {
+    personal: {
+      email: "johanalvarado296@gmail.com",
+      phone: "+52 3320131621",
+      github: "https://github.com/JohanFausto14",
+    },
+    contact: {
+      title: "Contáctame",
+      subtitle:
+        "¿Tienes un proyecto en mente o solo quieres saludar? Me encantaría saber de ti.",
+      infoTitle: "Información de Contacto",
+      email: "Correo",
+      phone: "Teléfono",
+      validationAlert: "Por favor llena tu nombre y mensaje.",
+      form: {
+        name: "Nombre",
+        email: "Correo",
+        subject: "Asunto",
+        message: "Mensaje",
+        send: "Enviar Mensaje",
+        placeholders: {
+          name: "Juan Pérez",
+          email: "juan@ejemplo.com",
+          subject: "Consulta de Proyecto",
+          message: "Tu mensaje aquí...",
+        },
+      },
+    },
+  },
+};
+
+const Contact = ({ language }: ContactProps) => {
+  const t = translations[language];
   return (
     <section id="contact" className="py-24 bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,7 +249,7 @@ const Contact = () => {
                         ) as HTMLTextAreaElement
                       ).value;
                       if (!name || !message) {
-                        alert("Por favor llena tu nombre y mensaje.");
+                        alert(t.contact.validationAlert);
                         return;
                       }
                       const email =
@@ -210,7 +276,7 @@ const Contact = () => {
                         ) as HTMLTextAreaElement
                       ).value;
                       if (!name || !message) {
-                        alert("Por favor llena tu nombre y mensaje.");
+                        alert(t.contact.validationAlert);
                         return;
                       }
                       const email =
@@ -237,7 +303,7 @@ const Contact = () => {
                         ) as HTMLTextAreaElement
                       ).value;
                       if (!name || !message) {
-                        alert("Por favor llena tu nombre y mensaje.");
+                        alert(t.contact.validationAlert);
                         return;
                       }
                       const email =

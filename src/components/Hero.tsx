@@ -6,7 +6,6 @@ import {
   Download,
   Github,
 } from "lucide-react";
-import { useLanguage } from "../context/LanguageContext";
 import fotoPerfil from "../assets/FotoPortafolio.png";
 
 /* ── Typewriter hook ── */
@@ -62,9 +61,62 @@ const useTypewriter = (
   return displayText;
 };
 
+type Language = "en" | "es";
+
+interface HeroProps {
+  language: Language;
+}
+
+const translations = {
+  en: {
+    personal: {
+      github: "https://github.com/JohanFausto14",
+    },
+    hero: {
+      greeting: "Ari Johan Alvarado Fausto",
+      available: "Available for Work",
+      titleStart: "Full Stack",
+      titleEnd: "Developer",
+      description:
+        "I build scalable web and mobile applications, integrating smooth frontend experiences with solid and scalable backend architectures. I focus on turning complex ideas into functional products, from projects from scratch to systems in production.",
+      viewWork: "View My Work",
+      contactMe: "Contact Me",
+      downloadCv: "Download CV",
+      cvLink: "/CV_en.pdf",
+      roles: [
+        "Full Stack Developer",
+        "Web & Mobile Developer",
+        "Software Engineer",
+      ],
+    },
+  },
+  es: {
+    personal: {
+      github: "https://github.com/JohanFausto14",
+    },
+    hero: {
+      greeting: "Ari Johan Alvarado Fausto",
+      available: "Disponible para Trabajar",
+      titleStart: "Desarrollador",
+      titleEnd: "Full Stack",
+      description:
+        "Construyo aplicaciones web y móviles escalables, integrando experiencias frontend fluidas con arquitecturas backend sólidas y escalables. Me enfoco en llevar ideas complejas a productos funcionales, desde proyectos de cero hasta sistemas en producción.",
+      viewWork: "Ver Mi Trabajo",
+      contactMe: "Contáctame",
+      downloadCv: "Descargar CV",
+      cvLink: "/CV_es.pdf",
+      roles: [
+        "Desarrollador Full Stack",
+        "Desarrollador Web & Móvil",
+        "Ingeniero de Software",
+      ],
+    },
+  },
+};
+
 /* ── Component ── */
-const Hero = () => {
-  const { t } = useLanguage();
+const Hero = ({ language }: HeroProps) => {
+  const t = translations[language];
   const cvFile = t.hero.cvLink;
   const displayRole = useTypewriter(t.hero.roles);
 
@@ -85,15 +137,15 @@ const Hero = () => {
 
       {/* Gradient blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/3 -left-1/4 w-[700px] h-[700px] bg-cyan-500/8 rounded-full blur-3xl" />
-        <div className="absolute -bottom-1/3 -right-1/4 w-[700px] h-[700px] bg-violet-600/8 rounded-full blur-3xl" />
+        <div className="absolute -top-1/3 -left-1/4 w-[700px] h-[700px] bg-cyan-500/8 rounded-full blur-3xl transform-gpu" />
+        <div className="absolute -bottom-1/3 -right-1/4 w-[700px] h-[700px] bg-violet-600/8 rounded-full blur-3xl transform-gpu" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10 w-full">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* ── LEFT: Text content ── */}
           <motion.div
-            className="flex-1 text-center lg:text-left max-w-2xl mx-auto lg:mx-0"
+            className="flex-1 text-center lg:text-left max-w-2xl mx-auto lg:mx-0 order-2 lg:order-1"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -166,14 +218,14 @@ const Hero = () => {
 
           {/* ── RIGHT: Avatar ── */}
           <motion.div
-            className="flex-shrink-0 hidden sm:flex justify-center"
+            className="flex-shrink-0 flex justify-center order-1 lg:order-2"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           >
-            <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem]">
+            <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem]">
               {/* Ambient glow */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-violet-600/20 blur-3xl scale-110" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-violet-600/20 blur-3xl scale-110 transform-gpu" />
 
               {/* Main circle */}
               <div className="relative w-full h-full rounded-full bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 border border-slate-700/80 flex items-center justify-center overflow-hidden shadow-2xl">
@@ -189,15 +241,15 @@ const Hero = () => {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-4 rounded-full border border-dashed border-cyan-500/25"
+                className="absolute -inset-4 rounded-full border border-dashed border-cyan-500/25 transform-gpu"
               />
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-9 rounded-full border border-dashed border-violet-500/12"
+                className="absolute -inset-9 rounded-full border border-dashed border-violet-500/12 transform-gpu"
               />
 
-              {/* Floating tech badges */}
+              {/* Floating tech badges - hidden on mobile to avoid overflow clutter */}
               <motion.div
                 animate={{ y: [-6, 6, -6] }}
                 transition={{
@@ -205,7 +257,7 @@ const Hero = () => {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute -right-12 md:-right-16 top-8 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-cyan-400 text-xs font-bold shadow-xl z-20"
+                className="absolute -right-12 md:-right-16 top-8 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-cyan-400 text-xs font-bold shadow-xl z-20 hidden sm:block"
               >
                 React
               </motion.div>
@@ -217,7 +269,7 @@ const Hero = () => {
                   ease: "easeInOut",
                   delay: 1,
                 }}
-                className="absolute -left-12 md:-left-16 bottom-12 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-violet-400 text-xs font-bold shadow-xl z-20"
+                className="absolute -left-12 md:-left-16 bottom-12 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-violet-400 text-xs font-bold shadow-xl z-20 hidden sm:block"
               >
                 Node.js
               </motion.div>
@@ -229,7 +281,7 @@ const Hero = () => {
                   ease: "easeInOut",
                   delay: 0.6,
                 }}
-                className="absolute -right-10 md:-right-14 bottom-16 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-emerald-400 text-xs font-bold shadow-xl z-20"
+                className="absolute -right-10 md:-right-14 bottom-16 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-emerald-400 text-xs font-bold shadow-xl z-20 hidden sm:block"
               >
                 TypeScript
               </motion.div>
@@ -241,7 +293,7 @@ const Hero = () => {
                   ease: "easeInOut",
                   delay: 0.3,
                 }}
-                className="absolute -left-10 md:-left-14 top-14 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-blue-400 text-xs font-bold shadow-xl z-20"
+                className="absolute -left-10 md:-left-14 top-14 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-blue-400 text-xs font-bold shadow-xl z-20 hidden sm:block"
               >
                 PostgreSQL
               </motion.div>

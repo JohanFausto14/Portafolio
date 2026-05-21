@@ -1,9 +1,123 @@
 import { motion } from "framer-motion";
 import { Briefcase, Calendar, ExternalLink } from "lucide-react";
-import { useLanguage } from "../context/LanguageContext";
 
-const Experience = () => {
-  const { t } = useLanguage();
+type Language = "en" | "es";
+
+interface ExperienceProps {
+  language: Language;
+}
+
+const translations = {
+  en: {
+    experience: {
+      title: "Work Experience",
+      jobs: [
+        {
+          title: "Front End Developer",
+          company: "Private Client",
+          period: "Nov 2025 - Present",
+          description:
+            "Development of a web platform for interactive reading oriented to high school and higher education institutions. Frontend development focused on user experience and performance. Integration of REST APIs, database design, implementation of a digital reader with annotation tools, automatic assessments, PDF reports, role-based access control, and responsive interface development.",
+        },
+        {
+          title: "Full Stack Developer",
+          company: "CONSOL NEGOCIOS SA DE CV SOFOM ENR",
+          period: "Jan 2026 - Apr 2026",
+          description:
+            "Development of a web system for credit management and centralized administration of financial information. Migration of features from desktop to web platform, integration with external APIs, development of individual credit, group credit, and insurance modules. Implementation of business logic and improvement in information traceability.",
+        },
+        {
+          title: "Software Developer",
+          company: "LIRA Project (Intellectual Property)",
+          period: "Jan 2025 - Nov 2025",
+          description:
+            "Development of a multiplatform educational system focused on children's reading, available on Android TV, Alexa, smartwatches, web, and mobile app. Development and integration of the system in multiple platforms within the same ecosystem.",
+          link: {
+            text: "Presented at Innovation Fest 2025",
+            url: "https://innovationfest.jalisco.gob.mx/",
+          },
+        },
+        {
+          title: "Software Developer",
+          company: "MicroGreen Project (IoT & Smart Agriculture)",
+          period: "Jan 2024 - Dec 2024",
+          description:
+            "Design and implementation of a greenhouse monitoring and automation system. Measurement of humidity, temperature, and light using sensors. Automated irrigation control through a mobile app. Integration with MongoDB and IoT devices (Arduino and ESP32).",
+        },
+        {
+          title: "Full Stack Developer",
+          company: "Tecnosol S.A. de C.V.",
+          period: "Apr 2024 - Aug 2024",
+          description:
+            "Development and implementation of a web application for customer and order management with an e-commerce approach. Automation of administrative processes, REST API integration, development of order management features, and deployment on a dedicated server.",
+        },
+        {
+          title: "Web Developer",
+          company: "UTZMG University",
+          period: "Sep 2022 - Jan 2023",
+          description:
+            'Complete development of the "Take Quick List" web application for student attendance registration and tracking. Participation in frontend, backend, and database management. Implementation of data validation and system logic.',
+        },
+      ],
+    },
+  },
+  es: {
+    experience: {
+      title: "Experiencia Laboral",
+      jobs: [
+        {
+          title: "Front End Developer",
+          company: "Cliente privado",
+          period: "Nov 2025 - Presente",
+          description:
+            "Desarrollo de plataforma web de lectura interactiva orientada a instituciones de educación media superior y superior. Desarrollo del frontend enfocado en experiencia de usuario y rendimiento. Integración de APIs REST, diseño de base de datos, implementación de lector digital con herramientas de anotación, evaluaciones automáticas, reportes PDF, control de acceso por roles y desarrollo de interfaz responsiva.",
+        },
+        {
+          title: "Full Stack Developer",
+          company: "CONSOL NEGOCIOS SA DE CV SOFOM ENR",
+          period: "Ene 2026 - Abr 2026",
+          description:
+            "Desarrollo de sistema web para la gestión de créditos y administración centralizada de información financiera. Migración de funcionalidades desde sistema de escritorio a plataforma web, integración con APIs externas, desarrollo de módulos de crédito individual, crédito grupal y seguros. Implementación de lógica de negocio y mejora en la trazabilidad de la información.",
+        },
+        {
+          title: "Software Developer",
+          company: "Proyecto LIRA (Propiedad intelectual)",
+          period: "Ene 2025 - Nov 2025",
+          description:
+            "Desarrollo de sistema educativo multiplataforma enfocado en lectura infantil, disponible en Android TV, Alexa, smartwatches, web y aplicación móvil. Desarrollo e integración del sistema en múltiples plataformas dentro de un mismo ecosistema.",
+          link: {
+            text: "Presentado en Innovation Fest 2025",
+            url: "https://innovationfest.jalisco.gob.mx/",
+          },
+        },
+        {
+          title: "Software Developer",
+          company: "Proyecto MicroGreen (IoT & Smart Agriculture)",
+          period: "Ene 2024 - Dic 2024",
+          description:
+            "Diseño e implementación de sistema de monitoreo y automatización de invernaderos. Medición de humedad, temperatura y luz mediante sensores. Control automatizado de riego a través de aplicación móvil. Integración con MongoDB y dispositivos IoT (Arduino y ESP32).",
+        },
+        {
+          title: "Full Stack Developer",
+          company: "Tecnosol S.A. de C.V.",
+          period: "Abr 2024 - Ago 2024",
+          description:
+            "Desarrollo e implementación de aplicación web para gestión de clientes y pedidos con enfoque tipo e-commerce. Automatización de procesos administrativos, integración de APIs REST, desarrollo de funcionalidades de gestión de pedidos y despliegue en servidor dedicado.",
+        },
+        {
+          title: "Web Developer",
+          company: "Universidad UTZMG",
+          period: "Sep 2022 - Ene 2023",
+          description:
+            'Desarrollo completo de la aplicación web "Take Quick List" para el registro y seguimiento de asistencia estudiantil. Participación en frontend, backend y manejo de base de datos. Implementación de validación de datos y lógica del sistema.',
+        },
+      ],
+    },
+  },
+};
+
+const Experience = ({ language }: ExperienceProps) => {
+  const t = translations[language];
   return (
     <section id="experience" className="py-24 bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

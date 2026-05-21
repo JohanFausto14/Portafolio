@@ -1,9 +1,61 @@
 import { motion } from "framer-motion";
 import { Calendar, GraduationCap } from "lucide-react";
-import { useLanguage } from "../context/LanguageContext";
 
-const Education = () => {
-  const { t } = useLanguage();
+type Language = "en" | "es";
+
+interface EducationProps {
+  language: Language;
+}
+
+const translations = {
+  en: {
+    education: {
+      title: "Education",
+      items: [
+        {
+          degree: "Software Development and Management Engineering",
+          institution:
+            "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
+          location: "Santa Cruz de las Flores, Jal.",
+          period: "Sep 2022 - Apr 2026",
+          description:
+            "Comprehensive education focused on creating scalable technological solutions. Active participation in the development of multiple hands-on projects from conception to deployment, applying software engineering best practices.",
+          achievements: [
+            "Specialization in Web & Mobile Development (Full Stack)",
+            "Relational and NoSQL Database Design",
+            "Implementation of Agile Methodologies (Scrum, Kanban, Extreme Programming)",
+            "Software Architecture and Cloud Deployment",
+          ],
+        },
+      ],
+    },
+  },
+  es: {
+    education: {
+      title: "Escolaridad",
+      items: [
+        {
+          degree: "Ingeniería en Desarrollo y gestión de software",
+          institution:
+            "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
+          location: "Santa Cruz de las Flores, Jal.",
+          period: "Sep 2022 - Apr 2026",
+          description:
+            "Formación integral enfocada en la creación de soluciones tecnológicas escalables. Participación activa en el desarrollo de múltiples proyectos prácticos desde la concepción hasta el despliegue, aplicando buenas prácticas de ingeniería de software.",
+          achievements: [
+            "Especialización en desarrollo web y móvil (Full Stack)",
+            "Diseño y administración de bases de datos relacionales y NoSQL",
+            "Implementación de metodologías ágiles (Scrum, Kanban, Extreme Programming)",
+            "Arquitectura de software y despliegue en la nube",
+          ],
+        },
+      ],
+    },
+  },
+};
+
+const Education = ({ language }: EducationProps) => {
+  const t = translations[language];
 
   // We only have one item right now, but it's an array for future scalability
   const educationItems = t.education?.items || [];

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -7,13 +8,21 @@ import Education from "./components/Education";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import { LanguageProvider } from "./context/LanguageContext";
 import ScrollProgress from "./components/ScrollProgress";
 
-import { useLanguage } from "./context/LanguageContext";
+type Language = "en" | "es";
 
 function App() {
-  const { isTransitioning } = useLanguage();
+  const [language, setLanguageState] = useState<Language>("es");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const changeLanguage = (lang: Language) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setLanguageState(lang);
+      setIsTransitioning(false);
+    }, 300);
+  };
 
   return (
     <div
@@ -22,27 +31,19 @@ function App() {
       }`}
     >
       <ScrollProgress />
-      <Navbar />
+      <Navbar language={language} setLanguage={changeLanguage} />
       <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Education />
-        <Projects />
-        <Contact />
+        <Hero language={language} />
+        <About language={language} />
+        <Skills language={language} />
+        <Experience language={language} />
+        <Education language={language} />
+        <Projects language={language} />
+        <Contact language={language} />
       </main>
-      <Footer />
+      <Footer language={language} />
     </div>
   );
 }
 
-const AppWrapper = () => {
-  return (
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>
-  );
-};
-
-export default AppWrapper;
+export default App;

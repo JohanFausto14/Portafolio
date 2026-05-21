@@ -1,10 +1,45 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Code2, Github } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "../context/LanguageContext";
 
-const Navbar = () => {
-  const { language, setLanguage, t } = useLanguage();
+type Language = "en" | "es";
+
+interface NavbarProps {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+}
+
+const translations = {
+  en: {
+    personal: {
+      github: "https://github.com/JohanFausto14",
+    },
+    nav: {
+      about: "About",
+      skills: "Skills",
+      experience: "Experience",
+      education: "Education",
+      projects: "Projects",
+      contact: "Contact",
+    },
+  },
+  es: {
+    personal: {
+      github: "https://github.com/JohanFausto14",
+    },
+    nav: {
+      about: "Sobre Mí",
+      skills: "Habilidades",
+      experience: "Experiencia",
+      education: "Educación",
+      projects: "Proyectos",
+      contact: "Contacto",
+    },
+  },
+};
+
+const Navbar = ({ language, setLanguage }: NavbarProps) => {
+  const t = translations[language];
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");

@@ -1,8 +1,36 @@
 import { Code2, Github, Mail, ArrowUp } from "lucide-react";
-import { useLanguage } from "../context/LanguageContext";
 
-const Footer = () => {
-  const { t } = useLanguage();
+type Language = "en" | "es";
+
+interface FooterProps {
+  language: Language;
+}
+
+const translations = {
+  en: {
+    personal: {
+      email: "johanalvarado296@gmail.com",
+      github: "https://github.com/JohanFausto14",
+    },
+    footer: {
+      rights: "All rights reserved.",
+      backToTop: "Back to top",
+    },
+  },
+  es: {
+    personal: {
+      email: "johanalvarado296@gmail.com",
+      github: "https://github.com/JohanFausto14",
+    },
+    footer: {
+      rights: "Todos los derechos reservados.",
+      backToTop: "Volver arriba",
+    },
+  },
+};
+
+const Footer = ({ language }: FooterProps) => {
+  const t = translations[language];
 
   return (
     <footer className="bg-slate-950 border-t border-slate-800/50">
@@ -43,7 +71,7 @@ const Footer = () => {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2 text-gray-500 hover:text-cyan-400 text-xs font-medium transition-colors group hidden md:flex"
         >
-          Back to top
+          {t.footer.backToTop}
           <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
         </button>
       </div>

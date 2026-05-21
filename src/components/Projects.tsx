@@ -7,7 +7,155 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { useLanguage } from "../context/LanguageContext";
+
+type Language = "en" | "es";
+
+interface ProjectsProps {
+  language: Language;
+}
+
+const translations = {
+  en: {
+    projects: {
+      title: "Featured Projects",
+      subtitle:
+        "A selection of my most impactful projects, built with a focus on real-world utility.",
+      technologiesUsed: "Technologies Used",
+      liveDemo: "Live Demo",
+      viewGallery: "View Gallery",
+      liveBadge: "Live",
+      items: [
+        {
+          title: "Proyecto Lector",
+          description:
+            "Interactive web reading platform for educational institutions focused on measuring and improving student reading comprehension. It includes a custom PDF reader with highlighting, annotation, definition lookup, and note-taking tools, plus automatic assessments with a dynamic question variation engine to prevent repetitive answers. The system generates PDF performance reports for teachers and features role-based access control. Developed with Next.js, Tailwind CSS, Node.js, and PostgreSQL, with CI/CD integration and cloud deployment.",
+          tags: [
+            "Next.js",
+            "React",
+            "Node.js",
+            "PostgreSQL",
+            "Tailwind CSS",
+            "PDF.js",
+            "REST API",
+          ],
+        },
+        {
+          title: "LIRA (Lectura Interactiva de Rapido Aprendizaje)",
+          description:
+            "Multiplatform educational ecosystem focused on children's interactive reading, available on Android TV, Alexa, smartwatches, mobile app, web, and admin panel. It centralizes API services and progress synchronization across devices through a unified backend architecture. Includes gamified reading sessions and adaptive content to enhance child engagement. Developed with React Native, Node.js, Express, and MongoDB.",
+          tags: [
+            "React Native",
+            "Node.js",
+            "Express",
+            "MongoDB",
+            "Android TV",
+            "Alexa Skills",
+            "Multi-platform",
+          ],
+        },
+        {
+          title: "Invernadero",
+          description:
+            "IoT smart agriculture system designed to monitor and automate greenhouses in real time. Arduino and ESP32 sensors collect humidity, temperature, and ambient light data via Bluetooth Low Energy (BLE), triggering automated irrigation and climate control rules. It includes a React Native mobile app with real-time monitoring, historical charts, and manual system control.",
+          tags: [
+            "Arduino",
+            "ESP32",
+            "BLE",
+            "React Native",
+            "Node.js",
+            "MongoDB",
+            "IoT",
+          ],
+        },
+        {
+          title: "Tecnosol",
+          description:
+            "ERP/CRM administrative web system for comprehensive management of solar installation projects across residential, industrial, and commercial sectors. It manages orders, maintenance, equipment models, payments, and business statistics through interactive dashboards and PDF report generation. Developed with React, TypeScript, Node.js, Express, and MySQL, featuring role-based access control and REST API consumption.",
+          tags: [
+            "React",
+            "TypeScript",
+            "Vite",
+            "React Router",
+            "Bootstrap",
+            "Node.js",
+            "Express",
+            "MySQL",
+          ],
+        },
+      ],
+    },
+  },
+  es: {
+    projects: {
+      title: "Proyectos Destacados",
+      subtitle:
+        "Una selección de mis proyectos más destacados, desarrollados con un enfoque en la utilidad y resolución de problemas reales.",
+      technologiesUsed: "Tecnologías Utilizadas",
+      liveDemo: "Demo en Vivo",
+      viewGallery: "Ver Galería",
+      liveBadge: "En Vivo",
+      items: [
+        {
+          title: "Proyecto Lector",
+          description:
+            "Plataforma web de lectura interactiva para instituciones educativas enfocada en medir y mejorar la comprensión lectora estudiantil. Incluye un lector PDF personalizado con herramientas de subrayado, anotaciones, obtención de definiciones y toma de notas, además de evaluaciones automáticas con motor de variación dinámica de preguntas para evitar respuestas repetitivas. El sistema genera reportes PDF de desempeño para docentes y cuenta con control de acceso por roles. Desarrollada con Next.js, Tailwind CSS, Node.js y PostgreSQL, con integración CI/CD y despliegue en la nube.",
+          tags: [
+            "Next.js",
+            "React",
+            "Node.js",
+            "PostgreSQL",
+            "Tailwind CSS",
+            "PDF.js",
+            "API REST",
+          ],
+        },
+        {
+          title: "LIRA (Lectura Interactiva de Rapido Aprendizaje)",
+          description:
+            "Ecosistema educativo multiplataforma enfocado en lectura interactiva infantil, disponible en Android TV, Alexa, smartwatches, aplicación móvil, web y panel administrativo. Centraliza servicios API y sincronización de progreso entre dispositivos mediante una arquitectura backend unificada. Incluye sesiones de lectura gamificadas y contenido adaptativo para mejorar la interacción infantil. Desarrollado con React Native, Node.js, Express y MongoDB.",
+          tags: [
+            "React Native",
+            "Node.js",
+            "Express",
+            "MongoDB",
+            "Android TV",
+            "Alexa Skills",
+            "Multiplataforma",
+          ],
+        },
+        {
+          title: "Invernadero",
+          description:
+            "Sistema IoT de agricultura inteligente diseñado para monitorear y automatizar invernaderos en tiempo real. Sensores Arduino y ESP32 recopilan datos de humedad, temperatura y luz ambiental mediante Bluetooth Low Energy (BLE), permitiendo activar reglas automatizadas de riego y control climático. Incluye aplicación móvil en React Native con monitoreo en tiempo real, gráficas históricas y control manual del sistema.",
+          tags: [
+            "Arduino",
+            "ESP32",
+            "BLE",
+            "React Native",
+            "Node.js",
+            "MongoDB",
+            "IoT",
+          ],
+        },
+        {
+          title: "Tecnosol",
+          description:
+            "Sistema web administrativo ERP/CRM para la gestión integral de proyectos de instalación solar en sectores residenciales, industriales y comerciales. Permite administrar pedidos, mantenimientos, modelos de equipos, pagos y estadísticas empresariales mediante dashboards interactivos y generación de reportes PDF. Desarrollado con React, TypeScript, Node.js, Express y MySQL, incorporando control de acceso basado en roles y consumo de APIs REST.",
+          tags: [
+            "React",
+            "TypeScript",
+            "Vite",
+            "React Router",
+            "Bootstrap",
+            "Node.js",
+            "Express",
+            "MySQL",
+          ],
+        },
+      ],
+    },
+  },
+};
 import invernaderoImg from "../assets/Invernadero.png";
 import tecnosolLogin from "../assets/Login Tecnosol.png";
 import tecnosolInicio from "../assets/inicio.png";
@@ -84,64 +232,27 @@ const ModalCarousel = ({
   );
 };
 
-const Projects = () => {
-  const { t } = useLanguage();
+const Projects = ({ language }: ProjectsProps) => {
+  const t = translations[language];
   const [selectedGallery, setSelectedGallery] = useState<string[] | null>(null);
 
   const projectAssets = [
     {
-      tags: [
-        "Next.js",
-        "React",
-        "Node.js",
-        "PostgreSQL",
-        "Tailwind CSS",
-        "PDF.js",
-        "REST API",
-      ],
       image: "",
       useIframe: true,
       demo: "https://proyectolector.com/",
     },
     {
-      tags: [
-        "React Native",
-        "Node.js",
-        "Express",
-        "MongoDB",
-        "Android TV",
-        "Alexa Skills",
-        "Multi-platform",
-      ],
       image: "",
       useIframe: true,
       demo: "https://educacion-lira.vercel.app/",
     },
     {
-      tags: [
-        "Arduino",
-        "ESP32",
-        "BLE",
-        "React Native",
-        "Node.js",
-        "MongoDB",
-        "IoT",
-      ],
       image: invernaderoImg,
       useIframe: false,
       demo: invernaderoImg,
     },
     {
-      tags: [
-        "React",
-        "TypeScript",
-        "Vite",
-        "React Router",
-        "Bootstrap",
-        "Node.js",
-        "Express",
-        "MySQL"
-      ],
       images: [
         tecnosolLogin,
         tecnosolInicio,
@@ -220,7 +331,7 @@ const Projects = () => {
                       <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1 bg-slate-900 border border-slate-700/80 rounded-full z-10 shadow-md">
                         <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                         <span className="text-xs text-emerald-400 font-semibold tracking-wide">
-                          Live
+                          {t.projects.liveBadge}
                         </span>
                       </div>
                     </>
@@ -254,7 +365,7 @@ const Projects = () => {
                       {project.images ? (
                         <div className="bg-slate-900/90 text-white px-6 py-3 rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 shadow-xl shadow-cyan-500/20 flex items-center gap-2 border border-slate-700 pointer-events-auto hover:bg-slate-800">
                           <Maximize className="w-5 h-5 text-cyan-400" />
-                          <span className="font-medium text-sm">Ver Galería ({project.images.length})</span>
+                          <span className="font-medium text-sm">{t.projects.viewGallery} ({project.images.length})</span>
                         </div>
                       ) : (
                         <div className="bg-cyan-500 text-white p-4 rounded-full opacity-100 scale-100 md:opacity-0 md:scale-50 md:group-hover:opacity-100 md:group-hover:scale-100 transition-all duration-300 shadow-xl shadow-cyan-500/20">
