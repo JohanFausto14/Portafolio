@@ -18,8 +18,6 @@ const translations = {
   en: {
     projects: {
       title: "Featured Projects",
-      subtitle:
-        "A selection of my most impactful projects, built with a focus on real-world utility.",
       technologiesUsed: "Technologies Used",
       liveDemo: "Live Demo",
       viewGallery: "View Gallery",
@@ -88,8 +86,6 @@ const translations = {
   es: {
     projects: {
       title: "Proyectos Destacados",
-      subtitle:
-        "Una selección de mis proyectos más destacados, desarrollados con un enfoque en la utilidad y resolución de problemas reales.",
       technologiesUsed: "Tecnologías Utilizadas",
       liveDemo: "Demo en Vivo",
       viewGallery: "Ver Galería",
@@ -290,9 +286,6 @@ const Projects = ({ language }: ProjectsProps) => {
             {t.projects.title}
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-violet-600 mx-auto rounded-full mb-5" />
-          <p className="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">
-            {t.projects.subtitle}
-          </p>
         </motion.div>
 
         {/* ── Project cards ── */}
@@ -332,6 +325,13 @@ const Projects = ({ language }: ProjectsProps) => {
                         <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                         <span className="text-xs text-emerald-400 font-semibold tracking-wide">
                           {t.projects.liveBadge}
+                        </span>
+                      </div>
+                      {/* Mobile tap indicator */}
+                      <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/90 border border-slate-700/80 rounded-full z-10 shadow-md lg:hidden pointer-events-none">
+                        <ExternalLink className="w-3 h-3 text-cyan-400 animate-pulse" />
+                        <span className="text-[10px] text-gray-300 font-medium tracking-wider uppercase">
+                          {language === "es" ? "Toca para abrir" : "Tap to open"}
                         </span>
                       </div>
                     </>

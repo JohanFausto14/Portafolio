@@ -68,8 +68,6 @@ const translations = {
   es: {
     skills: {
       title: "Habilidades Técnicas",
-      subtitle:
-        "Un conjunto completo de herramientas para construir aplicaciones web y móviles modernas y escalables.",
       categories: {
         frontend: "Desarrollo Frontend",
         backend: "Desarrollo Backend",
@@ -147,8 +145,8 @@ import {
 } from "react-icons/si";
 
 const getSkillIcon = (name: string) => {
-  const props = (color?: string, alpha: string = "60") => ({ 
-    className: "w-5 h-5", 
+  const props = (color?: string, alpha: string = "60") => ({
+    className: "w-5 h-5",
     color,
     style: color ? { filter: `drop-shadow(0 0 6px ${color}${alpha})` } : undefined
   });
@@ -252,9 +250,6 @@ const Skills = ({ language }: SkillsProps) => {
             {t.skills.title}
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-violet-600 mx-auto rounded-full" />
-          <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
-            {t.skills.subtitle}
-          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
