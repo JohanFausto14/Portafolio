@@ -141,7 +141,7 @@ const Hero = ({ language }: HeroProps) => {
         <div className="absolute -bottom-1/3 -right-1/4 w-[700px] h-[700px] bg-violet-600/8 rounded-full blur-3xl transform-gpu" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10 w-full">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 md:py-24 z-10 w-full">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* ── LEFT: Text content ── */}
           <motion.div

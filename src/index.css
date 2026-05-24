@@ -23,8 +23,16 @@ body {
 }
 
 html {
+  font-size: 95%;
   scroll-behavior: smooth;
 }
+
+@media (min-width: 768px) {
+  html {
+    font-size: 90%;
+  }
+}
+
 
 ::-webkit-scrollbar {
   width: 8px;

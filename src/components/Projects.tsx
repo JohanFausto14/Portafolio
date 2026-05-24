@@ -272,7 +272,7 @@ const Projects = ({ language }: ProjectsProps) => {
   }));
 
   return (
-    <section id="projects" className="py-24 bg-slate-950">
+    <section id="projects" className="py-16 md:py-24 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── Header ── */}
         <motion.div
@@ -280,7 +280,7 @@ const Projects = ({ language }: ProjectsProps) => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-20"
+          className="text-center mb-10 md:mb-20"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {t.projects.title}
@@ -289,7 +289,7 @@ const Projects = ({ language }: ProjectsProps) => {
         </motion.div>
 
         {/* ── Project cards ── */}
-        <div className="space-y-28">
+        <div className="space-y-16 md:space-y-28">
           {projects.map((project, index) => (
             <motion.article
               key={index}
@@ -386,7 +386,7 @@ const Projects = ({ language }: ProjectsProps) => {
               {/* ── Content panel ── */}
               <div className="w-full lg:flex-1">
                 {/* Project number */}
-                <span className="block text-[7rem] md:text-[8.5rem] font-black leading-none text-slate-800/55 select-none mb-0">
+                <span className="block text-5xl md:text-[8.5rem] font-black leading-none text-slate-800/55 select-none mb-0">
                   {String(index + 1).padStart(2, "0")}
                 </span>
 

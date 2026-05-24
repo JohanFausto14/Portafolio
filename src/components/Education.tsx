@@ -63,14 +63,14 @@ const Education = ({ language }: EducationProps) => {
   if (educationItems.length === 0) return null;
 
   return (
-    <section id="education" className="py-24 bg-slate-950">
+    <section id="education" className="py-16 md:py-24 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {t.education?.title || "Education"}
@@ -90,7 +90,7 @@ const Education = ({ language }: EducationProps) => {
                 ease: "easeOut",
               }}
               viewport={{ once: true, margin: "-50px" }}
-              className="relative pl-8 pb-12 last:pb-0 border-l-2 border-slate-800 last:border-l-0"
+              className="relative pl-8 pb-8 md:pb-12 last:pb-0 border-l-2 border-slate-800 last:border-l-0"
             >
               <div className="absolute left-[-9px] top-0 w-4 h-4 bg-cyan-500 rounded-full ring-4 ring-slate-950" />
 

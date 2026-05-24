@@ -129,28 +129,40 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
             {/* Language Toggle */}
             <button
               onClick={() => setLanguage(language === "en" ? "es" : "en")}
-              className="relative flex items-center w-20 h-9 bg-slate-900 rounded-full border border-slate-700 p-1 cursor-pointer shadow-inner hover:border-cyan-500/50 transition-colors"
+              className="relative w-20 h-9 bg-slate-900 rounded-full border border-slate-700 p-1 cursor-pointer shadow-inner hover:border-cyan-500/50 transition-colors"
               title={
                 language === "en" ? "Cambiar a Español" : "Switch to English"
               }
             >
-              <motion.div
-                className="absolute left-1 w-9 h-7 bg-cyan-500 rounded-full shadow-sm"
-                initial={false}
-                animate={{ x: language === "en" ? 0 : 36 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              />
-              <div className="relative w-full flex justify-between items-center z-10 px-[6px] pointer-events-none">
-                <img
-                  src="https://flagcdn.com/us.svg"
-                  alt="EN"
-                  className={`w-[22px] h-[16px] rounded-[3px] object-cover transition-opacity duration-200 ${language === "en" ? "opacity-100" : "opacity-50"}`}
-                />
-                <img
-                  src="https://flagcdn.com/mx.svg"
-                  alt="ES"
-                  className={`w-[22px] h-[16px] rounded-[3px] object-cover transition-opacity duration-200 ${language === "es" ? "opacity-100" : "opacity-50"}`}
-                />
+              <div className="relative w-full h-full flex z-10 pointer-events-none">
+                <div className="relative flex-1 h-full flex items-center justify-center">
+                  {language === "en" && (
+                    <motion.div
+                      layoutId="desktop-active-indicator"
+                      className="absolute inset-0 bg-cyan-500 rounded-full shadow-sm"
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    />
+                  )}
+                  <img
+                    src="https://flagcdn.com/us.svg"
+                    alt="EN"
+                    className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${language === "en" ? "opacity-100" : "opacity-50"}`}
+                  />
+                </div>
+                <div className="relative flex-1 h-full flex items-center justify-center">
+                  {language === "es" && (
+                    <motion.div
+                      layoutId="desktop-active-indicator"
+                      className="absolute inset-0 bg-cyan-500 rounded-full shadow-sm"
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    />
+                  )}
+                  <img
+                    src="https://flagcdn.com/mx.svg"
+                    alt="ES"
+                    className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${language === "es" ? "opacity-100" : "opacity-50"}`}
+                  />
+                </div>
               </div>
             </button>
           </div>
@@ -159,25 +171,37 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
           <div className="md:hidden flex items-center gap-4">
             <button
               onClick={() => setLanguage(language === "en" ? "es" : "en")}
-              className="relative flex items-center w-20 h-9 bg-slate-900 rounded-full border border-slate-700 p-1 cursor-pointer shadow-inner hover:border-cyan-500/50 transition-colors"
+              className="relative w-20 h-9 bg-slate-900 rounded-full border border-slate-700 p-1 cursor-pointer shadow-inner hover:border-cyan-500/50 transition-colors"
             >
-              <motion.div
-                className="absolute left-1 w-9 h-7 bg-cyan-500 rounded-full shadow-sm"
-                initial={false}
-                animate={{ x: language === "en" ? 0 : 36 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              />
-              <div className="relative w-full flex justify-between items-center z-10 px-[6px] pointer-events-none">
-                <img
-                  src="https://flagcdn.com/us.svg"
-                  alt="EN"
-                  className={`w-[22px] h-[16px] rounded-[3px] object-cover transition-opacity duration-200 ${language === "en" ? "opacity-100" : "opacity-50"}`}
-                />
-                <img
-                  src="https://flagcdn.com/mx.svg"
-                  alt="ES"
-                  className={`w-[22px] h-[16px] rounded-[3px] object-cover transition-opacity duration-200 ${language === "es" ? "opacity-100" : "opacity-50"}`}
-                />
+              <div className="relative w-full h-full flex z-10 pointer-events-none">
+                <div className="relative flex-1 h-full flex items-center justify-center">
+                  {language === "en" && (
+                    <motion.div
+                      layoutId="mobile-active-indicator"
+                      className="absolute inset-0 bg-cyan-500 rounded-full shadow-sm"
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    />
+                  )}
+                  <img
+                    src="https://flagcdn.com/us.svg"
+                    alt="EN"
+                    className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${language === "en" ? "opacity-100" : "opacity-50"}`}
+                  />
+                </div>
+                <div className="relative flex-1 h-full flex items-center justify-center">
+                  {language === "es" && (
+                    <motion.div
+                      layoutId="mobile-active-indicator"
+                      className="absolute inset-0 bg-cyan-500 rounded-full shadow-sm"
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    />
+                  )}
+                  <img
+                    src="https://flagcdn.com/mx.svg"
+                    alt="ES"
+                    className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${language === "es" ? "opacity-100" : "opacity-50"}`}
+                  />
+                </div>
               </div>
             </button>
 

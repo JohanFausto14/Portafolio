@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Github, Mail, Phone } from "lucide-react";
+import { Github, Mail } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 type Language = "en" | "es";
 
@@ -20,7 +21,7 @@ const translations = {
         "Have a project in mind or just want to say hi? I'd love to hear from you.",
       infoTitle: "Contact Information",
       email: "Email",
-      phone: "Phone",
+      phone: "WhatsApp",
       validationAlert: "Please fill in your name and message.",
       form: {
         name: "Name",
@@ -49,7 +50,7 @@ const translations = {
         "¿Tienes un proyecto en mente o solo quieres saludar? Me encantaría saber de ti.",
       infoTitle: "Información de Contacto",
       email: "Correo",
-      phone: "Teléfono",
+      phone: "WhatsApp",
       validationAlert: "Por favor llena tu nombre y mensaje.",
       form: {
         name: "Nombre",
@@ -71,14 +72,14 @@ const translations = {
 const Contact = ({ language }: ContactProps) => {
   const t = translations[language];
   return (
-    <section id="contact" className="py-24 bg-slate-900">
+    <section id="contact" className="py-16 md:py-24 bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {t.contact.title}
@@ -117,13 +118,15 @@ const Contact = ({ language }: ContactProps) => {
                 </div>
               </a>
 
-              {/* Phone */}
+              {/* WhatsApp */}
               <a
-                href={`tel:${t.personal?.phone?.replace(/[^\d+]/g, "")}`}
+                href={`https://wa.me/${t.personal?.phone?.replace(/[^\d]/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-4 bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors group cursor-pointer"
               >
                 <div className="p-3 bg-slate-800 rounded-lg text-cyan-400 group-hover:scale-110 transition-transform">
-                  <Phone className="w-6 h-6" />
+                  <FaWhatsapp className="w-6 h-6" />
                 </div>
                 <div>
                   <h4 className="text-lg font-medium text-white">
