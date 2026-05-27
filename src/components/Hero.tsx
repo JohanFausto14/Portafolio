@@ -6,7 +6,7 @@ import {
   Download,
   Github,
 } from "lucide-react";
-import fotoPerfil from "../assets/FotoPortafolio.jpg";
+import fotoPerfil from "../assets/FotoPortafolio.webp";
 
 /* ── Typewriter hook ── */
 const useTypewriter = (

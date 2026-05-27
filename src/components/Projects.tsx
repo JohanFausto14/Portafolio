@@ -154,7 +154,7 @@ const translations = {
 };
 import invernaderoImg from "../assets/Invernadero.png";
 import tecnosolLogin from "../assets/Login Tecnosol.png";
-import tecnosolInicio from "../assets/inicio.jpg";
+import tecnosolInicio from "../assets/inicio.webp";
 import tecnosolRegistroUsuarios from "../assets/Registro_usuarios.png";
 import tecnosolRegistroPedidos from "../assets/Registro_pedidos.png";
 import tecnosolTablaRegistros from "../assets/Tabla_registros.png";
