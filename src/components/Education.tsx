@@ -108,7 +108,7 @@ const Education = ({ language }: EducationProps) => {
                 <h4 className="text-xl text-cyan-400 mb-1">
                   {edu.institution}
                 </h4>
-                <p className="text-base text-gray-500 mb-4">{edu.location}</p>
+                <p className="text-base text-gray-400 mb-4">{edu.location}</p>
                 <p className="text-base md:text-lg text-gray-300 leading-relaxed mb-5">
                   {edu.description}
                 </p>

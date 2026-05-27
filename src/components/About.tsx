@@ -112,15 +112,15 @@ const About = ({ language }: AboutProps) => {
 
             <div className="grid grid-cols-2 gap-6 mt-8">
               <div className="p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-                <h4 className="text-3xl font-bold text-cyan-400 mb-1">
+                <h3 className="text-3xl font-bold text-cyan-400 mb-1">
                   <Counter end={2} />
-                </h4>
+                </h3>
                 <p className="text-sm text-gray-400">{t.about.yearsExp}</p>
               </div>
               <div className="p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-                <h4 className="text-3xl font-bold text-violet-400 mb-1">
+                <h3 className="text-3xl font-bold text-violet-400 mb-1">
                   <Counter end={20} />
-                </h4>
+                </h3>
                 <p className="text-sm text-gray-400">
                   {t.about.projectsCompleted}
                 </p>

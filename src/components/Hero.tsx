@@ -6,7 +6,7 @@ import {
   Download,
   Github,
 } from "lucide-react";
-import fotoPerfil from "../assets/FotoPortafolio.png";
+import fotoPerfil from "../assets/FotoPortafolio.jpg";
 
 /* ── Typewriter hook ── */
 const useTypewriter = (
@@ -233,6 +233,9 @@ const Hero = ({ language }: HeroProps) => {
                 <img
                   src={fotoPerfil}
                   alt="Johan Fausto"
+                  width={352}
+                  height={352}
+                  fetchPriority="high"
                   className="relative w-full h-full object-cover object-[center_20%] z-10"
                 />
               </div>
@@ -313,7 +316,7 @@ const Hero = ({ language }: HeroProps) => {
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ChevronDown className="w-6 h-6 text-gray-500" />
+          <ChevronDown className="w-6 h-6 text-gray-400" />
         </motion.div>
       </motion.div>
     </section>

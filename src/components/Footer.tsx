@@ -41,7 +41,7 @@ const Footer = ({ language }: FooterProps) => {
             <Code2 className="w-5 h-5" />
             <span>Ari Johan</span>
           </div>
-          <p className="text-gray-500 text-xs">
+          <p className="text-gray-400 text-xs">
             &copy; {new Date().getFullYear()} Ari Johan Alvarado Fausto. {t.footer.rights}
           </p>
         </div>
@@ -53,14 +53,14 @@ const Footer = ({ language }: FooterProps) => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-gray-500 hover:text-white transition-colors duration-300"
+            className="text-gray-400 hover:text-white transition-colors duration-300"
           >
             <Github className="w-5 h-5" />
           </a>
           <a
             href={`mailto:${t.personal.email}`}
             aria-label="Email"
-            className="text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+            className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
           >
             <Mail className="w-5 h-5" />
           </a>
@@ -69,7 +69,7 @@ const Footer = ({ language }: FooterProps) => {
         {/* Back to top */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="flex items-center gap-2 text-gray-500 hover:text-cyan-400 text-xs font-medium transition-colors group hidden md:flex"
+          className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 text-xs font-medium transition-colors group hidden md:flex"
         >
           {t.footer.backToTop}
           <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />

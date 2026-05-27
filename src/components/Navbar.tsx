@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Code2, Github } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import flagUS from "../assets/us.svg";
+import flagMX from "../assets/mx.svg";
 
 type Language = "en" | "es";
 
@@ -133,6 +135,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
               title={
                 language === "en" ? "Cambiar a Español" : "Switch to English"
               }
+              aria-label={language === "en" ? "Switch language to Spanish" : "Cambiar idioma a Español"}
             >
               <div className="relative w-full h-full flex z-10 pointer-events-none">
                 <div className="relative flex-1 h-full flex items-center justify-center">
@@ -144,8 +147,10 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                     />
                   )}
                   <img
-                    src="https://flagcdn.com/us.svg"
+                    src={flagUS}
                     alt="EN"
+                    width={20}
+                    height={14}
                     className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${language === "en" ? "opacity-100" : "opacity-50"}`}
                   />
                 </div>
@@ -158,8 +163,10 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                     />
                   )}
                   <img
-                    src="https://flagcdn.com/mx.svg"
+                    src={flagMX}
                     alt="ES"
+                    width={20}
+                    height={14}
                     className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${language === "es" ? "opacity-100" : "opacity-50"}`}
                   />
                 </div>
@@ -172,6 +179,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
             <button
               onClick={() => setLanguage(language === "en" ? "es" : "en")}
               className="relative w-20 h-9 bg-slate-900 rounded-full border border-slate-700 p-1 cursor-pointer shadow-inner hover:border-cyan-500/50 transition-colors"
+              aria-label={language === "en" ? "Switch language to Spanish" : "Cambiar idioma a Español"}
             >
               <div className="relative w-full h-full flex z-10 pointer-events-none">
                 <div className="relative flex-1 h-full flex items-center justify-center">
@@ -183,8 +191,10 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                     />
                   )}
                   <img
-                    src="https://flagcdn.com/us.svg"
+                    src={flagUS}
                     alt="EN"
+                    width={20}
+                    height={14}
                     className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${language === "en" ? "opacity-100" : "opacity-50"}`}
                   />
                 </div>
@@ -197,8 +207,10 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                     />
                   )}
                   <img
-                    src="https://flagcdn.com/mx.svg"
+                    src={flagMX}
                     alt="ES"
+                    width={20}
+                    height={14}
                     className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${language === "es" ? "opacity-100" : "opacity-50"}`}
                   />
                 </div>
@@ -208,6 +220,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-cyan-400 hover:bg-slate-800 focus:outline-none"
+              aria-label={isOpen ? (language === "es" ? "Cerrar menú de navegación" : "Close navigation menu") : (language === "es" ? "Abrir menú de navegación" : "Open navigation menu")}
             >
               {isOpen ? (
                 <X className="w-6 h-6" />

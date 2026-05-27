@@ -154,7 +154,7 @@ const translations = {
 };
 import invernaderoImg from "../assets/Invernadero.png";
 import tecnosolLogin from "../assets/Login Tecnosol.png";
-import tecnosolInicio from "../assets/inicio.png";
+import tecnosolInicio from "../assets/inicio.jpg";
 import tecnosolRegistroUsuarios from "../assets/Registro_usuarios.png";
 import tecnosolRegistroPedidos from "../assets/Registro_pedidos.png";
 import tecnosolTablaRegistros from "../assets/Tabla_registros.png";
@@ -166,8 +166,10 @@ import tecnosolModelos from "../assets/Modelos.png";
 import tecnosolAsesores from "../assets/Asesores.png";
 const ModalCarousel = ({
   images,
+  language,
 }: {
   images: string[];
+  language: Language;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -181,6 +183,8 @@ const ModalCarousel = ({
         transition={{ duration: 0.3 }}
         src={images[currentIndex]}
         alt="Project slide"
+        width={1200}
+        height={800}
         className="max-w-full max-h-[85vh] rounded-lg object-contain shadow-2xl relative z-40"
       />
 
@@ -194,6 +198,7 @@ const ModalCarousel = ({
                 prev === 0 ? images.length - 1 : prev - 1,
               );
             }}
+            aria-label={language === "es" ? "Imagen anterior" : "Previous image"}
             className="absolute left-2 md:-left-12 top-1/2 -translate-y-1/2 p-3 bg-slate-800/80 hover:bg-cyan-500 text-white rounded-full z-50 transition-colors shadow-lg"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -205,6 +210,7 @@ const ModalCarousel = ({
                 prev === images.length - 1 ? 0 : prev + 1,
               );
             }}
+            aria-label={language === "es" ? "Siguiente imagen" : "Next image"}
             className="absolute right-2 md:-right-12 top-1/2 -translate-y-1/2 p-3 bg-slate-800/80 hover:bg-cyan-500 text-white rounded-full z-50 transition-colors shadow-lg"
           >
             <ChevronRight className="w-6 h-6" />
@@ -218,6 +224,7 @@ const ModalCarousel = ({
                   e.stopPropagation();
                   setCurrentIndex(i);
                 }}
+                aria-label={language === "es" ? `Ir a la diapositiva ${i + 1}` : `Go to slide ${i + 1}`}
                 className={`w-3 h-3 rounded-full transition-all shadow-md ${i === currentIndex ? "w-8 bg-cyan-400" : "bg-white/40 hover:bg-white"}`}
               />
             ))}
@@ -352,11 +359,15 @@ const Projects = ({ language }: ProjectsProps) => {
                 ) : (
                   <button
                     onClick={() => setSelectedGallery(project.images || [project.image as string])}
+                    aria-label={language === "es" ? `Ver galería de imágenes del proyecto ${project.title}` : `View image gallery for project ${project.title}`}
                     className="block w-fit mx-auto lg:mx-0 text-left relative rounded-2xl overflow-hidden border border-slate-800 bg-transparent shadow-2xl shadow-slate-950/60 group cursor-pointer"
                   >
                     <img
                       src={project.images ? project.images[0] : (project.image as string)}
                       alt={project.title}
+                      width={640}
+                      height={420}
+                      loading="lazy"
                       className="w-auto h-auto max-w-full max-h-[350px] md:max-h-[420px] object-contain transition-transform duration-700 group-hover:scale-105"
                     />
 
@@ -386,7 +397,7 @@ const Projects = ({ language }: ProjectsProps) => {
               {/* ── Content panel ── */}
               <div className="w-full lg:flex-1">
                 {/* Project number */}
-                <span className="block text-5xl md:text-[8.5rem] font-black leading-none text-slate-800/55 select-none mb-0">
+                <span className="block text-5xl md:text-[8.5rem] font-black leading-none text-slate-700/50 select-none mb-0">
                   {String(index + 1).padStart(2, "0")}
                 </span>
 
@@ -404,7 +415,7 @@ const Projects = ({ language }: ProjectsProps) => {
                 <div className="mb-8">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="h-px w-6 bg-cyan-500/60 inline-block flex-shrink-0" />
-                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
                       {t.projects.technologiesUsed}
                     </h4>
                   </div>
@@ -436,12 +447,13 @@ const Projects = ({ language }: ProjectsProps) => {
           >
             <button
               onClick={() => setSelectedGallery(null)}
+              aria-label={language === "es" ? "Cerrar galería" : "Close gallery"}
               className="absolute top-4 right-4 md:top-8 md:right-8 p-3 rounded-full bg-slate-800/80 text-white hover:bg-slate-700 hover:text-cyan-400 transition-all z-[70] shadow-xl border border-slate-700"
             >
               <X className="w-6 h-6" />
             </button>
             <div className="w-full max-w-6xl h-full flex items-center justify-center relative">
-              <ModalCarousel images={selectedGallery} />
+              <ModalCarousel images={selectedGallery} language={language} />
             </div>
           </motion.div>
         )}
