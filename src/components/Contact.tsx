@@ -126,7 +126,7 @@ const Contact = ({ language }: ContactProps) => {
                 className="flex items-center gap-4 bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors group cursor-pointer"
               >
                 <div className="p-3 bg-slate-800 rounded-lg text-cyan-400 group-hover:scale-110 transition-transform">
-                  <FaWhatsapp className="w-6 h-6" />
+                  <FaWhatsapp className="w-6 h-6" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="text-lg font-medium text-white">

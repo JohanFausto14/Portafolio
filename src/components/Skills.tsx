@@ -148,7 +148,8 @@ const getSkillIcon = (name: string) => {
   const props = (color?: string, alpha: string = "60") => ({
     className: "w-5 h-5",
     color,
-    style: color ? { filter: `drop-shadow(0 0 6px ${color}${alpha})` } : undefined
+    style: color ? { filter: `drop-shadow(0 0 6px ${color}${alpha})` } : undefined,
+    "aria-hidden": true
   });
   switch (name.toLowerCase()) {
     case "react": return <SiReact {...props("#61DAFB")} />;

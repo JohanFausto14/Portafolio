@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -15,6 +15,10 @@ type Language = "en" | "es";
 function App() {
   const [language, setLanguageState] = useState<Language>("es");
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const changeLanguage = (lang: Language) => {
     setIsTransitioning(true);
