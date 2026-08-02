@@ -82,7 +82,7 @@ const translations = {
       viewWork: "View My Work",
       contactMe: "Contact Me",
       downloadCv: "Download CV",
-      cvLink: "/CV_en.pdf",
+      cvLink: "/CV_en.pdf?v=v3",
       roles: [
         "Full Stack Developer",
         "Web & Mobile Developer",
@@ -104,7 +104,7 @@ const translations = {
       viewWork: "Ver Mi Trabajo",
       contactMe: "Contáctame",
       downloadCv: "Descargar CV",
-      cvLink: "/CV_es.pdf",
+      cvLink: "/CV_es.pdf?v=v3",
       roles: [
         "Desarrollador Full Stack",
         "Desarrollador Web & Móvil",
