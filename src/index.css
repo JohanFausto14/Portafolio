@@ -1,52 +1,83 @@
 @import "tailwindcss";
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* ═════════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM
+   Typography: Giant Condensed Display (Bebas Neue / Syne) + Inter / Space Grotesk
+   Interactive Feature: Letter-by-Letter & Word Illumination on Hover
+   Background: Soft Dark Graphite (#0f0f0f / #121212)
+   ═════════════════════════════════════════════════════════════════════ */
 
-  color-scheme: dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #0f172a;
+@layer base {
+  :root {
+    --bg-dark: #0f0f0f;
+    --bg-surface: #171717;
+    --text-dim: #777777;
+    --text-mid: #aaaaaa;
+    --text-bright: #ffffff;
+    --border-subtle: #262626;
+  }
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-html {
-  font-size: 95%;
-  scroll-behavior: smooth;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 90%;
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--bg-dark);
+    color: var(--text-dim);
+    font-family: 'Inter', system-ui, sans-serif;
   }
 }
 
+/* Custom Font Utilities */
+.font-display {
+  font-family: 'Bebas Neue', 'Syne', sans-serif;
+}
 
+.font-tech {
+  font-family: 'Space Grotesk', monospace;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #0f0f0f;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #262626;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #444444;
+}
+
+/* Glassmorphism Surface Utility */
+.surface-card {
+  background-color: rgba(23, 23, 23, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.surface-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Text Illumination Animation */
+.illuminate-text {
+  color: #666666;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.illuminate-text:hover {
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }

@@ -1,4 +1,4 @@
-import { Code2, Github, Mail, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 type Language = "en" | "es";
 
@@ -8,24 +8,12 @@ interface FooterProps {
 
 const translations = {
   en: {
-    personal: {
-      email: "johanalvarado296@gmail.com",
-      github: "https://github.com/JohanFausto14",
-    },
-    footer: {
-      rights: "All rights reserved.",
-      backToTop: "Back to top",
-    },
+    rights: "Software Development & Frontend Engineering.",
+    backToTop: "BACK TO TOP",
   },
   es: {
-    personal: {
-      email: "johanalvarado296@gmail.com",
-      github: "https://github.com/JohanFausto14",
-    },
-    footer: {
-      rights: "Todos los derechos reservados.",
-      backToTop: "Volver arriba",
-    },
+    rights: "Desarrollo de Software & Ingeniería Frontend.",
+    backToTop: "VOLVER ARRIBA",
   },
 };
 
@@ -33,46 +21,23 @@ const Footer = ({ language }: FooterProps) => {
   const t = translations[language];
 
   return (
-    <footer className="bg-slate-950 border-t border-slate-800/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Logo & Copyright */}
-        <div className="flex flex-col items-center md:items-start gap-1">
-          <div className="flex items-center gap-2 text-cyan-400 font-bold text-lg">
-            <Code2 className="w-5 h-5" />
-            <span>Ari Johan</span>
-          </div>
-          <p className="text-gray-400 text-xs">
-            &copy; {new Date().getFullYear()} Ari Johan Alvarado Fausto. {t.footer.rights}
+    <footer className="bg-[#0f0f0f] py-10 border-t border-[#222222]">
+      <div className="max-w-[1450px] mx-auto px-6 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span className="text-xs font-tech font-bold text-white block uppercase tracking-widest">
+            ARI JOHAN ALVARADO FAUSTO
+          </span>
+          <p className="text-[11px] font-tech text-[#666666] mt-1">
+            &copy; {new Date().getFullYear()} — Ari Johan Alvarado Fausto
           </p>
         </div>
 
-        {/* Social Icons */}
-        <div className="flex items-center gap-4">
-          <a
-            href={t.personal.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-            className="text-gray-400 hover:text-white transition-colors duration-300"
-          >
-            <Github className="w-5 h-5" />
-          </a>
-          <a
-            href={`mailto:${t.personal.email}`}
-            aria-label="Email"
-            className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-          >
-            <Mail className="w-5 h-5" />
-          </a>
-        </div>
-
-        {/* Back to top */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 text-xs font-medium transition-colors group hidden md:flex"
+          className="flex items-center space-x-2 text-xs font-tech text-[#888888] hover:text-white transition-colors cursor-pointer uppercase tracking-widest"
         >
-          {t.footer.backToTop}
-          <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+          <span>{t.backToTop}</span>
+          <ArrowUp className="w-3.5 h-3.5" />
         </button>
       </div>
     </footer>

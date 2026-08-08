@@ -1,28 +1,5 @@
-import { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
-
-const Counter = ({ end, suffix = "+" }: { end: number; suffix?: string }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!isInView) return;
-    let current = 0;
-    const step = end / 60;
-    const timer = setInterval(() => {
-      current = Math.min(current + step, end);
-      setCount(Math.floor(current));
-      if (current >= end) clearInterval(timer);
-    }, 16);
-    return () => clearInterval(timer);
-  }, [isInView, end]);
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  );
-};
+import { motion } from "framer-motion";
+import { Target, Zap, Rocket, ArrowRight, ArrowDown } from "lucide-react";
 
 type Language = "en" | "es";
 
@@ -33,100 +10,163 @@ interface AboutProps {
 const translations = {
   en: {
     about: {
-      title: "About Me",
-      role: "Software Developer",
-      p1: "I am a Software Development and Management Engineer, specialized in web and mobile applications. I have experience in frontend development using React and Next.js, as well as in backend with Node.js, NestJS, and Express.",
-      p2: "I like to understand the problem before writing code. I have worked on projects from scratch, system migrations, REST API integrations, and database connections such as PostgreSQL, MongoDB, and MySQL, always looking for the solution to be practical and easy to maintain.",
-      p3: "I enjoy environments with real challenges and adapt easily to the project's needs. I'm looking for an opportunity to keep growing and contribute real value to the team.",
-      yearsExp: "Years Experience",
-      projectsCompleted: "Projects Completed",
+      title: "MY APPROACH",
+      tagline: "Before writing code, I take time to understand the problem and simplify the solution. I believe the best software is not the most complex, but the one that is easy to maintain and evolve.",
+      metrics: "3+ years of experience · 20+ projects built",
+      principles: [
+        {
+          num: "01",
+          title: "UNDERSTAND",
+          desc: "Analyze context, users, and requirements thoroughly before designing the solution.",
+        },
+        {
+          num: "02",
+          title: "SIMPLIFY",
+          desc: "Reduce unnecessary complexity in architecture, interface, and workflow.",
+        },
+        {
+          num: "03",
+          title: "DELIVER",
+          desc: "Build maintainable, scalable, and production-ready solutions.",
+        },
+      ],
     },
   },
   es: {
     about: {
-      title: "Sobre Mí",
-      role: "Desarrollador de Software",
-      p1: "Soy Ingeniero en Desarrollo y Gestión de Software, especializado en aplicaciones web y móviles. Cuento con experiencia en desarrollo frontend utilizando React y Next.js, así como en backend con Node.js, NestJS y Express.",
-      p2: "Me gusta entender el problema antes de escribir código. He trabajado en proyectos desde cero, migraciones de sistemas, integraciones con APIs REST y conexión con bases de datos como PostgreSQL, MongoDB y MySQL, siempre buscando que la solución sea práctica y fácil de mantener.",
-      p3: "Disfruto los entornos donde hay retos reales y me adapto con facilidad a lo que el proyecto necesite. Busco una oportunidad donde pueda seguir creciendo y aportar valor real al equipo.",
-      yearsExp: "Años de Experiencia",
-      projectsCompleted: "Proyectos Completados",
+      title: "MI ENFOQUE",
+      tagline: "Antes de escribir código, dedico tiempo a entender el problema y simplificar la solución. Creo que el mejor software no es el más complejo, sino el que resulta fácil de mantener y evolucionar.",
+      metrics: "3+ años de experiencia · 20+ proyectos desarrollados",
+      principles: [
+        {
+          num: "01",
+          title: "ENTENDER",
+          desc: "Analizar contexto, usuarios y requerimientos antes de diseñar la solución.",
+        },
+        {
+          num: "02",
+          title: "SIMPLIFICAR",
+          desc: "Reducir complejidad innecesaria en arquitectura, interfaz y flujo de trabajo.",
+        },
+        {
+          num: "03",
+          title: "ENTREGAR",
+          desc: "Construir soluciones mantenibles, escalables y listas para producción.",
+        },
+      ],
     },
   },
 };
 
+// Interactive letter component for section titles
+const InteractiveTitleText = ({ text }: { text: string }) => {
+  return (
+    <span className="inline-block select-none">
+      {text.split("").map((char, index) => {
+        if (char === " ") {
+          return <span key={index} className="inline-block w-[0.25em]">&nbsp;</span>;
+        }
+        return (
+          <span
+            key={index}
+            className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
+          >
+            {char}
+          </span>
+        );
+      })}
+    </span>
+  );
+};
+
 const About = ({ language }: AboutProps) => {
   const t = translations[language];
+
+  const principleIcons = [
+    <Target className="w-5 h-5 text-amber-400" />,
+    <Zap className="w-5 h-5 text-sky-400" />,
+    <Rocket className="w-5 h-5 text-emerald-400" />,
+  ];
+
   return (
-    <section id="about" className="py-16 md:py-24 bg-slate-900">
+    <section id="about" className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-10 md:mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            {t.about.title}
+          <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
+            <InteractiveTitleText text={t.about.title} />
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-violet-600 mx-auto rounded-full" />
+          <div className="w-24 h-1 bg-white mx-auto rounded-full" />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="relative max-w-sm mx-auto"
-          >
-            <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 border border-slate-700/80 flex items-center justify-center relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/8 via-transparent to-violet-600/8" />
-              <span className="relative text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-violet-500 select-none">
-                AJ
-              </span>
-            </div>
-            <div className="absolute -z-10 top-4 -left-4 w-full h-full border-2 border-cyan-500/30 rounded-2xl" />
-            <div className="absolute -z-10 top-8 -left-8 w-full h-full border-2 border-violet-500/10 rounded-2xl" />
-          </motion.div>
+        {/* Authentic Statement & Metrics Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="bg-[#151515] p-6 sm:p-10 rounded-3xl border border-[#222222] hover:border-white transition-all duration-300 mb-14 text-center max-w-4xl mx-auto flex flex-col items-center gap-6"
+        >
+          <p className="text-base sm:text-xl font-tech text-[#dddddd] font-medium leading-relaxed">
+            "{t.about.tagline}"
+          </p>
+          <span className="inline-flex items-center px-4 py-2 bg-[#0f0f0f] border border-[#333333] text-xs font-tech font-bold text-white rounded-full uppercase tracking-widest">
+            {t.about.metrics}
+          </span>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="bg-slate-800/60 p-8 rounded-2xl border border-slate-700/50"
-          >
-            <div className="space-y-4">
-              <p className="text-gray-300 text-lg leading-relaxed">
-                {t.about.p1}
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                {t.about.p2}
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                {t.about.p3}
-              </p>
-            </div>
+        {/* 3 Principles Connected Process Flow */}
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+            {t.about.principles.map((item, index) => (
+              <div key={item.num} className="relative flex flex-col">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  className="bg-[#151515] p-6 rounded-3xl border border-[#222222] hover:border-white transition-all duration-300 flex-1 flex flex-col justify-between group shadow-lg"
+                >
+                  <div>
+                    {/* Top bar with step number & icon */}
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="text-3xl font-display font-black text-[#333333] group-hover:text-white transition-colors">
+                        {item.num}
+                      </span>
+                      <div className="p-3 rounded-2xl bg-[#0f0f0f] border border-[#222222] group-hover:border-[#444444] transition-colors">
+                        {principleIcons[index]}
+                      </div>
+                    </div>
 
-            <div className="grid grid-cols-2 gap-6 mt-8">
-              <div className="p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-                <h3 className="text-3xl font-bold text-cyan-400 mb-1">
-                  <Counter end={2} />
-                </h3>
-                <p className="text-sm text-gray-400">{t.about.yearsExp}</p>
+                    <h4 className="text-lg font-display font-black text-white uppercase tracking-wider mb-2">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs font-tech text-[#888888] leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Arrow Connector between steps */}
+                {index < 2 && (
+                  <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-[#151515] border border-[#333333] text-[#666666]">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                )}
+                {index < 2 && (
+                  <div className="flex md:hidden justify-center my-2 text-[#444444]">
+                    <ArrowDown className="w-5 h-5" />
+                  </div>
+                )}
               </div>
-              <div className="p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-                <h3 className="text-3xl font-bold text-violet-400 mb-1">
-                  <Counter end={20} />
-                </h3>
-                <p className="text-sm text-gray-400">
-                  {t.about.projectsCompleted}
-                </p>
-              </div>
-            </div>
-          </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -134,3 +174,4 @@ const About = ({ language }: AboutProps) => {
 };
 
 export default About;
+
