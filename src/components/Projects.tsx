@@ -43,6 +43,9 @@ const translations = {
         solution: "The Solution",
         result: "Result",
         technologies: "TECHNOLOGIES USED",
+        visitSite: "Visit site",
+        viewCapture: "View screenshot",
+        viewCaptures: "View screenshots",
       },
       cases: [
         {
@@ -112,6 +115,9 @@ const translations = {
         solution: "La Solución",
         result: "Resultado",
         technologies: "TECNOLOGÍAS UTILIZADAS",
+        visitSite: "Visitar sitio",
+        viewCapture: "Ver captura",
+        viewCaptures: "Ver capturas",
       },
       cases: [
         {
@@ -173,7 +179,6 @@ const translations = {
   },
 };
 
-// Interactive letter component for section titles
 const InteractiveTitleText = ({ text }: { text: string }) => {
   return (
     <span className="inline-block select-none">
@@ -194,9 +199,13 @@ const InteractiveTitleText = ({ text }: { text: string }) => {
   );
 };
 
-const ModalCarousel = ({ images }: { images: string[] }) => {
+interface ModalCarouselProps {
+  images: string[];
+}
+
+const ModalCarousel = ({ images }: ModalCarouselProps) => {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const [direction, setDirection] = useState(0);
 
   useEffect(() => {
     images.forEach((src) => {
@@ -216,42 +225,75 @@ const ModalCarousel = ({ images }: { images: string[] }) => {
   };
 
   return (
-    <div className="relative w-full h-[85vh] flex flex-col items-center justify-between overflow-hidden">
-      <div className="relative w-full flex-1 h-[75vh] flex items-center justify-center overflow-hidden">
+    <div className="relative w-full max-w-4xl h-full max-h-[85vh] flex flex-col items-center justify-between overflow-hidden select-none">
+      {/* Image Display Container with Touch Drag / Swipe */}
+      <div className="relative w-full flex-1 flex items-center justify-center overflow-hidden p-2 sm:p-4">
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.img
             key={index}
             custom={direction}
-            initial={{ x: direction > 0 ? 90 : -90, opacity: 0, scale: 0.95 }}
+            initial={{ x: direction > 0 ? 120 : -120, opacity: 0, scale: 0.95 }}
             animate={{ x: 0, opacity: 1, scale: 1 }}
-            exit={{ x: direction < 0 ? 90 : -90, opacity: 0, scale: 0.95 }}
+            exit={{ x: direction < 0 ? 120 : -120, opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -40) {
+                handleNext();
+              } else if (info.offset.x > 40) {
+                handlePrev();
+              }
+            }}
             src={images[index]}
-            alt="Slide"
-            className="max-w-full max-h-[75vh] object-contain border border-[#333333] bg-[#121212] p-2 rounded-2xl shadow-2xl select-none"
+            alt={`Slide ${index + 1}`}
+            className="max-w-full max-h-[65vh] sm:max-h-[75vh] object-contain border border-[#333333] bg-[#121212] p-2 rounded-2xl shadow-2xl touch-pan-y cursor-grab active:cursor-grabbing"
           />
         </AnimatePresence>
+
+        {/* Side Floating Next/Prev Buttons for Mobile & Desktop */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={handlePrev}
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-3 bg-black/75 hover:bg-white text-white hover:text-[#0f0f0f] border border-white/20 rounded-full transition-all shadow-2xl z-30 cursor-pointer active:scale-95"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={handleNext}
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-3 bg-black/75 hover:bg-white text-white hover:text-[#0f0f0f] border border-white/20 rounded-full transition-all shadow-2xl z-30 cursor-pointer active:scale-95"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </>
+        )}
       </div>
 
+      {/* Bottom Counter & Indicator Dots */}
       {images.length > 1 && (
-        <div className="h-12 flex items-center space-x-4 mt-3 z-10 shrink-0">
-          <button
-            onClick={handlePrev}
-            className="p-2.5 bg-[#171717] text-[#888888] hover:text-white border border-[#333333] rounded-full transition-all hover:scale-110 active:scale-95 cursor-pointer"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <span className="text-xs font-tech font-bold text-white tracking-widest select-none min-w-[45px] text-center">
+        <div className="h-12 flex items-center justify-center space-x-3 shrink-0 z-30 pb-2">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setDirection(i > index ? 1 : -1);
+                setIndex(i);
+              }}
+              className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                i === index
+                  ? "w-8 bg-white"
+                  : "w-2.5 bg-[#444444] hover:bg-[#888888]"
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+          <span className="text-xs font-tech font-bold text-white tracking-widest ml-2 select-none">
             {index + 1} / {images.length}
           </span>
-          <button
-            onClick={handleNext}
-            className="p-2.5 bg-[#171717] text-[#888888] hover:text-white border border-[#333333] rounded-full transition-all hover:scale-110 active:scale-95 cursor-pointer"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
         </div>
       )}
     </div>
@@ -273,7 +315,6 @@ const Projects = ({ language }: ProjectsProps) => {
   return (
     <section id="projects" className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title with Letter Illumination */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -287,7 +328,6 @@ const Projects = ({ language }: ProjectsProps) => {
           <div className="w-24 h-1 bg-white mx-auto rounded-full" />
         </motion.div>
 
-        {/* Projects List */}
         <div className="space-y-16 md:space-y-24">
           {t.projects.cases.map((project, index) => (
             <motion.article
@@ -300,14 +340,13 @@ const Projects = ({ language }: ProjectsProps) => {
                 index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
               } items-center gap-6 lg:gap-12 bg-[#151515] p-6 md:p-8 rounded-3xl border border-[#222222] hover:border-white transition-all duration-300 group`}
             >
-              {/* Media Preview Box */}
               <div className="w-full lg:w-1/2 flex justify-center">
                 {project.demoUrl ? (
                   <a
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full aspect-video relative rounded-2xl overflow-hidden border border-[#333333] bg-[#0f0f0f] shadow-2xl group cursor-pointer p-1"
+                    className="block w-full aspect-video relative rounded-2xl overflow-hidden border border-[#333333] bg-[#0f0f0f] shadow-2xl group cursor-pointer p-1 active:scale-[0.98] transition-transform duration-200"
                   >
                     <img
                       src={project.image}
@@ -315,9 +354,13 @@ const Projects = ({ language }: ProjectsProps) => {
                       className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-150 z-20 flex items-center justify-center rounded-2xl">
-                      <div className="p-3.5 bg-white text-[#0f0f0f] rounded-full shadow-2xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150">
+                      <div className="p-3.5 bg-white text-[#0f0f0f] rounded-full shadow-2xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
                         <ExternalLink className="w-6 h-6" />
                       </div>
+                    </div>
+                    <div className="absolute top-3 right-3 z-30 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-tech font-bold text-[10.5px] uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                      <span>{t.projects.labels.visitSite}</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-white" />
                     </div>
                   </a>
                 ) : (
@@ -329,7 +372,7 @@ const Projects = ({ language }: ProjectsProps) => {
                           : tecnosolGallery
                       )
                     }
-                    className="block w-full aspect-video relative rounded-2xl overflow-hidden border border-[#333333] bg-[#0f0f0f] shadow-2xl group cursor-pointer p-1"
+                    className="block w-full aspect-video relative rounded-2xl overflow-hidden border border-[#333333] bg-[#0f0f0f] shadow-2xl group cursor-pointer p-1 active:scale-[0.98] transition-transform duration-200 text-left"
                   >
                     <img
                       src={project.image}
@@ -338,23 +381,29 @@ const Projects = ({ language }: ProjectsProps) => {
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-150 z-20 flex items-center justify-center rounded-2xl">
                       {project.id === "tecnosol" ? (
-                        <div className="px-5 py-2.5 bg-white text-[#0f0f0f] font-tech font-bold text-xs rounded-full flex items-center gap-2 uppercase shadow-xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150">
+                        <div className="px-5 py-2.5 bg-white text-[#0f0f0f] font-tech font-bold text-xs rounded-full flex items-center gap-2 uppercase shadow-xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
                           <Maximize className="w-4 h-4" />
                           <span>{t.projects.exploreCaptures}</span>
                         </div>
                       ) : (
-                        <div className="p-3.5 bg-white text-[#0f0f0f] rounded-full shadow-2xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150">
+                        <div className="p-3.5 bg-white text-[#0f0f0f] rounded-full shadow-2xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
                           <Maximize className="w-6 h-6" />
                         </div>
                       )}
+                    </div>
+                    <div className="absolute top-3 right-3 z-30 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-tech font-bold text-[10.5px] uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                      <Maximize className="w-3.5 h-3.5 text-white" />
+                      <span>
+                        {project.gallery && project.gallery.length > 1
+                          ? `${t.projects.labels.viewCaptures} (${project.gallery.length})`
+                          : t.projects.labels.viewCapture}
+                      </span>
                     </div>
                   </button>
                 )}
               </div>
 
-              {/* Content Panel */}
               <div className="w-full lg:w-1/2">
-                {/* Number */}
                 <div className="mb-1">
                   <span className="text-2xl font-display font-black text-[#444444] select-none">
                     {String(index + 1).padStart(2, "0")}
@@ -365,14 +414,11 @@ const Projects = ({ language }: ProjectsProps) => {
                   {project.title}
                 </h3>
                 
-                {/* 1-Line Essence Tagline (No Quotes) */}
                 <p className="text-xs font-tech text-[#888888] font-semibold mb-4 leading-relaxed">
                   {project.tagline}
                 </p>
 
-                {/* Narrative Hierarchy */}
                 <div className="space-y-2 font-tech text-xs sm:text-xs leading-relaxed mb-4">
-                  {/* 1. Contexto */}
                   <div className="p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222]">
                     <div className="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] uppercase tracking-wider mb-0.5">
                       <AlertCircle className="w-3 h-3" />
@@ -381,7 +427,6 @@ const Projects = ({ language }: ProjectsProps) => {
                     <p className="text-[#aaaaaa]">{project.problem}</p>
                   </div>
 
-                  {/* 2. Mi Aporte */}
                   <div className="p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222]">
                     <div className="flex items-center gap-1.5 text-sky-400 font-bold text-[11px] uppercase tracking-wider mb-0.5">
                       <ShieldCheck className="w-3 h-3" />
@@ -390,7 +435,6 @@ const Projects = ({ language }: ProjectsProps) => {
                     <p className="text-[#aaaaaa]">{project.responsibility}</p>
                   </div>
 
-                  {/* 3. La Solución */}
                   <div className="p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222]">
                     <div className="flex items-center gap-1.5 text-indigo-400 font-bold text-[11px] uppercase tracking-wider mb-0.5">
                       <Cpu className="w-3 h-3" />
@@ -399,7 +443,6 @@ const Projects = ({ language }: ProjectsProps) => {
                     <p className="text-[#aaaaaa]">{project.solution}</p>
                   </div>
 
-                  {/* 4. Resultado */}
                   <div className="p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222]">
                     <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-[11px] uppercase tracking-wider mb-0.5">
                       <CheckCircle2 className="w-3 h-3" />
@@ -409,7 +452,6 @@ const Projects = ({ language }: ProjectsProps) => {
                   </div>
                 </div>
 
-                {/* 5. Tecnologías Utilizadas */}
                 <div className="w-full pt-1">
                   <div className="flex flex-wrap items-center gap-1.5 w-full">
                     {project.tags.map((tag, idx) => (
@@ -428,7 +470,6 @@ const Projects = ({ language }: ProjectsProps) => {
         </div>
       </div>
 
-      {/* Gallery / Image Modal */}
       {typeof document !== "undefined" &&
         createPortal(
           <AnimatePresence>
@@ -438,7 +479,7 @@ const Projects = ({ language }: ProjectsProps) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-12"
+                className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md p-2 sm:p-4 md:p-12"
               >
                 <motion.button
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -446,7 +487,7 @@ const Projects = ({ language }: ProjectsProps) => {
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   onClick={() => setSelectedGallery(null)}
-                  className="absolute top-6 right-6 p-3 rounded-full bg-[#171717] border border-[#333333] text-[#ffffff] hover:bg-white hover:text-[#0f0f0f] transition-all z-[10000] shadow-2xl cursor-pointer"
+                  className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-[#171717] border border-[#333333] text-[#ffffff] hover:bg-white hover:text-[#0f0f0f] transition-all z-[10000] shadow-2xl cursor-pointer"
                   aria-label="Close modal"
                 >
                   <X className="w-6 h-6" />
