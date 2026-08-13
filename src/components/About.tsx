@@ -144,9 +144,9 @@ const About = ({ language }: AboutProps) => {
                       </div>
                     </div>
 
-                    <h4 className="text-lg font-display font-black text-white uppercase tracking-wider mb-2">
+                    <h3 className="text-lg font-display font-black text-white uppercase tracking-wider mb-2">
                       {item.title}
-                    </h4>
+                    </h3>
                     <p className="text-xs font-tech text-[#888888] leading-relaxed">
                       {item.desc}
                     </p>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, X, Maximize, ChevronLeft, ChevronRight, AlertCircle, ShieldCheck, Cpu, CheckCircle2 } from "lucide-react";
+import { ExternalLink, X, Maximize, ChevronLeft, ChevronRight, AlertCircle, ShieldCheck, Cpu, CheckCircle2, ZoomIn, ZoomOut } from "lucide-react";
 
 type Language = "en" | "es";
 
@@ -23,14 +23,14 @@ interface ProjectCase {
   gallery?: string[];
 }
 
-import proyectoLectorImg from "../assets/ProyectoLector.png";
-import liraImg from "../assets/LIRA.png";
-import invernaderoImg from "../assets/Invernadero.png";
-import tecnosolLogin from "../assets/Login Tecnosol.png";
+import proyectoLectorImg from "../assets/ProyectoLector.webp";
+import liraImg from "../assets/LIRA.webp";
+import invernaderoImg from "../assets/Invernadero.webp";
+import tecnosolLogin from "../assets/Login Tecnosol.webp";
 import tecnosolInicio from "../assets/inicio.webp";
-import tecnosolRegistroUsuarios from "../assets/Registro_usuarios.png";
-import tecnosolRegistroPedidos from "../assets/Registro_pedidos.png";
-import tecnosolTablaRegistros from "../assets/Tabla_registros.png";
+import tecnosolRegistroUsuarios from "../assets/Registro_usuarios.webp";
+import tecnosolRegistroPedidos from "../assets/Registro_pedidos.webp";
+import tecnosolTablaRegistros from "../assets/Tabla_registros.webp";
 
 const translations = {
   en: {
@@ -180,21 +180,24 @@ const translations = {
 };
 
 const InteractiveTitleText = ({ text }: { text: string }) => {
+  const words = text.split(" ");
   return (
     <span className="inline-block select-none">
-      {text.split("").map((char, index) => {
-        if (char === " ") {
-          return <span key={index} className="inline-block w-[0.25em]">&nbsp;</span>;
-        }
-        return (
-          <span
-            key={index}
-            className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
-          >
-            {char}
-          </span>
-        );
-      })}
+      {words.map((word, wIdx) => (
+        <span key={wIdx} className="inline-block whitespace-nowrap">
+          {word.split("").map((char, cIdx) => (
+            <span
+              key={cIdx}
+              className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
+            >
+              {char}
+            </span>
+          ))}
+          {wIdx < words.length - 1 && (
+            <span className="inline-block w-[0.25em]">&nbsp;</span>
+          )}
+        </span>
+      ))}
     </span>
   );
 };
@@ -206,6 +209,8 @@ interface ModalCarouselProps {
 const ModalCarousel = ({ images }: ModalCarouselProps) => {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [lastTap, setLastTap] = useState(0);
 
   useEffect(() => {
     images.forEach((src) => {
@@ -215,40 +220,112 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
   }, [images]);
 
   const handleNext = () => {
+    setZoomLevel(1);
     setDirection(1);
     setIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const handlePrev = () => {
+    setZoomLevel(1);
     setDirection(-1);
     setIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
+  const toggleZoom = () => {
+    setZoomLevel((prev) => (prev === 1 ? 2.2 : 1));
+  };
+
+  const handleDoubleTap = () => {
+    const now = Date.now();
+    if (now - lastTap < 300) {
+      toggleZoom();
+    } else {
+      setLastTap(now);
+    }
+  };
+
+  const zoomIn = () => {
+    setZoomLevel((prev) => Math.min(prev + 0.5, 3));
+  };
+
+  const zoomOut = () => {
+    setZoomLevel((prev) => Math.max(prev - 0.5, 1));
+  };
+
   return (
     <div className="relative w-full max-w-4xl h-full max-h-[85vh] flex flex-col items-center justify-between overflow-hidden select-none">
-      {/* Image Display Container with Touch Drag / Swipe */}
-      <div className="relative w-full flex-1 flex items-center justify-center overflow-hidden p-2 sm:p-4">
+      {/* Zoom Controls Bar */}
+      <div className="absolute top-2 z-40 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/85 backdrop-blur-md border border-white/20 text-white shadow-2xl">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            zoomOut();
+          }}
+          disabled={zoomLevel <= 1}
+          className="p-1 text-white hover:text-sky-400 disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
+          aria-label="Zoom out"
+        >
+          <ZoomOut className="w-4 h-4" />
+        </button>
+        <span className="text-[11px] font-tech font-bold tracking-wider min-w-[38px] text-center">
+          {Math.round(zoomLevel * 100)}%
+        </span>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            zoomIn();
+          }}
+          disabled={zoomLevel >= 3}
+          className="p-1 text-white hover:text-sky-400 disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
+          aria-label="Zoom in"
+        >
+          <ZoomIn className="w-4 h-4" />
+        </button>
+        {zoomLevel > 1 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setZoomLevel(1);
+            }}
+            className="ml-1 px-2 py-0.5 text-[9.5px] font-tech uppercase font-bold bg-white/20 hover:bg-white/30 text-white rounded-full transition-colors"
+          >
+            Reset
+          </button>
+        )}
+      </div>
+
+      {/* Image Display Container with Touch Drag / Swipe & Zoom */}
+      <div
+        className="relative w-full flex-1 flex items-center justify-center overflow-hidden p-2 sm:p-4 touch-none"
+        onClick={handleDoubleTap}
+      >
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.img
             key={index}
             custom={direction}
             initial={{ x: direction > 0 ? 120 : -120, opacity: 0, scale: 0.95 }}
-            animate={{ x: 0, opacity: 1, scale: 1 }}
+            animate={{ x: 0, opacity: 1, scale: zoomLevel }}
             exit={{ x: direction < 0 ? 120 : -120, opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 350, damping: 28 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
+            drag={zoomLevel > 1 ? true : "x"}
+            dragConstraints={
+              zoomLevel > 1
+                ? { left: -250 * (zoomLevel - 1), right: 250 * (zoomLevel - 1), top: -180 * (zoomLevel - 1), bottom: 180 * (zoomLevel - 1) }
+                : { left: 0, right: 0 }
+            }
             dragElastic={0.2}
             onDragEnd={(_, info) => {
-              if (info.offset.x < -40) {
-                handleNext();
-              } else if (info.offset.x > 40) {
-                handlePrev();
+              if (zoomLevel === 1) {
+                if (info.offset.x < -40) {
+                  handleNext();
+                } else if (info.offset.x > 40) {
+                  handlePrev();
+                }
               }
             }}
             src={images[index]}
             alt={`Slide ${index + 1}`}
-            className="max-w-full max-h-[65vh] sm:max-h-[75vh] object-contain border border-[#333333] bg-[#121212] p-2 rounded-2xl shadow-2xl touch-pan-y cursor-grab active:cursor-grabbing"
+            className="max-w-full max-h-[65vh] sm:max-h-[75vh] object-contain border border-[#333333] bg-[#121212] p-2 rounded-2xl shadow-2xl transition-transform duration-200 cursor-grab active:cursor-grabbing"
           />
         </AnimatePresence>
 
@@ -256,14 +333,20 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
         {images.length > 1 && (
           <>
             <button
-              onClick={handlePrev}
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePrev();
+              }}
               className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-3 bg-black/75 hover:bg-white text-white hover:text-[#0f0f0f] border border-white/20 rounded-full transition-all shadow-2xl z-30 cursor-pointer active:scale-95"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
-              onClick={handleNext}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNext();
+              }}
               className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-3 bg-black/75 hover:bg-white text-white hover:text-[#0f0f0f] border border-white/20 rounded-full transition-all shadow-2xl z-30 cursor-pointer active:scale-95"
               aria-label="Next slide"
             >
@@ -279,7 +362,9 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
           {images.map((_, i) => (
             <button
               key={i}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
+                setZoomLevel(1);
                 setDirection(i > index ? 1 : -1);
                 setIndex(i);
               }}
@@ -470,6 +555,7 @@ const Projects = ({ language }: ProjectsProps) => {
         </div>
       </div>
 
+      {/* Gallery / Image Modal */}
       {typeof document !== "undefined" &&
         createPortal(
           <AnimatePresence>
@@ -479,6 +565,11 @@ const Projects = ({ language }: ProjectsProps) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
+                onClick={(e) => {
+                  if (e.target === e.currentTarget && typeof window !== "undefined" && window.innerWidth >= 640) {
+                    setSelectedGallery(null);
+                  }
+                }}
                 className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md p-2 sm:p-4 md:p-12"
               >
                 <motion.button
@@ -486,8 +577,11 @@ const Projects = ({ language }: ProjectsProps) => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  onClick={() => setSelectedGallery(null)}
-                  className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-[#171717] border border-[#333333] text-[#ffffff] hover:bg-white hover:text-[#0f0f0f] transition-all z-[10000] shadow-2xl cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedGallery(null);
+                  }}
+                  className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3.5 rounded-full bg-[#171717] border border-[#333333] text-[#ffffff] hover:bg-white hover:text-[#0f0f0f] transition-all z-[10000] shadow-2xl cursor-pointer active:scale-95"
                   aria-label="Close modal"
                 >
                   <X className="w-6 h-6" />
@@ -497,6 +591,7 @@ const Projects = ({ language }: ProjectsProps) => {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.85, y: 15 }}
                   transition={{ type: "spring", stiffness: 420, damping: 28 }}
+                  onClick={(e) => e.stopPropagation()}
                   className="w-full max-w-5xl h-full flex items-center justify-center"
                 >
                   <ModalCarousel images={selectedGallery} />

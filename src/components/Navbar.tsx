@@ -219,6 +219,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-[#888888] hover:text-white hover:bg-[#171717] focus:outline-none"
+              aria-label={isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>

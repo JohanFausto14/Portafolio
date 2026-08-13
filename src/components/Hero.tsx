@@ -181,12 +181,7 @@ const Hero = ({ language }: HeroProps) => {
           </motion.div>
 
           {/* ── RIGHT: Avatar with original rings & floating badges ── */}
-          <motion.div
-            className="lg:col-span-5 flex-shrink-0 flex justify-center order-1 lg:order-2"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          >
+          <div className="lg:col-span-5 flex-shrink-0 flex justify-center order-1 lg:order-2">
             <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem]">
               {/* Ambient glow */}
               <div className="absolute inset-0 rounded-full bg-white/5 blur-3xl scale-110 transform-gpu" />
@@ -245,7 +240,7 @@ const Hero = ({ language }: HeroProps) => {
                 PostgreSQL
               </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 

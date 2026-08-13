@@ -27,7 +27,7 @@ const Footer = ({ language }: FooterProps) => {
           <span className="text-xs font-tech font-bold text-white block uppercase tracking-widest">
             ARI JOHAN ALVARADO FAUSTO
           </span>
-          <p className="text-[11px] font-tech text-[#666666] mt-1">
+          <p className="text-[11px] font-tech text-[#aaaaaa] mt-1">
             &copy; {new Date().getFullYear()} — Ari Johan Alvarado Fausto
           </p>
         </div>
@@ -35,6 +35,7 @@ const Footer = ({ language }: FooterProps) => {
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center space-x-2 text-xs font-tech text-[#888888] hover:text-white transition-colors cursor-pointer uppercase tracking-widest"
+          aria-label={t.backToTop}
         >
           <span>{t.backToTop}</span>
           <ArrowUp className="w-3.5 h-3.5" />

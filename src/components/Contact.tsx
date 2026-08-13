@@ -118,13 +118,13 @@ const Contact = ({ language }: ContactProps) => {
               <div className="flex items-center space-x-4">
                 <Mail className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
                 <div>
-                  <span className="text-[10px] font-tech text-[#555555] group-hover:text-[#aaaaaa] font-bold block uppercase">{t.contact.email}</span>
+                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase">{t.contact.email}</span>
                   <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors">
                     {t.contact.directEmail}
                   </span>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#555555] group-hover:text-white transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
             </a>
 
             {/* WhatsApp */}
@@ -137,20 +137,20 @@ const Contact = ({ language }: ContactProps) => {
               <div className="flex items-center space-x-4">
                 <FaWhatsapp className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
                 <div>
-                  <span className="text-[10px] font-tech text-[#555555] group-hover:text-[#aaaaaa] font-bold block uppercase">WHATSAPP</span>
+                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase">WHATSAPP</span>
                   <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors">
                     {t.contact.directPhone}
                   </span>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#555555] group-hover:text-white transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
             </a>
 
             {/* Location */}
             <div className="flex items-center p-5 bg-[#151515] border border-[#222222] rounded-2xl space-x-4">
               <MapPin className="w-5 h-5 text-[#888888]" />
               <div>
-                <span className="text-[10px] font-tech text-[#555555] font-bold block uppercase">{t.contact.location}</span>
+                <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase">{t.contact.location}</span>
                 <span className="text-xs sm:text-sm font-tech font-bold text-white">
                   {t.contact.locationVal}
                 </span>
@@ -167,13 +167,13 @@ const Contact = ({ language }: ContactProps) => {
               <div className="flex items-center space-x-4">
                 <Github className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
                 <div>
-                  <span className="text-[10px] font-tech text-[#555555] group-hover:text-[#aaaaaa] font-bold block uppercase">GITHUB</span>
+                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase">GITHUB</span>
                   <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors">
                     github.com/JohanFausto14
                   </span>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#555555] group-hover:text-white transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
             </a>
           </div>
 

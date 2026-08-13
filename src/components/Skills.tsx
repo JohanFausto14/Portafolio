@@ -76,21 +76,24 @@ const translations = {
 
 // Interactive letter component for section titles
 const InteractiveTitleText = ({ text }: { text: string }) => {
+  const words = text.split(" ");
   return (
     <span className="inline-block select-none">
-      {text.split("").map((char, index) => {
-        if (char === " ") {
-          return <span key={index} className="inline-block w-[0.25em]">&nbsp;</span>;
-        }
-        return (
-          <span
-            key={index}
-            className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
-          >
-            {char}
-          </span>
-        );
-      })}
+      {words.map((word, wIdx) => (
+        <span key={wIdx} className="inline-block whitespace-nowrap">
+          {word.split("").map((char, cIdx) => (
+            <span
+              key={cIdx}
+              className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
+            >
+              {char}
+            </span>
+          ))}
+          {wIdx < words.length - 1 && (
+            <span className="inline-block w-[0.25em]">&nbsp;</span>
+          )}
+        </span>
+      ))}
     </span>
   );
 };
@@ -109,7 +112,7 @@ const Skills = ({ language }: SkillsProps) => {
           viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-16 md:mb-24"
         >
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-black tracking-tight sm:tracking-wide mb-3 max-w-xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-black tracking-wide mb-3 max-w-4xl mx-auto">
             <InteractiveTitleText text={t.skills.title} />
           </h2>
           <div className="w-24 h-1 bg-white mx-auto rounded-full" />
