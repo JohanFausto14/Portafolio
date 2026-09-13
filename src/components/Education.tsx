@@ -74,7 +74,7 @@ const InteractiveTitleText = ({ text }: { text: string }) => {
           {word.split("").map((char, cIdx) => (
             <span
               key={cIdx}
-              className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
+              className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default transform-gpu"
             >
               {char}
             </span>
@@ -95,11 +95,11 @@ const Education = ({ language }: EducationProps) => {
     <section id="education" className="py-16 md:py-24 bg-[#0f0f0f] border-b border-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-12 md:mb-16"
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-40px" }}
+          className="text-center mb-12 md:mb-16 transform-gpu"
         >
           <h2 className="text-3xl md:text-5xl font-display font-black tracking-wide mb-3">
             <InteractiveTitleText text={t.education.title} />
@@ -110,11 +110,11 @@ const Education = ({ language }: EducationProps) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto items-stretch">
           {/* University Degree & Focus Areas Card */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="lg:col-span-7 bg-[#151515] border border-[#222222] hover:border-white transition-all duration-300 p-6 sm:p-8 rounded-3xl group flex flex-col justify-between"
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-40px" }}
+            className="lg:col-span-7 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 p-6 sm:p-8 rounded-3xl group flex flex-col justify-between transform-gpu"
           >
             <div>
               <div className="flex items-start space-x-4 mb-5">
@@ -159,11 +159,11 @@ const Education = ({ language }: EducationProps) => {
 
           {/* Rich Balanced English Certification Card (EF SET) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="lg:col-span-5 bg-[#151515] border border-emerald-500/30 hover:border-emerald-400 transition-all duration-300 p-6 sm:p-8 rounded-3xl group flex flex-col justify-between shadow-lg"
+            transition={{ duration: 0.45, delay: 0.1, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-40px" }}
+            className="lg:col-span-5 bg-[#151515] border border-emerald-500/30 hover:border-emerald-400 transition-colors duration-200 p-6 sm:p-8 rounded-3xl group flex flex-col justify-between shadow-lg transform-gpu"
           >
             <div>
               <div className="flex items-center gap-3 mb-5">

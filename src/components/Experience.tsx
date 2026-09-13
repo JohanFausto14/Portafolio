@@ -126,7 +126,7 @@ const InteractiveTitleText = ({ text }: { text: string }) => {
           {word.split("").map((char, cIdx) => (
             <span
               key={cIdx}
-              className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
+              className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default transform-gpu"
             >
               {char}
             </span>
@@ -148,11 +148,11 @@ const Experience = ({ language }: ExperienceProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title with Letter Illumination */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16 md:mb-24"
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-40px" }}
+          className="text-center mb-16 md:mb-24 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
             <InteractiveTitleText text={t.experience.title} />
@@ -165,16 +165,16 @@ const Experience = ({ language }: ExperienceProps) => {
           {t.experience.jobs.map((exp, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-50px" }}
-              className="relative pl-8 pb-10 md:pb-14 last:pb-0 border-l-2 border-[#222222] last:border-l-0"
+              transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-40px" }}
+              className="relative pl-8 pb-10 md:pb-14 last:pb-0 border-l-2 border-[#222222] last:border-l-0 transform-gpu"
             >
               {/* Timeline Dot */}
               <div className="absolute left-[-9px] top-0 w-4 h-4 bg-white rounded-full ring-4 ring-[#0f0f0f]" />
 
-              <div className="bg-[#151515] p-6 sm:p-8 rounded-2xl border border-[#222222] hover:border-white transition-all duration-300 group">
+              <div className="bg-[#151515] p-6 sm:p-8 rounded-2xl border border-[#222222] hover:border-white transition-colors duration-200 group">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
                   <h3 className="text-lg sm:text-xl font-tech font-bold text-white flex items-center gap-2">
                     <Briefcase className="w-5 h-5 text-[#aaaaaa] group-hover:text-white transition-colors" />

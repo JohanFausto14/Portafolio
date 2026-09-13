@@ -188,7 +188,7 @@ const InteractiveTitleText = ({ text }: { text: string }) => {
           {word.split("").map((char, cIdx) => (
             <span
               key={cIdx}
-              className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
+              className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default transform-gpu"
             >
               {char}
             </span>
@@ -401,11 +401,11 @@ const Projects = ({ language }: ProjectsProps) => {
     <section id="projects" className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16 md:mb-24"
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-40px" }}
+          className="text-center mb-16 md:mb-24 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
             <InteractiveTitleText text={t.projects.title} />
@@ -417,13 +417,13 @@ const Projects = ({ language }: ProjectsProps) => {
           {t.projects.cases.map((project, index) => (
             <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-40px" }}
               className={`flex flex-col ${
                 index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              } items-center gap-6 lg:gap-12 bg-[#151515] p-6 md:p-8 rounded-3xl border border-[#222222] hover:border-white transition-all duration-300 group`}
+              } items-center gap-6 lg:gap-12 bg-[#151515] p-6 md:p-8 rounded-3xl border border-[#222222] hover:border-white transition-colors duration-200 group transform-gpu`}
             >
               <div className="w-full lg:w-1/2 flex justify-center">
                 {project.demoUrl ? (

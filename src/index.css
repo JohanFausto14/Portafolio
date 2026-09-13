@@ -1,8 +1,36 @@
 @import "tailwindcss";
 
 /* ═════════════════════════════════════════════════════════════════════
+   LOCAL TYPOGRAPHY (Zero FOUT / Instant First Paint)
+   Preloaded locally to avoid font swapping, layout shifts, or stutter on refresh
+   ═════════════════════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('/fonts/BebasNeue-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: block;
+  src: url('/fonts/SpaceGrotesk-Variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: block;
+  src: url('/fonts/Inter-Variable.woff2') format('woff2');
+}
+
+/* ═════════════════════════════════════════════════════════════════════
    DESIGN SYSTEM
-   Typography: Giant Condensed Display (Bebas Neue / Syne) + Inter / Space Grotesk
+   Typography: Giant Condensed Display (Bebas Neue) + Inter / Space Grotesk
    Interactive Feature: Letter-by-Letter & Word Illumination on Hover
    Background: Soft Dark Graphite (#0f0f0f / #121212)
    ═════════════════════════════════════════════════════════════════════ */

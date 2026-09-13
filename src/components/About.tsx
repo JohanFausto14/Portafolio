@@ -69,7 +69,7 @@ const InteractiveTitleText = ({ text }: { text: string }) => {
         return (
           <span
             key={index}
-            className="inline-block transition-all duration-350 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default"
+            className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default transform-gpu"
           >
             {char}
           </span>
@@ -93,11 +93,11 @@ const About = ({ language }: AboutProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-12 md:mb-16"
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-40px" }}
+          className="text-center mb-12 md:mb-16 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
             <InteractiveTitleText text={t.about.title} />
@@ -107,11 +107,11 @@ const About = ({ language }: AboutProps) => {
 
         {/* Authentic Statement & Metrics Card */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="bg-[#151515] p-6 sm:p-10 rounded-3xl border border-[#222222] hover:border-white transition-all duration-300 mb-14 text-center max-w-4xl mx-auto flex flex-col items-center gap-6"
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-40px" }}
+          className="bg-[#151515] p-6 sm:p-10 rounded-3xl border border-[#222222] hover:border-white transition-colors duration-200 mb-14 text-center max-w-4xl mx-auto flex flex-col items-center gap-6 transform-gpu"
         >
           <p className="text-base sm:text-xl font-tech text-[#dddddd] font-medium leading-relaxed">
             "{t.about.tagline}"
@@ -127,11 +127,11 @@ const About = ({ language }: AboutProps) => {
             {t.about.principles.map((item, index) => (
               <div key={item.num} className="relative flex flex-col">
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  className="bg-[#151515] p-6 rounded-3xl border border-[#222222] hover:border-white transition-all duration-300 flex-1 flex flex-col justify-between group shadow-lg"
+                  transition={{ duration: 0.45, delay: index * 0.1, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  className="bg-[#151515] p-6 rounded-3xl border border-[#222222] hover:border-white transition-colors duration-200 flex-1 flex flex-col justify-between group shadow-lg transform-gpu"
                 >
                   <div>
                     {/* Top bar with step number & icon */}
