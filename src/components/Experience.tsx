@@ -13,47 +13,47 @@ const translations = {
       title: "CAREER PATH",
       jobs: [
         {
-          title: "Frontend Developer",
-          company: "Private Educational Client (Freelance Project)",
+          title: "Frontend Developer · Project Lead",
+          company: "Private Institutional Client — Proyecto Lector (Freelance)",
           period: "Nov 2025 - Jul 2026",
           description:
-            "Project stemming from an alliance formed during LIRA's presentation at Innovation Fest Guadalajara 2025. I was part of a development team focused on building an educational platform for learning institutions.",
+            "Led a team of 3 in the development of this reading platform for high schools and higher education, stemming from an alliance formed during LIRA's presentation at Innovation Fest Guadalajara 2025.",
         },
         {
           title: "Full Stack Developer",
-          company: "CONSOL NEGOCIOS SA DE CV SOFOM ENR (Contract Project)",
+          company: "CONSOL NEGOCIOS SA DE CV SOFOM ENR (Contract)",
           period: "Jan 2026 - Apr 2026",
           description:
             "Participated in migrating a desktop financial system to a web platform during my professional internship, while continuing development on Proyecto Lector.",
         },
         {
           title: "Software Engineer · Project Lead",
-          company: "LIRA Project (Intellectual Property)",
+          company: "LIRA Project (Independent Project)",
           period: "Jan 2025 - Nov 2025",
           description:
-            "Led a team of 4 during product planning and development, coordinating technical execution and component integration. Presented the project at Innovation Fest Guadalajara 2025.",
+            "Led a team of 4 in developing an ecosystem that operates seamlessly across formats as diverse as a TV screen, a voice assistant, and a mobile device.",
           link: {
-            text: "Presented at Innovation Fest 2025",
+            text: "Presented at Innovation Fest Guadalajara 2025",
             url: "https://innovationfest.jalisco.gob.mx/",
           },
         },
         {
-          title: "Software Engineer · Project Lead",
-          company: "MicroGreen Project (IoT & Smart Agriculture)",
-          period: "Jan 2024 - Dec 2024",
+          title: "Full Stack Developer",
+          company: "Tecnosol S.A. de C.V. (Contract)",
+          period: "May 2024 - Aug 2024",
           description:
-            "Led a team of 5 during the development of a smart greenhouse prototype, coordinating embedded system engineering and hardware/software component integration.",
+            "Part of a 3-developer team operating under a fully horizontal structure with no hierarchies or fixed roles, collaboratively defining every technical decision across the project.",
         },
         {
-          title: "Full Stack Developer",
-          company: "Tecnosol S.A. de C.V.",
-          period: "Apr 2024 - Aug 2024",
+          title: "Software Developer · Project Lead",
+          company: "MicroGreen Project (Independent Project)",
+          period: "Jan 2024 - Apr 2024",
           description:
-            "Collaborated with a 3-developer team under a horizontal workflow to build an ERP/CRM platform digitizing sales and administrative processes.",
+            "Led a team of 5 in the design and construction of a domestic smart greenhouse, coordinating multidisciplinary development spanning physical structure, electronics, and software, culminating in a fully functional prototype.",
         },
         {
           title: "Software Developer",
-          company: "UTZMG University",
+          company: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
           period: "Sep 2022 - Jan 2023",
           description:
             "Development of a web application for student attendance tracking, building the solution from data modeling through user interface.",
@@ -66,47 +66,47 @@ const translations = {
       title: "TRAYECTORIA PROFESIONAL",
       jobs: [
         {
-          title: "Frontend Developer",
-          company: "Cliente Institucional Privado (Proyecto freelance)",
+          title: "Frontend Developer · Líder de Proyecto",
+          company: "Cliente Institucional Privado — Proyecto Lector (freelance)",
           period: "Nov 2025 - Jul 2026",
           description:
-            "Proyecto surgido de una alianza establecida durante la presentación de LIRA en Innovation Fest Guadalajara 2025. Formé parte de un equipo de desarrollo enfocado en construir una plataforma educativa para instituciones de enseñanza.",
+            "Lideré a un equipo de 3 integrantes en el desarrollo de esta plataforma de lectura para nivel medio superior y superior, surgida de una alianza establecida durante la presentación de LIRA en Innovation Fest Guadalajara 2025.",
         },
         {
           title: "Full Stack Developer",
-          company: "CONSOL NEGOCIOS SA DE CV SOFOM ENR (Proyecto por contrato)",
+          company: "CONSOL NEGOCIOS SA DE CV SOFOM ENR (por contrato)",
           period: "Ene 2026 - Abr 2026",
           description:
             "Participé en la migración de un sistema financiero de escritorio a una plataforma web durante mi periodo de estadías profesionales, mientras continuaba el desarrollo de Proyecto Lector.",
         },
         {
-          title: "Software Engineer · Encargado de Proyecto",
-          company: "Proyecto LIRA (Propiedad Intelectual)",
+          title: "Software Engineer · Líder de Proyecto",
+          company: "Proyecto LIRA (proyecto propio)",
           period: "Ene 2025 - Nov 2025",
           description:
-            "Lideré un equipo de 4 integrantes durante la planificación y desarrollo del producto, coordinando el trabajo técnico y la integración de sus diferentes componentes. El proyecto fue presentado en Innovation Fest Guadalajara 2025.",
+            "Lideré a un equipo de 4 integrantes en el desarrollo de un ecosistema que funciona de forma coherente en formatos tan distintos como una pantalla de TV, un asistente de voz y un dispositivo móvil.",
           link: {
-            text: "Presentado en Innovation Fest 2025",
+            text: "Presentado en Innovation Fest Guadalajara 2025",
             url: "https://innovationfest.jalisco.gob.mx/",
           },
         },
         {
-          title: "Software Engineer · Encargado de Proyecto",
-          company: "Proyecto MicroGreen (IoT & Smart Agriculture)",
-          period: "Ene 2024 - Dic 2024",
+          title: "Full Stack Developer",
+          company: "Tecnosol S.A. de C.V. (por contrato)",
+          period: "May 2024 - Ago 2024",
           description:
-            "Lideré un equipo de 5 integrantes durante el desarrollo de un prototipo de invernadero inteligente, coordinando el desarrollo del sistema embebido y la integración de sus componentes de hardware y software.",
+            "Formé parte de un equipo de 3 desarrolladores con una estructura completamente horizontal, sin jerarquías ni roles fijos, definiendo juntos cada decisión técnica del proyecto.",
         },
         {
-          title: "Full Stack Developer",
-          company: "Tecnosol S.A. de C.V.",
-          period: "Abr 2024 - Ago 2024",
+          title: "Software Developer · Líder de Proyecto",
+          company: "Proyecto MicroGreen (proyecto propio)",
+          period: "Ene 2024 - Abr 2024",
           description:
-            "Participé junto a un equipo de 3 desarrolladores, bajo una estructura de trabajo horizontal, en el desarrollo de una plataforma ERP/CRM para digitalizar procesos comerciales y administrativos.",
+            "Lideré a un equipo de 5 integrantes en el diseño y construcción de un invernadero inteligente doméstico, coordinando un desarrollo multidisinario que abarcó desde la estructura física hasta la electrónica y el software, culminando en un prototipo completamente funcional.",
         },
         {
           title: "Software Developer",
-          company: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara",
+          company: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
           period: "Sep 2022 - Ene 2023",
           description:
             "Desarrollo de una aplicación web para el control de asistencia estudiantil, participando en la construcción de la solución desde el modelo de datos hasta la interfaz de usuario.",

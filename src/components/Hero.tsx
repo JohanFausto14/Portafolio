@@ -14,7 +14,7 @@ const translations = {
     hero: {
       available: "Available for work",
       greeting: "Hi, I'm Ari Johan",
-      roles: ["Full Stack Software Engineer", "Full Stack Developer", "Software Engineer"],
+      roles: ["Software Engineer", "Software Project Lead"],
       description: "I design and build web and mobile applications for organizations that need reliable, growth-ready software.",
       viewWork: "Explore Featured Projects",
       contactMe: "Contact Me",
@@ -28,7 +28,7 @@ const translations = {
     hero: {
       available: "Disponible para trabajar",
       greeting: "Johan Fausto",
-      roles: ["Full Stack Software Engineer", "Desarrollador Full Stack", "Ingeniero de Software"],
+      roles: ["Ingeniero de Software", "Líder de Proyectos de Software"],
       description: "Diseño y desarrollo de aplicaciones web y móviles para organizaciones que necesitan software confiable y preparado para crecer.",
       viewWork: "Ver proyectos",
       contactMe: "Contactarme",

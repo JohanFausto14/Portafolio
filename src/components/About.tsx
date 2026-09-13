@@ -11,7 +11,7 @@ const translations = {
   en: {
     about: {
       title: "MY APPROACH",
-      tagline: "Before writing code, I take time to understand the problem and simplify the solution. I believe the best software is not the most complex, but the one that is easy to maintain and evolve.",
+      tagline: "Before writing code, I take time to understand the real problem behind the request. A system only provides value if the person using it every day can get their work done without friction.",
       metrics: "3+ years of experience · 20+ projects built",
       principles: [
         {
@@ -35,7 +35,7 @@ const translations = {
   es: {
     about: {
       title: "MI ENFOQUE",
-      tagline: "Antes de escribir código, dedico tiempo a entender el problema y simplificar la solución. Creo que el mejor software no es el más complejo, sino el que resulta fácil de mantener y evolucionar.",
+      tagline: "Antes de escribir código, dedico tiempo a entender el problema real detrás de la solicitud. Un sistema solo tiene valor si la persona que lo usa todos los días logra resolver su trabajo sin fricción.",
       metrics: "3+ años de experiencia · 20+ proyectos desarrollados",
       principles: [
         {

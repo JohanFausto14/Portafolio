@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GraduationCap, ExternalLink, Award, Code2, Database, Cpu, Layers } from "lucide-react";
+import { GraduationCap, ExternalLink, Award } from "lucide-react";
 
 type Language = "en" | "es";
 
@@ -25,14 +25,7 @@ const translations = {
           badge: "Associate Degree",
         },
       ],
-      desc: "Education focused on web and mobile application development, software architecture, and database design, applied through projects centered on automation, enterprise systems, and IoT.",
-      focusTitle: "Core Competencies",
-      focuses: [
-        { label: "Full Stack Development (Web & Mobile)", icon: <Code2 className="w-3.5 h-3.5 text-sky-400" /> },
-        { label: "Relational & NoSQL Databases", icon: <Database className="w-3.5 h-3.5 text-amber-400" /> },
-        { label: "Software Architecture & REST APIs", icon: <Cpu className="w-3.5 h-3.5 text-indigo-400" /> },
-        { label: "Agile Methodologies (Scrum & Kanban)", icon: <Layers className="w-3.5 h-3.5 text-emerald-400" /> },
-      ],
+      desc: "Four-year academic journey —from Associate Degree to Engineering— consolidated in practice through real-world team projects, with agile methodologies (Scrum, Kanban, and Extreme Programming [XP]) as a consistent core of work.",
       certCategory: "English",
       certSubtitle: "B2 · Upper Intermediate",
       certDesc: "Official international English assessment aligned with the Common European Framework of Reference for Languages (CEFR).",
@@ -59,14 +52,7 @@ const translations = {
           badge: "Título de TSU",
         },
       ],
-      desc: "Formación enfocada en el desarrollo de aplicaciones web y móviles, arquitectura de software y diseño de bases de datos, aplicada mediante proyectos orientados a automatización, sistemas empresariales e IoT.",
-      focusTitle: "Enfoques principales",
-      focuses: [
-        { label: "Desarrollo Full Stack (web y móvil)", icon: <Code2 className="w-3.5 h-3.5 text-sky-400" /> },
-        { label: "Bases de datos relacionales y NoSQL", icon: <Database className="w-3.5 h-3.5 text-amber-400" /> },
-        { label: "Arquitectura de software y APIs REST", icon: <Cpu className="w-3.5 h-3.5 text-indigo-400" /> },
-        { label: "Metodologías ágiles (Scrum y Kanban)", icon: <Layers className="w-3.5 h-3.5 text-emerald-400" /> },
-      ],
+      desc: "Trayectoria académica de cuatro años —de Técnico Superior Universitario a Ingeniería— consolidada en la práctica mediante proyectos reales en equipo, con metodologías ágiles (Scrum, Kanban y Extreme Programming [XP]) como eje constante de trabajo.",
       certCategory: "Inglés",
       certSubtitle: "B2 · Intermedio Alto",
       certDesc: "Evaluación internacional oficial de inglés conforme al Marco Común Europeo de Referencia para las Lenguas (MCER).",
@@ -163,25 +149,10 @@ const Education = ({ language }: EducationProps) => {
                 ))}
               </div>
 
-              <p className="text-xs font-tech text-[#cccccc] leading-relaxed mb-6">
-                {t.education.desc}
-              </p>
-
-              <div className="pt-4 border-t border-[#222222]">
-                <span className="text-[11px] font-tech text-[#888888] font-bold uppercase tracking-wider block mb-3">
-                  {t.education.focusTitle}
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {t.education.focuses.map((focus, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2 p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222] text-xs font-tech text-[#dddddd]"
-                    >
-                      {focus.icon}
-                      <span className="text-[11.5px] font-medium">{focus.label}</span>
-                    </div>
-                  ))}
-                </div>
+              <div className="pt-5 border-t border-[#222222]">
+                <p className="text-xs sm:text-sm font-tech text-[#bbbbbb] leading-relaxed">
+                  {t.education.desc}
+                </p>
               </div>
             </div>
           </motion.div>
