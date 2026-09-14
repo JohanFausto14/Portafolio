@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Github, ArrowUpRight, MapPin } from "lucide-react";
+import { Mail, Github, ArrowUpRight, MapPin, Linkedin, Copy, Check } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
 type Language = "en" | "es";
@@ -14,25 +15,17 @@ const translations = {
       title: "GET IN TOUCH",
       subtitle: "If you think I can bring value to your team or next project, let's talk.",
       email: "Email",
-      phone: "Phone",
+      clickToCopy: "Click to copy",
+      copied: "Copied to clipboard!",
+      phone: "WhatsApp",
       location: "Location",
       locationVal: "Guadalajara, Jalisco, Mexico",
       directEmail: "johanalvarado296@gmail.com",
       directPhone: "+52 3320131621",
       github: "https://github.com/JohanFausto14",
-      validationAlert: "Please fill in your name and message before sending.",
-      form: {
-        name: "Name",
-        email: "Email",
-        subject: "Subject",
-        message: "Message",
-        placeholders: {
-          name: "Your name",
-          email: "your.email@example.com",
-          subject: "Project subject",
-          message: "Describe your project or inquiry...",
-        },
-      },
+      linkedin: "https://www.linkedin.com/in/ari-johan-alvarado-fausto-a843b9427/",
+      githubHandle: "github.com/JohanFausto14",
+      linkedinHandle: "Ari Johan Alvarado",
     },
   },
   es: {
@@ -40,25 +33,17 @@ const translations = {
       title: "CONTACTO",
       subtitle: "Si crees que puedo aportar a tu equipo o a tu próximo proyecto, hablemos.",
       email: "Correo",
-      phone: "Teléfono",
+      clickToCopy: "Clic para copiar",
+      copied: "¡Copiado al portapapeles!",
+      phone: "WhatsApp",
       location: "Ubicación",
       locationVal: "Guadalajara, Jalisco, México",
       directEmail: "johanalvarado296@gmail.com",
       directPhone: "+52 3320131621",
       github: "https://github.com/JohanFausto14",
-      validationAlert: "Por favor escribe tu nombre y mensaje antes de enviar.",
-      form: {
-        name: "Nombre",
-        email: "Correo Electrónico",
-        subject: "Asunto",
-        message: "Mensaje",
-        placeholders: {
-          name: "Tu nombre",
-          email: "tu.correo@ejemplo.com",
-          subject: "Asunto del proyecto",
-          message: "Describe tu proyecto o consulta...",
-        },
-      },
+      linkedin: "https://www.linkedin.com/in/ari-johan-alvarado-fausto-a843b9427/",
+      githubHandle: "github.com/JohanFausto14",
+      linkedinHandle: "Ari Johan Alvarado",
     },
   },
 };
@@ -86,17 +71,24 @@ const InteractiveTitleText = ({ text }: { text: string }) => {
 
 const Contact = ({ language }: ContactProps) => {
   const t = translations[language];
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(t.contact.directEmail);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
+  };
 
   return (
     <section id="contact" className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title with Letter Illumination */}
+        {/* Title with Letter Illumination & tightened bottom margin */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
           viewport={{ once: true, margin: "-40px" }}
-          className="text-center mb-16 md:mb-24 transform-gpu"
+          className="text-center mb-8 md:mb-12 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
             <InteractiveTitleText text={t.contact.title} />
@@ -107,56 +99,87 @@ const Contact = ({ language }: ContactProps) => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left: Contact Info Cards */}
-          <div className="lg:col-span-5 space-y-4">
-            {/* Email */}
-            <a
-              href={`mailto:${t.contact.directEmail}?subject=Contacto%20Portafolio`}
-              className="flex items-center justify-between p-5 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 group rounded-2xl"
+        {/* Contact Hub: Option C (2 Primary Direct Channels + 3 Secondary/Context Channels) */}
+        <div className="max-w-4xl mx-auto space-y-4">
+          {/* Row 1: Primary Direct Contact Channels */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Email -> Click to Copy to Clipboard */}
+            <button
+              type="button"
+              onClick={handleCopyEmail}
+              title={copied ? t.contact.copied : `${t.contact.email} — ${t.contact.clickToCopy}`}
+              aria-label={copied ? t.contact.copied : `${t.contact.email} — ${t.contact.clickToCopy}`}
+              className={`w-full text-left flex items-center justify-between p-6 bg-[#151515] border transition-all duration-200 group rounded-2xl cursor-pointer ${
+                copied
+                  ? "border-emerald-500/60 shadow-[0_0_24px_rgba(16,185,129,0.12)]"
+                  : "border-[#222222] hover:border-white"
+              }`}
             >
-              <div className="flex items-center space-x-4">
-                <Mail className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
-                <div>
-                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase">{t.contact.email}</span>
-                  <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors">
+              <div className="flex items-center space-x-4 min-w-0">
+                <div
+                  className={`p-3 rounded-xl bg-[#0f0f0f] border transition-colors shrink-0 ${
+                    copied
+                      ? "border-emerald-500/50 text-emerald-400"
+                      : "border-[#222222] group-hover:border-white/40 text-[#888888] group-hover:text-white"
+                  }`}
+                >
+                  <Mail className="w-6 h-6" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="text-[10px] font-tech text-[#aaaaaa] font-bold uppercase tracking-wider shrink-0">
+                      {t.contact.email}
+                    </span>
+                    <span
+                      className={`text-[10px] font-tech transition-colors truncate ${
+                        copied ? "text-emerald-400 font-bold" : "text-[#777777] font-normal"
+                      }`}
+                    >
+                      · {copied ? t.contact.copied : t.contact.clickToCopy}
+                    </span>
+                  </div>
+                  <span className="text-sm sm:text-base font-tech font-bold text-white group-hover:text-white transition-colors truncate block">
                     {t.contact.directEmail}
                   </span>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
-            </a>
+              <div
+                className={`p-2 rounded-lg transition-all shrink-0 ml-3 ${
+                  copied
+                    ? "text-emerald-400 bg-emerald-500/10"
+                    : "text-[#888888] group-hover:text-white group-hover:scale-110"
+                }`}
+              >
+                {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+              </div>
+            </button>
 
-            {/* WhatsApp */}
+            {/* WhatsApp -> Direct Chat */}
             <a
               href={`https://wa.me/${t.contact.directPhone.replace(/[^\d]/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-5 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 group rounded-2xl"
+              className="flex items-center justify-between p-6 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 group rounded-2xl"
             >
               <div className="flex items-center space-x-4">
-                <FaWhatsapp className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
+                <div className="p-3 rounded-xl bg-[#0f0f0f] border border-[#222222] group-hover:border-white/40 transition-colors">
+                  <FaWhatsapp className="w-6 h-6 text-[#888888] group-hover:text-white transition-colors" />
+                </div>
                 <div>
-                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase">WHATSAPP</span>
-                  <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors">
+                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase tracking-wider">
+                    {t.contact.phone}
+                  </span>
+                  <span className="text-sm sm:text-base font-tech font-bold text-white group-hover:text-white transition-colors">
                     {t.contact.directPhone}
                   </span>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-[#888888] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-3" />
             </a>
+          </div>
 
-            {/* Location */}
-            <div className="flex items-center p-5 bg-[#151515] border border-[#222222] rounded-2xl space-x-4">
-              <MapPin className="w-5 h-5 text-[#888888]" />
-              <div>
-                <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase">{t.contact.location}</span>
-                <span className="text-xs sm:text-sm font-tech font-bold text-white">
-                  {t.contact.locationVal}
-                </span>
-              </div>
-            </div>
-
+          {/* Row 2: Secondary Exploration & Context Channels */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {/* GitHub */}
             <a
               href={t.contact.github}
@@ -164,138 +187,55 @@ const Contact = ({ language }: ContactProps) => {
               rel="noopener noreferrer"
               className="flex items-center justify-between p-5 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 group rounded-2xl"
             >
-              <div className="flex items-center space-x-4">
-                <Github className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
-                <div>
-                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase">GITHUB</span>
-                  <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors">
-                    github.com/JohanFausto14
+              <div className="flex items-center space-x-3.5 min-w-0">
+                <Github className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors shrink-0" />
+                <div className="min-w-0">
+                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase tracking-wider">
+                    GITHUB
+                  </span>
+                  <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors truncate block">
+                    {t.contact.githubHandle}
                   </span>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors" />
+              <ArrowUpRight className="w-4 h-4 text-[#888888] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
             </a>
-          </div>
 
-          {/* Right: Contact Form */}
-          <div className="lg:col-span-7 bg-[#151515] border border-[#222222] hover:border-white transition-all duration-300 p-8 sm:p-10 rounded-2xl group">
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="block text-xs font-tech text-[#aaaaaa] mb-1.5 font-bold uppercase">
-                    {t.contact.form.name}
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="w-full px-4 py-3 bg-[#0f0f0f] border border-[#222222] focus:border-white outline-none text-white text-xs font-tech transition-colors rounded-xl"
-                    placeholder={t.contact.form.placeholders.name}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-xs font-tech text-[#aaaaaa] mb-1.5 font-bold uppercase">
-                    {t.contact.form.email}
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="w-full px-4 py-3 bg-[#0f0f0f] border border-[#222222] focus:border-white outline-none text-white text-xs font-tech transition-colors rounded-xl"
-                    placeholder={t.contact.form.placeholders.email}
-                  />
+            {/* LinkedIn */}
+            <a
+              href={t.contact.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between p-5 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 group rounded-2xl"
+            >
+              <div className="flex items-center space-x-3.5 min-w-0">
+                <Linkedin className="w-5 h-5 text-[#888888] group-hover:text-white transition-colors shrink-0" />
+                <div className="min-w-0">
+                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase tracking-wider">
+                    LINKEDIN
+                  </span>
+                  <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors truncate block">
+                    {t.contact.linkedinHandle}
+                  </span>
                 </div>
               </div>
-              <div>
-                <label htmlFor="subject" className="block text-xs font-tech text-[#aaaaaa] mb-1.5 font-bold uppercase">
-                  {t.contact.form.subject}
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  required
-                  className="w-full px-4 py-3 bg-[#0f0f0f] border border-[#222222] focus:border-white outline-none text-white text-xs font-tech transition-colors rounded-xl"
-                  placeholder={t.contact.form.placeholders.subject}
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-xs font-tech text-[#aaaaaa] mb-1.5 font-bold uppercase">
-                  {t.contact.form.message}
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={4}
-                  className="w-full px-4 py-3 bg-[#0f0f0f] border border-[#222222] focus:border-white outline-none text-white text-xs font-tech transition-colors resize-none rounded-xl"
-                  placeholder={t.contact.form.placeholders.message}
-                />
-              </div>
-              <div className="pt-3 border-t border-[#222222]">
-                <p className="text-xs font-tech text-[#888888] mb-3 text-center uppercase">
-                  Enviar mensaje usando / Send using:
-                </p>
-                <div className="grid grid-cols-3 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const name = (document.getElementById("name") as HTMLInputElement).value;
-                      const subject = (document.getElementById("subject") as HTMLInputElement).value;
-                      const message = (document.getElementById("message") as HTMLTextAreaElement).value;
-                      if (!name || !message) {
-                        alert(t.contact.validationAlert);
-                        return;
-                      }
-                      const email = t.contact.directEmail;
-                      const link = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)} - Portafolio (${encodeURIComponent(name)})&body=${encodeURIComponent(message)}`;
-                      window.open(link, "_blank");
-                    }}
-                    className="py-2.5 bg-[#0f0f0f] border border-[#333333] hover:border-white text-white font-tech font-bold text-xs uppercase transition-all rounded-full"
-                  >
-                    Gmail
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const name = (document.getElementById("name") as HTMLInputElement).value;
-                      const subject = (document.getElementById("subject") as HTMLInputElement).value;
-                      const message = (document.getElementById("message") as HTMLTextAreaElement).value;
-                      if (!name || !message) {
-                        alert(t.contact.validationAlert);
-                        return;
-                      }
-                      const email = t.contact.directEmail;
-                      const link = `https://outlook.live.com/mail/0/deeplink/compose?to=${email}&subject=${encodeURIComponent(subject)} - Portafolio (${encodeURIComponent(name)})&body=${encodeURIComponent(message)}`;
-                      window.open(link, "_blank");
-                    }}
-                    className="py-2.5 bg-[#0f0f0f] border border-[#333333] hover:border-white text-white font-tech font-bold text-xs uppercase transition-all rounded-full"
-                  >
-                    Outlook
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const name = (document.getElementById("name") as HTMLInputElement).value;
-                      const subject = (document.getElementById("subject") as HTMLInputElement).value;
-                      const message = (document.getElementById("message") as HTMLTextAreaElement).value;
-                      if (!name || !message) {
-                        alert(t.contact.validationAlert);
-                        return;
-                      }
-                      const email = t.contact.directEmail;
-                      const link = `mailto:${email}?subject=${encodeURIComponent(subject)} - Portafolio (${encodeURIComponent(name)})&body=${encodeURIComponent(message)}`;
-                      window.location.href = link;
-                    }}
-                    className="py-2.5 bg-[#0f0f0f] border border-[#333333] hover:border-white text-white font-tech font-bold text-xs uppercase transition-all rounded-full"
-                  >
-                    Mail App
-                  </button>
+              <ArrowUpRight className="w-4 h-4 text-[#888888] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+            </a>
+
+            {/* Location (Informativa, sin flecha, sin cursor pointer, sin hover de enlace) */}
+            <div className="flex items-center p-5 bg-[#151515] border border-[#222222] rounded-2xl cursor-default select-none">
+              <div className="flex items-center space-x-3.5 min-w-0">
+                <MapPin className="w-5 h-5 text-[#666666] shrink-0" />
+                <div className="min-w-0">
+                  <span className="text-[10px] font-tech text-[#aaaaaa] font-bold block uppercase tracking-wider">
+                    {t.contact.location}
+                  </span>
+                  <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] truncate block">
+                    {t.contact.locationVal}
+                  </span>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

@@ -21,7 +21,7 @@ const Footer = ({ language }: FooterProps) => {
   const t = translations[language];
 
   return (
-    <footer className="bg-[#0f0f0f] py-10 border-t border-[#222222]">
+    <footer className="bg-[#0f0f0f] py-6 border-t border-[#222222]">
       <div className="max-w-[1450px] mx-auto px-6 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <span className="text-xs font-tech font-bold text-white block uppercase tracking-widest">
