@@ -36,7 +36,7 @@ const translations = {
   en: {
     projects: {
       title: "FEATURED PROJECTS",
-      exploreCaptures: "Explore System",
+      exploreCaptures: "View Screenshots",
       labels: {
         problem: "Context",
         responsibility: "My Contribution",
@@ -64,10 +64,10 @@ const translations = {
           id: "lira",
           title: "Ecosistema LIRA",
           tagline: "Multiplatform system built to drive children's reading comprehension through interactive experiences on web, mobile, Android TV, and Alexa.",
-          problem: "Traditional reading instruction methods offered low interactivity, scarce personalization, and limited progress tracking.",
+          problem: "Traditional reading instruction methods offered low interactivity, limited personalization, and poor progress tracking.",
           responsibility: "Led project planning and participated in architectural and development decisions, including component integration for Android TV, web, and interactive experiences, as well as database model design.",
           solution: "Integrates gamified activities, progress tracking, and data synchronization across all devices in the ecosystem.",
-          result: "Allowed children to continue their learning from any device, giving parents and tutors ongoing visibility into their progress.",
+          result: "Enabled children to continue their learning from any device, giving parents and tutors ongoing visibility into their progress.",
           tags: ["React Native", "Node.js", "Express", "MongoDB", "Android TV", "Alexa Skills", "REST API"],
           demoUrl: "https://educacion-lira.vercel.app/",
           image: liraImg,

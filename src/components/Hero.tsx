@@ -12,10 +12,10 @@ const translations = {
   en: {
     hero: {
       available: "Available for work",
-      greeting: "Hi, I'm Ari Johan",
+      greeting: "Johan Fausto",
       role: "Software Engineer",
       description: "I design and build web and mobile applications for organizations that need reliable, growth-ready software.",
-      viewWork: "Explore Featured Projects",
+      viewWork: "View Projects",
       contactMe: "Contact Me",
       downloadCv: "Download CV",
     },
@@ -183,7 +183,7 @@ const Hero = ({ language }: HeroProps) => {
               <div className="relative w-full h-full rounded-full bg-[#171717] border border-[#333333] flex items-center justify-center overflow-hidden shadow-2xl">
                 <img
                   src={fotoPerfil}
-                  alt="Ari Johan"
+                  alt="Johan Fausto"
                   width={352}
                   height={352}
                   fetchPriority="high"

@@ -8,6 +8,8 @@ type Language = "en" | "es";
 
 interface NavbarProps {
   language: Language;
+  displayedLanguage?: Language;
+  isTransitioning?: boolean;
   setLanguage: (lang: Language) => void;
 }
 
@@ -40,8 +42,13 @@ const translations = {
   },
 };
 
-const Navbar = ({ language, setLanguage }: NavbarProps) => {
-  const t = translations[language];
+const Navbar = ({
+  language,
+  displayedLanguage = language,
+  isTransitioning = false,
+  setLanguage,
+}: NavbarProps) => {
+  const t = translations[displayedLanguage];
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -95,13 +102,17 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
           >
             <div className="flex items-center gap-2 text-white font-tech font-bold text-xl">
               <Code2 className="w-8 h-8 text-white group-hover:scale-110 transition-transform" />
-              <span className="group-hover:text-[#aaaaaa] transition-colors">Ari Johan</span>
+              <span className="group-hover:text-[#aaaaaa] transition-colors">Johan Fausto</span>
             </div>
           </a>
 
           {/* Desktop Nav Links */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-6">
+            <div
+              className={`ml-10 flex items-baseline space-x-6 transition-opacity duration-300 ease-in-out ${
+                isTransitioning ? "opacity-0" : "opacity-100"
+              }`}
+            >
               {t.nav.map((link) => (
                 <a
                   key={link.name}
@@ -244,7 +255,11 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-[#0f0f0f] border-b border-[#222222]"
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <div
+              className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 transition-opacity duration-300 ease-in-out ${
+                isTransitioning ? "opacity-0" : "opacity-100"
+              }`}
+            >
               {t.nav.map((link) => (
                 <a
                   key={link.name}

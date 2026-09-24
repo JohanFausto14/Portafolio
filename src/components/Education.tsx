@@ -30,7 +30,7 @@ const translations = {
       certSubtitle: "B2 · Upper Intermediate",
       certDesc: "Official international English assessment aligned with the Common European Framework of Reference for Languages (CEFR).",
       skillsTitle: "Assessed Competencies",
-      skills: ["Reading Comprehension", "Listening Comprehension", "Written Expression", "Oral Expression"],
+      skills: ["Reading", "Listening", "Writing", "Speaking"],
       certBtn: "Verify Certificate",
       certUrl: "https://cert.efset.org/es/cJAZXi",
     },

@@ -42,7 +42,7 @@ const translations = {
           company: "Tecnosol S.A. de C.V. (Contract)",
           period: "May 2024 - Aug 2024",
           description:
-            "Part of a 3-developer team operating under a fully horizontal structure with no hierarchies or fixed roles, collaboratively defining every technical decision across the project.",
+            "Collaborated within a 3-developer team operating under a flat structure without hierarchies or fixed roles, collaboratively defining every technical decision across the project.",
         },
         {
           title: "Software Developer · Project Lead",
@@ -56,7 +56,7 @@ const translations = {
           company: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
           period: "Sep 2022 - Jan 2023",
           description:
-            "Development of a web application for student attendance tracking, building the solution from data modeling through user interface.",
+            "Developed a web application for student attendance tracking, participating in building the solution from data modeling to user interface.",
         },
       ],
     },
@@ -102,7 +102,7 @@ const translations = {
           company: "Proyecto MicroGreen (proyecto propio)",
           period: "Ene 2024 - Abr 2024",
           description:
-            "Lideré a un equipo de 5 integrantes en el diseño y construcción de un invernadero inteligente doméstico, coordinando un desarrollo multidisinario que abarcó desde la estructura física hasta la electrónica y el software, culminando en un prototipo completamente funcional.",
+            "Lideré a un equipo de 5 integrantes en el diseño y construcción de un invernadero inteligente doméstico, coordinando un desarrollo multidisciplinario que abarcó desde la estructura física hasta la electrónica y el software, culminando en un prototipo completamente funcional.",
         },
         {
           title: "Software Developer",

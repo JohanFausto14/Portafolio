@@ -16,30 +16,54 @@ function App() {
     const saved = localStorage.getItem("portfolio_lang");
     return saved === "en" || saved === "es" ? saved : "es";
   });
+  const [displayedLanguage, setDisplayedLanguage] = useState<Language>(language);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("portfolio_lang", language);
     document.documentElement.lang = language;
   }, [language]);
 
+  const handleLanguageChange = (newLang: Language) => {
+    if (newLang === language || isTransitioning) return;
+    setLanguage(newLang);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setDisplayedLanguage(newLang);
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 50);
+    }, 300);
+  };
+
   return (
     <div className="bg-[#0f0f0f] text-white min-h-screen font-sans selection:bg-white selection:text-[#0f0f0f] relative overflow-x-hidden">
-      {/* Top Navbar */}
-      <Navbar language={language} setLanguage={setLanguage} />
+      {/* Top Navbar stays fixed and gives instant slider feedback while syncing text crossfade */}
+      <Navbar
+        language={language}
+        displayedLanguage={displayedLanguage}
+        isTransitioning={isTransitioning}
+        setLanguage={handleLanguageChange}
+      />
 
-      {/* Main Sections */}
-      <main className="relative z-10">
-        <Hero language={language} />
-        <About language={language} />
-        <Projects language={language} />
-        <Experience language={language} />
-        <Skills language={language} />
-        <Education language={language} />
-        <Contact language={language} />
-      </main>
+      {/* Main Content & Footer with Smooth Pure Opacity Crossfade */}
+      <div
+        className={`transition-opacity duration-300 ease-in-out ${
+          isTransitioning ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+      >
+        <main className="relative z-10">
+          <Hero language={displayedLanguage} />
+          <About language={displayedLanguage} />
+          <Projects language={displayedLanguage} />
+          <Experience language={displayedLanguage} />
+          <Skills language={displayedLanguage} />
+          <Education language={displayedLanguage} />
+          <Contact language={displayedLanguage} />
+        </main>
 
-      {/* Footer */}
-      <Footer language={language} />
+        <Footer language={displayedLanguage} />
+      </div>
     </div>
   );
 }
