@@ -6,18 +6,80 @@
   <meta name="google" content="notranslate" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f0f0f" />
+  <meta name="author" content="Ari Johan Alvarado Fausto" />
   <meta name="description"
-    content="Portafolio profesional de Ari Johan Alvarado Fausto, Full Stack Software Engineer." />
+    content="Portafolio profesional de Johan Fausto — Full Stack Developer. Proyectos reales en producción con React, Next.js, Node.js y TypeScript." />
+  
+  <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Johan Fausto | Full Stack Developer" />
+  <meta property="og:description"
+    content="Portafolio profesional de Johan Fausto — Full Stack Developer. Proyectos reales en producción con React, Next.js, Node.js y TypeScript." />
+  <meta property="og:url" content="https://portafolio-johan-fausto.vercel.app/" />
+  <meta property="og:site_name" content="Johan Fausto" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:image" content="https://portafolio-johan-fausto.vercel.app/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Johan Fausto — Ingeniero de Software" />
+
+  <link rel="canonical" href="https://portafolio-johan-fausto.vercel.app/" />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-  <title>Johan Fausto | Portfolio</title>
+  <title>Johan Fausto | Full Stack Developer</title>
   <!-- High-priority local font preloads: Eliminates FOUT, font swapping, and layout shifts on refresh -->
   <link rel="preload" href="/fonts/BebasNeue-Regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Structured Data / JSON-LD for Search Engines & Knowledge Graph -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ari Johan Alvarado Fausto",
+    "alternateName": "Johan Fausto",
+    "url": "https://portafolio-johan-fausto.vercel.app/",
+    "image": "https://portafolio-johan-fausto.vercel.app/og-image.jpg",
+    "jobTitle": "Full Stack Developer",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Guadalajara",
+      "addressRegion": "Jalisco",
+      "addressCountry": "MX"
+    },
+    "sameAs": [
+      "https://github.com/JohanFausto14",
+      "https://www.linkedin.com/in/ari-johan-alvarado-fausto-a843b9427"
+    ],
+    "knowsAbout": [
+      "React",
+      "Next.js",
+      "React Native",
+      "TypeScript",
+      "JavaScript",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "MongoDB",
+      "MySQL",
+      "REST APIs"
+    ]
+  }
+  </script>
 </head>
 
 <body class="bg-[#0f0f0f] text-[#888888] selection:bg-white selection:text-[#0f0f0f]">
   <div id="root"></div>
+  <noscript>
+    <div
+      style="background:#0f0f0f;color:#dddddd;font-family:system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;text-align:center;line-height:1.6">
+      <p>
+        Este portafolio necesita JavaScript para mostrar el contenido interactivo.<br />
+        This portfolio needs JavaScript to display its interactive content.
+      </p>
+    </div>
+  </noscript>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 

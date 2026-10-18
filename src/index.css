@@ -39,7 +39,7 @@
   :root {
     --bg-dark: #0f0f0f;
     --bg-surface: #171717;
-    --text-dim: #777777;
+    --text-dim: #999999;
     --text-mid: #aaaaaa;
     --text-bright: #ffffff;
     --border-subtle: #262626;
@@ -88,24 +88,22 @@ html {
   background: #444444;
 }
 
-/* Glassmorphism Surface Utility */
-.surface-card {
-  background-color: rgba(23, 23, 23, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+/* ═════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   Respect the OS "reduce motion" preference: stop looping/decorative
+   animations and disable smooth scrolling. Short hover/crossfade
+   transitions are kept so the language switch does not blank out.
+   (framer-motion handles its own animations via MotionConfig reducedMotion="user")
+   ═════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
-.surface-card:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-/* Text Illumination Animation */
-.illuminate-text {
-  color: #666666;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.illuminate-text:hover {
-  color: #ffffff;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

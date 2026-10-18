@@ -1,98 +1,23 @@
 import { motion } from "framer-motion";
 import { GraduationCap, ExternalLink, Award } from "lucide-react";
+import InteractiveTitle from "./common/InteractiveTitle";
+import { CONTACT_INFO } from "../constants/contact";
 
-type Language = "en" | "es";
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n";
 
-interface EducationProps {
-  language: Language;
-}
-
-const translations = {
-  en: {
-    education: {
-      title: "CREDENTIALS & EDUCATION",
-      institution: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
-      location: "Guadalajara, Jalisco",
-      degrees: [
-        {
-          title: "Software Development & Management Engineering",
-          period: "Sep 2024 – Apr 2026",
-          badge: "Bachelor's Degree",
-        },
-        {
-          title: "Associate Degree in Multiplatform Software Development (TSU)",
-          period: "Sep 2022 – Aug 2024",
-          badge: "Associate Degree",
-        },
-      ],
-      desc: "Four-year academic journey —from Associate Degree to Engineering— consolidated in practice through real-world team projects, with agile methodologies (Scrum, Kanban, and Extreme Programming [XP]) as a consistent core of work.",
-      certCategory: "English",
-      certSubtitle: "B2 · Upper Intermediate",
-      certDesc: "Official international English assessment aligned with the Common European Framework of Reference for Languages (CEFR).",
-      skillsTitle: "Assessed Competencies",
-      skills: ["Reading", "Listening", "Writing", "Speaking"],
-      certBtn: "Verify Certificate",
-      certUrl: "https://cert.efset.org/es/cJAZXi",
-    },
-  },
-  es: {
-    education: {
-      title: "FORMACIÓN & CERTIFICACIONES",
-      institution: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
-      location: "Guadalajara, Jalisco",
-      degrees: [
-        {
-          title: "Ingeniería en Desarrollo y Gestión de Software",
-          period: "Sep 2024 – Abr 2026",
-          badge: "Título de Ingeniería",
-        },
-        {
-          title: "Técnico Superior Universitario en Desarrollo de Software Multiplataforma",
-          period: "Sep 2022 – Ago 2024",
-          badge: "Título de TSU",
-        },
-      ],
-      desc: "Trayectoria académica de cuatro años —de Técnico Superior Universitario a Ingeniería— consolidada en la práctica mediante proyectos reales en equipo, con metodologías ágiles (Scrum, Kanban y Extreme Programming [XP]) como eje constante de trabajo.",
-      certCategory: "Inglés",
-      certSubtitle: "B2 · Intermedio Alto",
-      certDesc: "Evaluación internacional oficial de inglés conforme al Marco Común Europeo de Referencia para las Lenguas (MCER).",
-      skillsTitle: "Habilidades evaluadas",
-      skills: ["Comprensión lectora", "Comprensión auditiva", "Expresión escrita", "Expresión oral"],
-      certBtn: "Ver certificado",
-      certUrl: "https://cert.efset.org/es/cJAZXi",
-    },
-  },
+/** Language-invariant academic data. */
+const UNIVERSITY = {
+  institution: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
+  location: "Guadalajara, Jalisco",
 };
 
-// Interactive letter component for section titles
-const InteractiveTitleText = ({ text }: { text: string }) => {
-  const words = text.split(" ");
-  return (
-    <span className="inline-block select-none">
-      {words.map((word, wIdx) => (
-        <span key={wIdx} className="inline-block whitespace-nowrap">
-          {word.split("").map((char, cIdx) => (
-            <span
-              key={cIdx}
-              className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default transform-gpu"
-            >
-              {char}
-            </span>
-          ))}
-          {wIdx < words.length - 1 && (
-            <span className="inline-block w-[0.25em]">&nbsp;</span>
-          )}
-        </span>
-      ))}
-    </span>
-  );
-};
-
-const Education = ({ language }: EducationProps) => {
+const Education = () => {
+  const { displayedLanguage: language } = useLanguage();
   const t = translations[language];
 
   return (
-    <section id="education" className="py-16 md:py-24 bg-[#0f0f0f] border-b border-[#222222]">
+    <section id="education" className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -101,8 +26,8 @@ const Education = ({ language }: EducationProps) => {
           viewport={{ once: true, margin: "-40px" }}
           className="text-center mb-12 md:mb-16 transform-gpu"
         >
-          <h2 className="text-3xl md:text-5xl font-display font-black tracking-wide mb-3">
-            <InteractiveTitleText text={t.education.title} />
+          <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
+            <InteractiveTitle text={t.education.title} />
           </h2>
           <div className="w-24 h-1 bg-white mx-auto rounded-full" />
         </motion.div>
@@ -123,10 +48,10 @@ const Education = ({ language }: EducationProps) => {
                 </div>
                 <div>
                   <span className="text-xs font-tech text-[#888888] font-bold uppercase tracking-widest block mb-0.5">
-                    {t.education.location}
+                    {UNIVERSITY.location}
                   </span>
                   <p className="text-xs font-tech text-[#aaaaaa] font-semibold">
-                    {t.education.institution}
+                    {UNIVERSITY.institution}
                   </p>
                 </div>
               </div>
@@ -150,7 +75,7 @@ const Education = ({ language }: EducationProps) => {
               </div>
 
               <div className="pt-5 border-t border-[#222222]">
-                <p className="text-xs sm:text-sm font-tech text-[#bbbbbb] leading-relaxed">
+                <p className="text-[13px] sm:text-sm font-tech text-[#bbbbbb] leading-relaxed">
                   {t.education.desc}
                 </p>
               </div>
@@ -184,7 +109,7 @@ const Education = ({ language }: EducationProps) => {
                 <span className="text-xs font-tech text-emerald-400 font-bold block uppercase tracking-wider">
                   {t.education.certSubtitle}
                 </span>
-                <p className="text-xs font-tech text-[#bbbbbb] leading-relaxed mt-2">
+                <p className="text-[13px] font-tech text-[#bbbbbb] leading-relaxed mt-2">
                   {t.education.certDesc}
                 </p>
               </div>
@@ -208,7 +133,7 @@ const Education = ({ language }: EducationProps) => {
 
             <div className="pt-6 border-t border-[#222222] mt-6">
               <a
-                href={t.education.certUrl}
+                href={CONTACT_INFO.efSetCertUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 hover:border-emerald-500/60 text-emerald-400 text-xs font-tech font-bold tracking-widest uppercase transition-all duration-300"

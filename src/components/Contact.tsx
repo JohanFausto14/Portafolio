@@ -2,79 +2,20 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Github, ArrowUpRight, MapPin, Linkedin, Copy, Check } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import InteractiveTitle from "./common/InteractiveTitle";
 
-type Language = "en" | "es";
+import { CONTACT_INFO } from "../constants/contact";
 
-interface ContactProps {
-  language: Language;
-}
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n";
 
-const translations = {
-  en: {
-    contact: {
-      title: "GET IN TOUCH",
-      subtitle: "If you think I can bring value to your team or next project, let's talk.",
-      email: "Email",
-      clickToCopy: "Click to copy",
-      copied: "Copied to clipboard!",
-      phone: "WhatsApp",
-      location: "Location",
-      locationVal: "Guadalajara, Jalisco, Mexico",
-      directEmail: "johanalvarado296@gmail.com",
-      directPhone: "+52 3320131621",
-      github: "https://github.com/JohanFausto14",
-      linkedin: "https://www.linkedin.com/in/ari-johan-alvarado-fausto-a843b9427/",
-      githubHandle: "github.com/JohanFausto14",
-      linkedinHandle: "Ari Johan Alvarado",
-    },
-  },
-  es: {
-    contact: {
-      title: "CONTACTO",
-      subtitle: "Si crees que puedo aportar a tu equipo o a tu próximo proyecto, hablemos.",
-      email: "Correo",
-      clickToCopy: "Clic para copiar",
-      copied: "¡Copiado al portapapeles!",
-      phone: "WhatsApp",
-      location: "Ubicación",
-      locationVal: "Guadalajara, Jalisco, México",
-      directEmail: "johanalvarado296@gmail.com",
-      directPhone: "+52 3320131621",
-      github: "https://github.com/JohanFausto14",
-      linkedin: "https://www.linkedin.com/in/ari-johan-alvarado-fausto-a843b9427/",
-      githubHandle: "github.com/JohanFausto14",
-      linkedinHandle: "Ari Johan Alvarado",
-    },
-  },
-};
-
-// Interactive letter component for section titles
-const InteractiveTitleText = ({ text }: { text: string }) => {
-  return (
-    <span className="inline-block select-none">
-      {text.split("").map((char, index) => {
-        if (char === " ") {
-          return <span key={index} className="inline-block w-[0.25em]">&nbsp;</span>;
-        }
-        return (
-          <span
-            key={index}
-            className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default transform-gpu"
-          >
-            {char}
-          </span>
-        );
-      })}
-    </span>
-  );
-};
-
-const Contact = ({ language }: ContactProps) => {
+const Contact = () => {
+  const { displayedLanguage: language } = useLanguage();
   const t = translations[language];
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(t.contact.directEmail);
+    navigator.clipboard.writeText(CONTACT_INFO.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2200);
   };
@@ -91,7 +32,7 @@ const Contact = ({ language }: ContactProps) => {
           className="text-center mb-8 md:mb-12 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
-            <InteractiveTitleText text={t.contact.title} />
+            <InteractiveTitle text={t.contact.title} />
           </h2>
           <div className="w-24 h-1 bg-white mx-auto rounded-full mb-4" />
           <p className="text-sm sm:text-base font-tech text-[#888888] max-w-xl mx-auto">
@@ -132,14 +73,14 @@ const Contact = ({ language }: ContactProps) => {
                     </span>
                     <span
                       className={`text-[10px] font-tech transition-colors truncate ${
-                        copied ? "text-emerald-400 font-bold" : "text-[#777777] font-normal"
+                        copied ? "text-emerald-400 font-bold" : "text-[#999999] font-normal"
                       }`}
                     >
                       · {copied ? t.contact.copied : t.contact.clickToCopy}
                     </span>
                   </div>
                   <span className="text-sm sm:text-base font-tech font-bold text-white group-hover:text-white transition-colors truncate block">
-                    {t.contact.directEmail}
+                    {CONTACT_INFO.email}
                   </span>
                 </div>
               </div>
@@ -156,7 +97,7 @@ const Contact = ({ language }: ContactProps) => {
 
             {/* WhatsApp -> Direct Chat */}
             <a
-              href={`https://wa.me/${t.contact.directPhone.replace(/[^\d]/g, "")}`}
+              href={`https://wa.me/${CONTACT_INFO.phoneDigits.replace(/[^\d]/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-6 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 group rounded-2xl"
@@ -170,7 +111,7 @@ const Contact = ({ language }: ContactProps) => {
                     {t.contact.phone}
                   </span>
                   <span className="text-sm sm:text-base font-tech font-bold text-white group-hover:text-white transition-colors">
-                    {t.contact.directPhone}
+                    {CONTACT_INFO.phone}
                   </span>
                 </div>
               </div>
@@ -182,7 +123,7 @@ const Contact = ({ language }: ContactProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {/* GitHub */}
             <a
-              href={t.contact.github}
+              href={CONTACT_INFO.github}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-5 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 group rounded-2xl"
@@ -194,7 +135,7 @@ const Contact = ({ language }: ContactProps) => {
                     GITHUB
                   </span>
                   <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors truncate block">
-                    {t.contact.githubHandle}
+                    {CONTACT_INFO.githubHandle}
                   </span>
                 </div>
               </div>
@@ -203,7 +144,7 @@ const Contact = ({ language }: ContactProps) => {
 
             {/* LinkedIn */}
             <a
-              href={t.contact.linkedin}
+              href={CONTACT_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-5 bg-[#151515] border border-[#222222] hover:border-white transition-colors duration-200 group rounded-2xl"
@@ -215,7 +156,7 @@ const Contact = ({ language }: ContactProps) => {
                     LINKEDIN
                   </span>
                   <span className="text-xs sm:text-sm font-tech font-bold text-[#888888] group-hover:text-white transition-colors truncate block">
-                    {t.contact.linkedinHandle}
+                    {CONTACT_INFO.linkedinHandle}
                   </span>
                 </div>
               </div>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portafolio-johan-fausto.vercel.app/sitemap.xml

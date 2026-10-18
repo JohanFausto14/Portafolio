@@ -1,27 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, X, Maximize, ChevronLeft, ChevronRight, AlertCircle, ShieldCheck, Cpu, CheckCircle2, ZoomIn, ZoomOut } from "lucide-react";
+import InteractiveTitle from "./common/InteractiveTitle";
 
-type Language = "en" | "es";
-
-interface ProjectsProps {
-  language: Language;
-}
-
-interface ProjectCase {
-  id: string;
-  title: string;
-  tagline: string;
-  problem: string;
-  responsibility: string;
-  solution: string;
-  result: string;
-  tags: string[];
-  demoUrl?: string;
-  image: string;
-  gallery?: string[];
-}
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n";
 
 import proyectoLectorImg from "../assets/ProyectoLector.webp";
 import liraImg from "../assets/LIRA.webp";
@@ -31,186 +15,71 @@ import tecnosolInicio from "../assets/inicio.webp";
 import tecnosolRegistroUsuarios from "../assets/Registro_usuarios.webp";
 import tecnosolRegistroPedidos from "../assets/Registro_pedidos.webp";
 import tecnosolTablaRegistros from "../assets/Tabla_registros.webp";
+import tecnosolPagos from "../assets/Pagos.webp";
+import tecnosolEstadisticas from "../assets/Estadisticas.webp";
+import tecnosolMantenimiento from "../assets/Mantenimiento.webp";
+import tecnosolQuejas from "../assets/Quejas.webp";
+import tecnosolAsesores from "../assets/Asesores.webp";
+import tecnosolModelos from "../assets/Modelos.webp";
 
-const translations = {
-  en: {
-    projects: {
-      title: "FEATURED PROJECTS",
-      exploreCaptures: "View Screenshots",
-      labels: {
-        problem: "Context",
-        responsibility: "My Contribution",
-        solution: "The Solution",
-        result: "Result",
-        technologies: "TECHNOLOGIES USED",
-        visitSite: "Visit site",
-        viewCapture: "View screenshot",
-        viewCaptures: "View screenshots",
-      },
-      cases: [
-        {
-          id: "lector",
-          title: "Proyecto Lector",
-          tagline: "Educational platform for high schools and universities, focused on strengthening reading comprehension and streamlining student progress tracking.",
-          problem: "Educational institutions struggled with low reading comprehension metrics and a lack of centralized visibility into student performance.",
-          responsibility: "Defined the project timeline and task allocation, contributed to frontend development across all modules —students, parents, teachers, schools, and administrator (access control and licensing)— and collaborated on database design.",
-          solution: "Combines digital reading, dynamic assessments, license management, and progress tracking through dashboards tailored to each user type.",
-          result: "Unified platform operations into a single environment, streamlining daily workflows for teachers, administrators, and families.",
-          tags: ["Next.js", "React", "Node.js", "PostgreSQL", "PDF.js", "Tailwind CSS", "REST API"],
-          demoUrl: "https://proyectolector.com/",
-          image: proyectoLectorImg,
-        },
-        {
-          id: "lira",
-          title: "Ecosistema LIRA",
-          tagline: "Multiplatform system built to drive children's reading comprehension through interactive experiences on web, mobile, Android TV, and Alexa.",
-          problem: "Traditional reading instruction methods offered low interactivity, limited personalization, and poor progress tracking.",
-          responsibility: "Led project planning and participated in architectural and development decisions, including component integration for Android TV, web, and interactive experiences, as well as database model design.",
-          solution: "Integrates gamified activities, progress tracking, and data synchronization across all devices in the ecosystem.",
-          result: "Enabled children to continue their learning from any device, giving parents and tutors ongoing visibility into their progress.",
-          tags: ["React Native", "Node.js", "Express", "MongoDB", "Android TV", "Alexa Skills", "REST API"],
-          demoUrl: "https://educacion-lira.vercel.app/",
-          image: liraImg,
-        },
-        {
-          id: "tecnosol",
-          title: "Tecnosol ERP / CRM",
-          tagline: "Platform developed to replace manual processes and centralize company sales and administrative operations.",
-          problem: "Managing operations through Excel spreadsheets created error risks, slow data lookups, and scaling bottlenecks.",
-          responsibility: "Implemented the authentication, payments, and statistics modules, multi-sector order logic across hospitality, industrial, healthcare, residential, pool, and photovoltaic sectors, and maintenance notifications.",
-          solution: "Unifies clients, operations, and maintenance into a single environment, featuring role-based access and real-time visibility.",
-          result: "Replaced spreadsheets with a unified digital workflow, reducing errors and accelerating client response times.",
-          tags: ["React", "TypeScript", "JavaScript", "Node.js", "Vite", "MySQL", "CSS", "cPanel"],
-          image: tecnosolLogin,
-          gallery: [
-            tecnosolLogin,
-            tecnosolInicio,
-            tecnosolRegistroUsuarios,
-            tecnosolRegistroPedidos,
-            tecnosolTablaRegistros,
-          ],
-        },
-        {
-          id: "invernadero",
-          title: "Proyecto MicroGreen",
-          tagline: "IoT system developed to automate the monitoring and care of domestic greenhouses using sensors, ESP32, and a mobile app.",
-          problem: "Small greenhouses lacked a simple way to monitor environmental conditions and optimize plant care.",
-          responsibility: "Coordinated the 5-member team in building the prototype, defined sensor placement, and programmed the communication logic between the ESP32 and the mobile app, validating measurements through integration testing.",
-          solution: "Combines environmental sensors, an ESP32, and a mobile app to display real-time data and support crop automation.",
-          result: "Demonstrated the feasibility of automating domestic greenhouse care through an accessible and scalable system, replicable across other crops.",
-          tags: ["Arduino", "ESP32", "BLE", "React Native", "Node.js", "MongoDB"],
-          image: invernaderoImg,
-          gallery: [invernaderoImg],
-        },
-      ] as ProjectCase[],
-    },
+/**
+ * Language-invariant media for each case, keyed by the case `id`.
+ * Copy lives in `src/i18n`; assets, tags and links stay here.
+ */
+const PROJECT_MEDIA: Record<
+  string,
+  { tags: string[]; demoUrl?: string; image: string; gallery?: string[] }
+> = {
+  lector: {
+    tags: ["Next.js", "React", "Node.js", "PostgreSQL", "PDF.js", "Tailwind CSS", "REST API"],
+    demoUrl: "https://proyectolector.com/",
+    image: proyectoLectorImg,
   },
-  es: {
-    projects: {
-      title: "PROYECTOS DESTACADOS",
-      exploreCaptures: "Explorar Capturas",
-      labels: {
-        problem: "Contexto",
-        responsibility: "Mi Aporte",
-        solution: "La Solución",
-        result: "Resultado",
-        technologies: "TECNOLOGÍAS UTILIZADAS",
-        visitSite: "Visitar sitio",
-        viewCapture: "Ver captura",
-        viewCaptures: "Ver capturas",
-      },
-      cases: [
-        {
-          id: "lector",
-          title: "Proyecto Lector",
-          tagline: "Plataforma educativa para preparatorias y universidades, enfocada en fortalecer la comprensión lectora y facilitar el seguimiento del avance estudiantil.",
-          problem: "Las instituciones educativas enfrentaban baja comprensión lectora y poca visibilidad centralizada sobre el desempeño de los alumnos.",
-          responsibility: "Definí el cronograma y la asignación de tareas del proyecto, participé en el desarrollo frontend de todos los módulos —alumnos, padres, maestros, escuelas y administrador (control de accesos y licencias)— y colaboré en el diseño de la base de datos.",
-          solution: "Reúne lectura digital, evaluaciones dinámicas, gestión de licencias y seguimiento del progreso mediante paneles adaptados a cada tipo de usuario.",
-          result: "Unificó la operación de la plataforma en un solo lugar, simplificando el trabajo diario de docentes, directivos y familias.",
-          tags: ["Next.js", "React", "Node.js", "PostgreSQL", "PDF.js", "Tailwind CSS", "REST API"],
-          demoUrl: "https://proyectolector.com/",
-          image: proyectoLectorImg,
-        },
-        {
-          id: "lira",
-          title: "Ecosistema LIRA",
-          tagline: "Sistema multiplataforma creado para impulsar el aprendizaje de la lectura infantil mediante experiencias interactivas en web, móvil, Android TV y Alexa.",
-          problem: "Los métodos tradicionales de enseñanza de la lectura ofrecían poca interactividad, personalización y seguimiento del progreso de los estudiantes.",
-          responsibility: "Lideré la planificación del proyecto y participé en decisiones de arquitectura y desarrollo, incluyendo la integración de componentes para Android TV, web y experiencias interactivas, así como en el diseño del modelo de datos.",
-          solution: "Integra actividades gamificadas, seguimiento del progreso y sincronización de datos entre todos los dispositivos del ecosistema.",
-          result: "Permitió que los niños continuaran su aprendizaje desde cualquier dispositivo, dando a padres y tutores visibilidad constante de su progreso.",
-          tags: ["React Native", "Node.js", "Express", "MongoDB", "Android TV", "Alexa Skills", "REST API"],
-          demoUrl: "https://educacion-lira.vercel.app/",
-          image: liraImg,
-        },
-        {
-          id: "tecnosol",
-          title: "Tecnosol ERP / CRM",
-          tagline: "Plataforma desarrollada para reemplazar procesos manuales y centralizar la operación comercial y administrativa de la empresa.",
-          problem: "La gestión de operaciones mediante archivos Excel generaba riesgo de errores, lentitud en consultas y dificultades para escalar los registros.",
-          responsibility: "Implementé los módulos de autenticación, pagos y estadísticas, la lógica de pedidos para los sectores hotelero, industrial, hospitalario, residencial, albercas y fotovoltaico, y las notificaciones de mantenimiento.",
-          solution: "Unifica clientes, operaciones y mantenimiento en un solo entorno, con acceso por roles y visibilidad en tiempo real.",
-          result: "Sustituyó las hojas de cálculo por un flujo digital único, reduciendo errores y acelerando la respuesta a clientes.",
-          tags: ["React", "TypeScript", "JavaScript", "Node.js", "Vite", "MySQL", "CSS", "cPanel"],
-          image: tecnosolLogin,
-          gallery: [
-            tecnosolLogin,
-            tecnosolInicio,
-            tecnosolRegistroUsuarios,
-            tecnosolRegistroPedidos,
-            tecnosolTablaRegistros,
-          ],
-        },
-        {
-          id: "invernadero",
-          title: "Proyecto MicroGreen",
-          tagline: "Sistema IoT desarrollado para automatizar el monitoreo y cuidado de invernaderos domésticos mediante sensores, ESP32 y una aplicación móvil.",
-          problem: "Los pequeños invernaderos carecían de una forma sencilla de supervisar las condiciones ambientales y optimizar el cuidado de las plantas.",
-          responsibility: "Coordiné al equipo de 5 integrantes en la construcción del prototipo, definí la ubicación de sensores y programé la lógica de comunicación entre el ESP32 y la app móvil, validando las mediciones con pruebas de integración.",
-          solution: "Combina sensores ambientales, un ESP32 y una aplicación móvil para visualizar información en tiempo real y apoyar la automatización del cultivo.",
-          result: "Demostró la viabilidad de automatizar el cuidado de invernaderos domésticos mediante un sistema accesible y escalable, replicable en otros cultivos.",
-          tags: ["Arduino", "ESP32", "BLE", "React Native", "Node.js", "MongoDB"],
-          image: invernaderoImg,
-          gallery: [invernaderoImg],
-        },
-      ] as ProjectCase[],
-    },
+  lira: {
+    tags: ["React Native", "Node.js", "Express", "MongoDB", "Android TV", "Alexa Skills", "REST API"],
+    demoUrl: "https://educacion-lira.vercel.app/",
+    image: liraImg,
   },
-};
-
-const InteractiveTitleText = ({ text }: { text: string }) => {
-  const words = text.split(" ");
-  return (
-    <span className="inline-block select-none">
-      {words.map((word, wIdx) => (
-        <span key={wIdx} className="inline-block whitespace-nowrap">
-          {word.split("").map((char, cIdx) => (
-            <span
-              key={cIdx}
-              className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default transform-gpu"
-            >
-              {char}
-            </span>
-          ))}
-          {wIdx < words.length - 1 && (
-            <span className="inline-block w-[0.25em]">&nbsp;</span>
-          )}
-        </span>
-      ))}
-    </span>
-  );
+  tecnosol: {
+    tags: ["React", "TypeScript", "JavaScript", "Node.js", "Vite", "MySQL", "CSS", "cPanel"],
+    image: tecnosolLogin,
+    gallery: [
+      tecnosolLogin,
+      tecnosolInicio,
+      tecnosolRegistroUsuarios,
+      tecnosolRegistroPedidos,
+      tecnosolTablaRegistros,
+      tecnosolEstadisticas,
+      tecnosolMantenimiento,
+      tecnosolQuejas,
+      tecnosolPagos,
+      tecnosolModelos,
+      tecnosolAsesores,
+    ],
+  },
+  invernadero: {
+    tags: ["Arduino", "ESP32", "BLE", "React Native", "Node.js", "MongoDB"],
+    image: invernaderoImg,
+    gallery: [invernaderoImg],
+  },
 };
 
 interface ModalCarouselProps {
   images: string[];
+  alts?: string[];
+  onClose?: () => void;
 }
 
-const ModalCarousel = ({ images }: ModalCarouselProps) => {
+const ModalCarousel = ({ images, alts, onClose }: ModalCarouselProps) => {
+  const { displayedLanguage } = useLanguage();
+  const g = translations[displayedLanguage].projects.gallery;
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [lastTap, setLastTap] = useState(0);
+
+  const currentAlt =
+    alts && alts[index] ? alts[index] : `${g.screenshot} ${index + 1} / ${images.length}`;
 
   useEffect(() => {
     images.forEach((src) => {
@@ -219,17 +88,31 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
     });
   }, [images]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setZoomLevel(1);
     setDirection(1);
     setIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
+  }, [images.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setZoomLevel(1);
     setDirection(-1);
     setIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  }, [images.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose?.();
+      } else if (e.key === "ArrowRight") {
+        handleNext();
+      } else if (e.key === "ArrowLeft") {
+        handlePrev();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrev, onClose]);
 
   const toggleZoom = () => {
     setZoomLevel((prev) => (prev === 1 ? 2.2 : 1));
@@ -263,7 +146,7 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
           }}
           disabled={zoomLevel <= 1}
           className="p-1 text-white hover:text-sky-400 disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
-          aria-label="Zoom out"
+          aria-label={g.zoomOut}
         >
           <ZoomOut className="w-4 h-4" />
         </button>
@@ -277,7 +160,7 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
           }}
           disabled={zoomLevel >= 3}
           className="p-1 text-white hover:text-sky-400 disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
-          aria-label="Zoom in"
+          aria-label={g.zoomIn}
         >
           <ZoomIn className="w-4 h-4" />
         </button>
@@ -289,7 +172,7 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
             }}
             className="ml-1 px-2 py-0.5 text-[9.5px] font-tech uppercase font-bold bg-white/20 hover:bg-white/30 text-white rounded-full transition-colors"
           >
-            Reset
+            {g.reset}
           </button>
         )}
       </div>
@@ -324,8 +207,8 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
               }
             }}
             src={images[index]}
-            alt={`Slide ${index + 1}`}
-            className="max-w-full max-h-[65vh] sm:max-h-[75vh] object-contain border border-[#333333] bg-[#121212] p-2 rounded-2xl shadow-2xl transition-transform duration-200 cursor-grab active:cursor-grabbing"
+            alt={currentAlt}
+            className="max-w-full max-h-[62vh] sm:max-h-[72vh] object-contain border border-[#333333] bg-[#121212] p-2 rounded-2xl shadow-2xl transition-transform duration-200 cursor-grab active:cursor-grabbing"
           />
         </AnimatePresence>
 
@@ -338,7 +221,7 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
                 handlePrev();
               }}
               className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-3 bg-black/75 hover:bg-white text-white hover:text-[#0f0f0f] border border-white/20 rounded-full transition-all shadow-2xl z-30 cursor-pointer active:scale-95"
-              aria-label="Previous slide"
+              aria-label={g.previousSlide}
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
@@ -348,7 +231,7 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
                 handleNext();
               }}
               className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-3 bg-black/75 hover:bg-white text-white hover:text-[#0f0f0f] border border-white/20 rounded-full transition-all shadow-2xl z-30 cursor-pointer active:scale-95"
-              aria-label="Next slide"
+              aria-label={g.nextSlide}
             >
               <ChevronRight className="w-6 h-6" />
             </button>
@@ -356,46 +239,116 @@ const ModalCarousel = ({ images }: ModalCarouselProps) => {
         )}
       </div>
 
-      {/* Bottom Counter & Indicator Dots */}
-      {images.length > 1 && (
-        <div className="h-12 flex items-center justify-center space-x-3 shrink-0 z-30 pb-2">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              onClick={(e) => {
-                e.stopPropagation();
-                setZoomLevel(1);
-                setDirection(i > index ? 1 : -1);
-                setIndex(i);
-              }}
-              className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                i === index
-                  ? "w-8 bg-white"
-                  : "w-2.5 bg-[#444444] hover:bg-[#888888]"
-              }`}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-          <span className="text-xs font-tech font-bold text-white tracking-widest ml-2 select-none">
-            {index + 1} / {images.length}
-          </span>
-        </div>
-      )}
+      {/* Bottom Counter & Indicator Dots with prominent slide caption */}
+      <div className="flex flex-col items-center justify-center gap-2 shrink-0 z-30 pb-3 max-w-2xl px-4 w-full">
+        {currentAlt && (
+          <div className="px-4 py-1.5 rounded-full bg-black/85 backdrop-blur-md border border-white/20 shadow-2xl">
+            <p className="text-xs sm:text-sm font-tech font-semibold text-white text-center select-none tracking-wide">
+              {currentAlt}
+            </p>
+          </div>
+        )}
+        {images.length > 1 && (
+          <div className="h-6 flex items-center justify-center space-x-2">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setZoomLevel(1);
+                  setDirection(i > index ? 1 : -1);
+                  setIndex(i);
+                }}
+                className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                  i === index
+                    ? "w-8 bg-white shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+                    : "w-2.5 bg-[#444444] hover:bg-[#888888]"
+                }`}
+                aria-label={`${g.goToSlide} ${i + 1}`}
+              />
+            ))}
+            <span className="text-xs sm:text-sm font-tech font-bold text-white tracking-widest ml-3 select-none">
+              {index + 1} / {images.length}
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-const Projects = ({ language }: ProjectsProps) => {
+const Projects = () => {
+  const { displayedLanguage: language } = useLanguage();
   const t = translations[language];
-  const [selectedGallery, setSelectedGallery] = useState<string[] | null>(null);
+  const [selectedGallery, setSelectedGallery] = useState<{ id: string; images: string[] } | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
 
-  const tecnosolGallery = [
-    tecnosolLogin,
-    tecnosolInicio,
-    tecnosolRegistroUsuarios,
-    tecnosolRegistroPedidos,
-    tecnosolTablaRegistros,
-  ];
+  // Copy comes from i18n; media (images, links, tags) from PROJECT_MEDIA.
+  // Only projects that define their own `gallery` expose the screenshot viewer;
+  // the rest (e.g. ones that just link to a live site) show the image as-is.
+  const cases = t.projects.cases.map((project) => {
+    const media = PROJECT_MEDIA[project.id];
+    const gallery =
+      media.gallery && media.gallery.length > 0 ? media.gallery : [media.image];
+    return {
+      ...project,
+      ...media,
+      gallery,
+      hasGallery: Boolean(media.gallery && media.gallery.length > 0),
+    };
+  });
+
+  // Body scroll lock + focus management: move focus into the dialog on open
+  // and restore it to the trigger element on close.
+  useEffect(() => {
+    if (!selectedGallery) return;
+
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.clearTimeout(focusTimer);
+      previouslyFocused.current?.focus?.();
+    };
+  }, [selectedGallery]);
+
+  // Trap keyboard focus inside the dialog while it is open.
+  useEffect(() => {
+    if (!selectedGallery) return;
+
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const root = dialogRef.current;
+      if (!root) return;
+      const focusable = Array.from(
+        root.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (e.shiftKey) {
+        if (active === first || !root.contains(active)) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (active === last || !root.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleTab);
+    return () => document.removeEventListener("keydown", handleTab);
+  }, [selectedGallery]);
 
   return (
     <section id="projects" className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
@@ -408,13 +361,13 @@ const Projects = ({ language }: ProjectsProps) => {
           className="text-center mb-16 md:mb-24 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
-            <InteractiveTitleText text={t.projects.title} />
+            <InteractiveTitle text={t.projects.title} />
           </h2>
           <div className="w-24 h-1 bg-white mx-auto rounded-full" />
         </motion.div>
 
         <div className="space-y-16 md:space-y-24">
-          {t.projects.cases.map((project, index) => (
+          {cases.map((project, index) => (
             <motion.article
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
@@ -423,69 +376,101 @@ const Projects = ({ language }: ProjectsProps) => {
               viewport={{ once: true, margin: "-40px" }}
               className={`flex flex-col ${
                 index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              } items-center gap-6 lg:gap-12 bg-[#151515] p-6 md:p-8 rounded-3xl border border-[#222222] hover:border-white transition-colors duration-200 group transform-gpu`}
+              } items-center gap-6 lg:gap-12 bg-[#151515] p-6 md:px-8 md:py-[clamp(20px,3svh,32px)] rounded-3xl border border-[#222222] hover:border-white transition-colors duration-200 group transform-gpu`}
             >
               <div className="w-full lg:w-1/2 flex justify-center">
-                {project.demoUrl ? (
-                  <a
-                    href={project.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full aspect-video relative rounded-2xl overflow-hidden border border-[#333333] bg-[#0f0f0f] shadow-2xl group cursor-pointer p-1 active:scale-[0.98] transition-transform duration-200"
-                  >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-150 z-20 flex items-center justify-center rounded-2xl">
-                      <div className="p-3.5 bg-white text-[#0f0f0f] rounded-full shadow-2xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
-                        <ExternalLink className="w-6 h-6" />
+                <div className="w-full aspect-video relative rounded-2xl overflow-hidden border border-[#333333] bg-[#0f0f0f] shadow-2xl group p-1 transition-transform duration-200">
+                  {project.demoUrl ? (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full h-full relative cursor-pointer active:scale-[0.98] transition-transform duration-200 text-left"
+                      aria-label={`${t.projects.labels.visitSite} — ${project.title}`}
+                    >
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-150 z-20 flex items-center justify-center rounded-2xl">
+                        <div className="w-14 h-14 bg-white text-[#0f0f0f] rounded-full flex items-center justify-center shadow-2xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
+                          <ExternalLink className="w-6 h-6 stroke-[2.2]" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="absolute top-3 right-3 z-30 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-tech font-bold text-[10.5px] uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                      <span>{t.projects.labels.visitSite}</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-white" />
-                    </div>
-                  </a>
-                ) : (
-                  <button
-                    onClick={() =>
-                      setSelectedGallery(
-                        project.id === "invernadero"
-                          ? [invernaderoImg]
-                          : tecnosolGallery
-                      )
-                    }
-                    className="block w-full aspect-video relative rounded-2xl overflow-hidden border border-[#333333] bg-[#0f0f0f] shadow-2xl group cursor-pointer p-1 active:scale-[0.98] transition-transform duration-200 text-left"
-                  >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-150 z-20 flex items-center justify-center rounded-2xl">
-                      {project.id === "tecnosol" ? (
+                    </a>
+                  ) : project.hasGallery ? (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSelectedGallery({ id: project.id, images: project.gallery })
+                      }
+                      className="block w-full h-full relative cursor-pointer active:scale-[0.98] transition-transform duration-200 text-left"
+                      aria-label={`${t.projects.labels.viewCapture} — ${project.title}`}
+                    >
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-150 z-20 flex items-center justify-center rounded-2xl">
                         <div className="px-5 py-2.5 bg-white text-[#0f0f0f] font-tech font-bold text-xs rounded-full flex items-center gap-2 uppercase shadow-xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
                           <Maximize className="w-4 h-4" />
-                          <span>{t.projects.exploreCaptures}</span>
+                          <span>
+                            {project.gallery.length > 1
+                              ? t.projects.exploreCaptures
+                              : t.projects.labels.viewCapture}
+                          </span>
                         </div>
-                      ) : (
-                        <div className="p-3.5 bg-white text-[#0f0f0f] rounded-full shadow-2xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
-                          <Maximize className="w-6 h-6" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="absolute top-3 right-3 z-30 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-tech font-bold text-[10.5px] uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                      <Maximize className="w-3.5 h-3.5 text-white" />
-                      <span>
-                        {project.gallery && project.gallery.length > 1
-                          ? `${t.projects.labels.viewCaptures} (${project.gallery.length})`
-                          : t.projects.labels.viewCapture}
-                      </span>
-                    </div>
-                  </button>
-                )}
+                      </div>
+                    </button>
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                    />
+                  )}
+
+                  {/* Top-right Action Badges */}
+                  <div className="absolute top-3 right-3 z-30 flex items-center gap-2 pointer-events-auto">
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 rounded-full bg-black/85 hover:bg-white text-white hover:text-[#0f0f0f] backdrop-blur-md border border-white/20 font-tech font-bold text-[10.5px] uppercase tracking-wider flex items-center gap-1.5 shadow-lg transition-colors cursor-pointer"
+                        aria-label={`${t.projects.labels.visitSite} — ${project.title}`}
+                      >
+                        <span>{t.projects.labels.visitSite}</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                    {project.hasGallery && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSelectedGallery({ id: project.id, images: project.gallery })
+                        }
+                        className="px-3 py-1.5 rounded-full bg-black/85 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-tech font-bold text-[10.5px] uppercase tracking-wider flex items-center gap-1.5 shadow-lg cursor-pointer transition-colors"
+                        aria-label={`${t.projects.labels.viewCapture} — ${project.title}`}
+                      >
+                        <Maximize className="w-3.5 h-3.5 text-white" />
+                        <span>
+                          {project.gallery.length > 1
+                            ? `${t.projects.labels.viewCaptures} (${project.gallery.length})`
+                            : t.projects.labels.viewCapture}
+                        </span>
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="w-full lg:w-1/2">
@@ -499,49 +484,49 @@ const Projects = ({ language }: ProjectsProps) => {
                   {project.title}
                 </h3>
                 
-                <p className="text-xs font-tech text-[#888888] font-semibold mb-4 leading-relaxed">
+                <p className="text-[13px] font-tech text-[#888888] font-semibold mb-[clamp(8px,1.5svh,16px)] leading-normal">
                   {project.tagline}
                 </p>
 
-                <div className="space-y-2 font-tech text-xs sm:text-xs leading-relaxed mb-4">
-                  <div className="p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222]">
+                <div className="space-y-[clamp(4px,0.9svh,8px)] font-tech text-[13px] leading-normal mb-[clamp(8px,1.5svh,16px)]">
+                  <div className="px-2.5 py-[clamp(6px,1.2svh,10px)] rounded-xl bg-[#0f0f0f] border border-[#222222]">
                     <div className="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] uppercase tracking-wider mb-0.5">
                       <AlertCircle className="w-3 h-3" />
                       <span>{t.projects.labels.problem}</span>
                     </div>
-                    <p className="text-[#aaaaaa]">{project.problem}</p>
+                    <p className="text-[#cccccc]">{project.problem}</p>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222]">
+                  <div className="px-2.5 py-[clamp(6px,1.2svh,10px)] rounded-xl bg-[#0f0f0f] border border-[#222222]">
                     <div className="flex items-center gap-1.5 text-sky-400 font-bold text-[11px] uppercase tracking-wider mb-0.5">
                       <ShieldCheck className="w-3 h-3" />
                       <span>{t.projects.labels.responsibility}</span>
                     </div>
-                    <p className="text-[#aaaaaa]">{project.responsibility}</p>
+                    <p className="text-[#cccccc]">{project.responsibility}</p>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222]">
+                  <div className="px-2.5 py-[clamp(6px,1.2svh,10px)] rounded-xl bg-[#0f0f0f] border border-[#222222]">
                     <div className="flex items-center gap-1.5 text-indigo-400 font-bold text-[11px] uppercase tracking-wider mb-0.5">
                       <Cpu className="w-3 h-3" />
                       <span>{t.projects.labels.solution}</span>
                     </div>
-                    <p className="text-[#aaaaaa]">{project.solution}</p>
+                    <p className="text-[#cccccc]">{project.solution}</p>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-[#0f0f0f] border border-[#222222]">
+                  <div className="px-2.5 py-[clamp(6px,1.2svh,10px)] rounded-xl bg-[#0f0f0f] border border-[#222222]">
                     <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-[11px] uppercase tracking-wider mb-0.5">
                       <CheckCircle2 className="w-3 h-3" />
                       <span>{t.projects.labels.result}</span>
                     </div>
-                    <p className="text-[#aaaaaa]">{project.result}</p>
+                    <p className="text-[#cccccc]">{project.result}</p>
                   </div>
                 </div>
 
                 <div className="w-full pt-1">
                   <div className="flex flex-wrap items-center gap-1.5 w-full">
-                    {project.tags.map((tag, idx) => (
+                    {project.tags.map((tag) => (
                       <span
-                        key={idx}
+                        key={tag}
                         className="px-2.5 py-1 text-[10px] sm:text-[11px] font-tech font-bold text-white bg-[#0f0f0f] border border-[#333333] rounded-full hover:border-white transition-colors shrink-0 shadow-sm"
                       >
                         {tag}
@@ -561,18 +546,19 @@ const Projects = ({ language }: ProjectsProps) => {
           <AnimatePresence>
             {selectedGallery && (
               <motion.div
+                ref={dialogRef}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                onClick={(e) => {
-                  if (e.target === e.currentTarget && typeof window !== "undefined" && window.innerWidth >= 640) {
-                    setSelectedGallery(null);
-                  }
-                }}
+                role="dialog"
+                aria-modal="true"
+                aria-label={t.projects.gallery.ariaLabel}
+                onClick={() => setSelectedGallery(null)}
                 className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md p-2 sm:p-4 md:p-12"
               >
                 <motion.button
+                  ref={closeButtonRef}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
@@ -582,7 +568,7 @@ const Projects = ({ language }: ProjectsProps) => {
                     setSelectedGallery(null);
                   }}
                   className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3.5 rounded-full bg-[#171717] border border-[#333333] text-[#ffffff] hover:bg-white hover:text-[#0f0f0f] transition-all z-[10000] shadow-2xl cursor-pointer active:scale-95"
-                  aria-label="Close modal"
+                  aria-label={t.projects.gallery.close}
                 >
                   <X className="w-6 h-6" />
                 </motion.button>
@@ -594,7 +580,15 @@ const Projects = ({ language }: ProjectsProps) => {
                   onClick={(e) => e.stopPropagation()}
                   className="w-full max-w-5xl h-full flex items-center justify-center"
                 >
-                  <ModalCarousel images={selectedGallery} />
+                  <ModalCarousel
+                    images={selectedGallery.images}
+                    alts={
+                      (t.projects.gallery as unknown as Record<string, string[]>)[
+                        selectedGallery.id
+                      ]
+                    }
+                    onClose={() => setSelectedGallery(null)}
+                  />
                 </motion.div>
               </motion.div>
             )}

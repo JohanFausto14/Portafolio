@@ -1,34 +1,21 @@
 import { ArrowUp } from "lucide-react";
 
-type Language = "en" | "es";
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n";
 
-interface FooterProps {
-  language: Language;
-}
-
-const translations = {
-  en: {
-    rights: "Software Development & Frontend Engineering.",
-    backToTop: "BACK TO TOP",
-  },
-  es: {
-    rights: "Desarrollo de Software & Ingeniería Frontend.",
-    backToTop: "VOLVER ARRIBA",
-  },
-};
-
-const Footer = ({ language }: FooterProps) => {
-  const t = translations[language];
+const Footer = () => {
+  const { displayedLanguage: language } = useLanguage();
+  const t = translations[language].footer;
 
   return (
     <footer className="bg-[#0f0f0f] py-6 border-t border-[#222222]">
-      <div className="max-w-[1450px] mx-auto px-6 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <span className="text-xs font-tech font-bold text-white block uppercase tracking-widest">
             ARI JOHAN ALVARADO FAUSTO
           </span>
           <p className="text-[11px] font-tech text-[#aaaaaa] mt-1">
-            &copy; {new Date().getFullYear()} — Ari Johan Alvarado Fausto
+            {t.descriptor} · &copy; {new Date().getFullYear()}
           </p>
         </div>
 

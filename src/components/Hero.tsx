@@ -1,66 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Github, ChevronDown } from "lucide-react";
+import { ArrowRight, Download, ChevronDown } from "lucide-react";
+import InteractiveTitle from "./common/InteractiveTitle";
 import fotoPerfil from "../assets/FotoPortafolio.webp";
 
-type Language = "en" | "es";
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n";
 
-interface HeroProps {
-  language: Language;
-}
-
-const translations = {
-  en: {
-    hero: {
-      available: "Available for work",
-      greeting: "Johan Fausto",
-      role: "Software Engineer",
-      description: "I design and build web and mobile applications for organizations that need reliable, growth-ready software.",
-      viewWork: "View Projects",
-      contactMe: "Contact Me",
-      downloadCv: "Download CV",
-    },
-    personal: {
-      github: "https://github.com/JohanFausto14",
-    },
-  },
-  es: {
-    hero: {
-      available: "Disponible para trabajar",
-      greeting: "Johan Fausto",
-      role: "Ingeniero de Software",
-      description: "Diseño y desarrollo de aplicaciones web y móviles para organizaciones que necesitan software confiable y preparado para crecer.",
-      viewWork: "Ver proyectos",
-      contactMe: "Contactarme",
-      downloadCv: "Descargar CV",
-    },
-    personal: {
-      github: "https://github.com/JohanFausto14",
-    },
-  },
-};
-
-// Interactive letter component with exact dominant presence & crisp letter spacing
-const DisplayTitleLetterText = ({ text }: { text: string }) => {
-  return (
-    <span className="inline-block select-none">
-      {text.split("").map((char, index) => {
-        if (char === " ") {
-          return <span key={index} className="inline-block w-[0.29em]">&nbsp;</span>;
-        }
-        return (
-          <span
-            key={index}
-            className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default px-[0.01em] transform-gpu"
-          >
-            {char}
-          </span>
-        );
-      })}
-    </span>
-  );
-};
-
-const Hero = ({ language }: HeroProps) => {
+const Hero = () => {
+  const { displayedLanguage: language } = useLanguage();
   const t = translations[language];
   const cvFile = language === "en" ? "/CV_en.pdf?v=v3" : "/CV_es.pdf?v=v3";
 
@@ -89,9 +36,9 @@ const Hero = ({ language }: HeroProps) => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.12, ease: "easeOut" }}
-              className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-[5.3vw] xl:text-[5.1vw] text-white tracking-normal mb-3 uppercase leading-none whitespace-nowrap overflow-hidden text-ellipsis"
+              className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-[clamp(2.75rem,5.3vw,5.25rem)] text-white tracking-normal mb-3 uppercase leading-none whitespace-nowrap"
             >
-              <DisplayTitleLetterText text="FULL STACK DEVELOPER" />
+              <InteractiveTitle text="FULL STACK DEVELOPER" charClassName="px-[0.01em]" />
             </motion.div>
 
             {/* Greeting */}
@@ -146,25 +93,14 @@ const Hero = ({ language }: HeroProps) => {
               >
                 {t.hero.contactMe}
               </a>
-              <div className="flex items-center gap-3 w-full sm:w-auto justify-center">
-                <a
-                  href={cvFile}
-                  download
-                  className="group flex-1 sm:flex-initial px-7 py-3 rounded-full border border-[#444444] text-[#aaaaaa] hover:text-white hover:border-white font-tech font-bold text-xs tracking-widest transition-all duration-300 flex items-center justify-center gap-2 uppercase"
-                >
-                  <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                  {t.hero.downloadCv}
-                </a>
-                <a
-                  href={t.personal.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="p-3 rounded-full bg-[#171717] border border-[#333333] text-[#aaaaaa] hover:text-white hover:border-white transition-all duration-300 flex items-center justify-center shrink-0"
-                >
-                  <Github className="w-5 h-5 hover:scale-110 transition-transform" />
-                </a>
-              </div>
+              <a
+                href={cvFile}
+                download
+                className="group w-full sm:w-auto px-7 py-3 rounded-full border border-[#444444] text-[#aaaaaa] hover:text-white hover:border-white font-tech font-bold text-xs tracking-widest transition-all duration-300 flex items-center justify-center gap-2 uppercase"
+              >
+                <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                {t.hero.downloadCv}
+              </a>
             </motion.div>
           </div>
 

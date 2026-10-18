@@ -4,54 +4,75 @@ import { motion, AnimatePresence } from "framer-motion";
 import flagUS from "../assets/us.svg";
 import flagMX from "../assets/mx.svg";
 
-type Language = "en" | "es";
+import { CONTACT_INFO } from "../constants/contact";
 
-interface NavbarProps {
+import { useLanguage } from "../i18n/LanguageContext";
+import type { Language } from "../i18n/types";
+import { translations } from "../i18n";
+
+interface LanguageToggleProps {
   language: Language;
-  displayedLanguage?: Language;
-  isTransitioning?: boolean;
-  setLanguage: (lang: Language) => void;
+  onToggle: () => void;
+  layoutPrefix: string;
 }
 
-const translations = {
-  en: {
-    personal: {
-      github: "https://github.com/JohanFausto14",
-    },
-    nav: [
-      { name: "My Approach", href: "#about" },
-      { name: "Featured Projects", href: "#projects" },
-      { name: "Career Path", href: "#experience" },
-      { name: "Tech & Tools", href: "#skills" },
-      { name: "Credentials", href: "#education" },
-      { name: "Get in Touch", href: "#contact" },
-    ],
-  },
-  es: {
-    personal: {
-      github: "https://github.com/JohanFausto14",
-    },
-    nav: [
-      { name: "Mi Enfoque", href: "#about" },
-      { name: "Proyectos Destacados", href: "#projects" },
-      { name: "Trayectoria", href: "#experience" },
-      { name: "Tecnologías", href: "#skills" },
-      { name: "Formación", href: "#education" },
-      { name: "Contacto", href: "#contact" },
-    ],
-  },
-};
+const LanguageToggle = ({ language, onToggle, layoutPrefix }: LanguageToggleProps) => (
+  <button
+    onClick={onToggle}
+    className="relative w-20 h-9 bg-[#171717] rounded-full border border-[#333333] p-1 cursor-pointer shadow-inner hover:border-white transition-colors"
+    aria-label={translations[language].nav.switchLanguage}
+  >
+    <div className="relative w-full h-full flex z-10 pointer-events-none">
+      <div className="relative flex-1 h-full flex items-center justify-center">
+        {language === "en" && (
+          <motion.div
+            layoutId={`${layoutPrefix}-active-indicator`}
+            className="absolute inset-0 bg-[#333333] rounded-full shadow-sm"
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          />
+        )}
+        <img
+          src={flagUS}
+          alt="EN"
+          width={20}
+          height={14}
+          className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${
+            language === "en" ? "opacity-100" : "opacity-40"
+          }`}
+        />
+      </div>
+      <div className="relative flex-1 h-full flex items-center justify-center">
+        {language === "es" && (
+          <motion.div
+            layoutId={`${layoutPrefix}-active-indicator`}
+            className="absolute inset-0 bg-[#333333] rounded-full shadow-sm"
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          />
+        )}
+        <img
+          src={flagMX}
+          alt="ES"
+          width={20}
+          height={14}
+          className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${
+            language === "es" ? "opacity-100" : "opacity-40"
+          }`}
+        />
+      </div>
+    </div>
+  </button>
+);
 
-const Navbar = ({
-  language,
-  displayedLanguage = language,
-  isTransitioning = false,
-  setLanguage,
-}: NavbarProps) => {
+const Navbar = () => {
+  const { language, displayedLanguage, isTransitioning, setLanguage } = useLanguage();
   const t = translations[displayedLanguage];
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+
+  const toggleLanguage = () => {
+    setLanguage(language === "en" ? "es" : "en");
+  };
 
   useEffect(() => {
     let ticking = false;
@@ -68,6 +89,14 @@ const Navbar = ({
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close the mobile menu as soon as the user scrolls.
+  useEffect(() => {
+    if (!isOpen) return;
+    const closeOnScroll = () => setIsOpen(false);
+    window.addEventListener("scroll", closeOnScroll, { passive: true });
+    return () => window.removeEventListener("scroll", closeOnScroll);
+  }, [isOpen]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -113,7 +142,7 @@ const Navbar = ({
                 isTransitioning ? "opacity-0" : "opacity-100"
               }`}
             >
-              {t.nav.map((link) => (
+              {t.nav.items.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
@@ -132,7 +161,7 @@ const Navbar = ({
           {/* Desktop Right — GitHub + Language Toggle */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href={t.personal.github}
+              href={CONTACT_INFO.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -142,103 +171,27 @@ const Navbar = ({
             </a>
 
             {/* Sliding Language Toggle */}
-            <button
-              onClick={() => setLanguage(language === "en" ? "es" : "en")}
-              className="relative w-20 h-9 bg-[#171717] rounded-full border border-[#333333] p-1 cursor-pointer shadow-inner hover:border-white transition-colors"
-              aria-label={language === "en" ? "Switch language to Spanish" : "Cambiar idioma a Español"}
-            >
-              <div className="relative w-full h-full flex z-10 pointer-events-none">
-                <div className="relative flex-1 h-full flex items-center justify-center">
-                  {language === "en" && (
-                    <motion.div
-                      layoutId="desktop-active-indicator"
-                      className="absolute inset-0 bg-[#333333] rounded-full shadow-sm"
-                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    />
-                  )}
-                  <img
-                    src={flagUS}
-                    alt="EN"
-                    width={20}
-                    height={14}
-                    className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${
-                      language === "en" ? "opacity-100" : "opacity-40"
-                    }`}
-                  />
-                </div>
-                <div className="relative flex-1 h-full flex items-center justify-center">
-                  {language === "es" && (
-                    <motion.div
-                      layoutId="desktop-active-indicator"
-                      className="absolute inset-0 bg-[#333333] rounded-full shadow-sm"
-                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    />
-                  )}
-                  <img
-                    src={flagMX}
-                    alt="ES"
-                    width={20}
-                    height={14}
-                    className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${
-                      language === "es" ? "opacity-100" : "opacity-40"
-                    }`}
-                  />
-                </div>
-              </div>
-            </button>
+            <LanguageToggle
+              language={language}
+              onToggle={toggleLanguage}
+              layoutPrefix="desktop"
+            />
           </div>
 
           {/* Mobile Controls */}
           <div className="md:hidden flex items-center gap-4">
-            <button
-              onClick={() => setLanguage(language === "en" ? "es" : "en")}
-              className="relative w-20 h-9 bg-[#171717] rounded-full border border-[#333333] p-1 cursor-pointer shadow-inner hover:border-white transition-colors"
-              aria-label={language === "en" ? "Switch language to Spanish" : "Cambiar idioma a Español"}
-            >
-              <div className="relative w-full h-full flex z-10 pointer-events-none">
-                <div className="relative flex-1 h-full flex items-center justify-center">
-                  {language === "en" && (
-                    <motion.div
-                      layoutId="mobile-active-indicator"
-                      className="absolute inset-0 bg-[#333333] rounded-full shadow-sm"
-                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    />
-                  )}
-                  <img
-                    src={flagUS}
-                    alt="EN"
-                    width={20}
-                    height={14}
-                    className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${
-                      language === "en" ? "opacity-100" : "opacity-40"
-                    }`}
-                  />
-                </div>
-                <div className="relative flex-1 h-full flex items-center justify-center">
-                  {language === "es" && (
-                    <motion.div
-                      layoutId="mobile-active-indicator"
-                      className="absolute inset-0 bg-[#333333] rounded-full shadow-sm"
-                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    />
-                  )}
-                  <img
-                    src={flagMX}
-                    alt="ES"
-                    width={20}
-                    height={14}
-                    className={`relative z-10 w-5 h-3.5 rounded-[3px] object-cover transition-opacity duration-200 ${
-                      language === "es" ? "opacity-100" : "opacity-40"
-                    }`}
-                  />
-                </div>
-              </div>
-            </button>
+            <LanguageToggle
+              language={language}
+              onToggle={toggleLanguage}
+              layoutPrefix="mobile"
+            />
 
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-[#888888] hover:text-white hover:bg-[#171717] focus:outline-none"
-              aria-label={isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
+              aria-label={isOpen ? t.nav.menuClose : t.nav.menuOpen}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -250,6 +203,7 @@ const Navbar = ({
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -260,7 +214,7 @@ const Navbar = ({
                 isTransitioning ? "opacity-0" : "opacity-100"
               }`}
             >
-              {t.nav.map((link) => (
+              {t.nav.items.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
@@ -276,7 +230,7 @@ const Navbar = ({
               ))}
               <div className="flex gap-3 px-3 pt-2 pb-1">
                 <a
-                  href={t.personal.github}
+                  href={CONTACT_INFO.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"

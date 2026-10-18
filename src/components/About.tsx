@@ -1,85 +1,12 @@
 import { motion } from "framer-motion";
 import { Target, Zap, Rocket, ArrowRight, ArrowDown } from "lucide-react";
+import InteractiveTitle from "./common/InteractiveTitle";
 
-type Language = "en" | "es";
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n";
 
-interface AboutProps {
-  language: Language;
-}
-
-const translations = {
-  en: {
-    about: {
-      title: "MY APPROACH",
-      tagline: "Before writing code, I take time to understand the real problem behind the request. A system only provides value if the person using it every day can get their work done without friction.",
-      metrics: "3+ years of experience · 20+ projects built",
-      principles: [
-        {
-          num: "01",
-          title: "UNDERSTAND",
-          desc: "Analyze context, users, and requirements thoroughly before designing the solution.",
-        },
-        {
-          num: "02",
-          title: "SIMPLIFY",
-          desc: "Reduce unnecessary complexity in architecture, interface, and workflow.",
-        },
-        {
-          num: "03",
-          title: "DELIVER",
-          desc: "Build maintainable, scalable, and production-ready solutions.",
-        },
-      ],
-    },
-  },
-  es: {
-    about: {
-      title: "MI ENFOQUE",
-      tagline: "Antes de escribir código, dedico tiempo a entender el problema real detrás de la solicitud. Un sistema solo tiene valor si la persona que lo usa todos los días logra resolver su trabajo sin fricción.",
-      metrics: "3+ años de experiencia · 20+ proyectos desarrollados",
-      principles: [
-        {
-          num: "01",
-          title: "ENTENDER",
-          desc: "Analizar contexto, usuarios y requerimientos antes de diseñar la solución.",
-        },
-        {
-          num: "02",
-          title: "SIMPLIFICAR",
-          desc: "Reducir complejidad innecesaria en arquitectura, interfaz y flujo de trabajo.",
-        },
-        {
-          num: "03",
-          title: "ENTREGAR",
-          desc: "Construir soluciones mantenibles, escalables y listas para producción.",
-        },
-      ],
-    },
-  },
-};
-
-// Interactive letter component for section titles
-const InteractiveTitleText = ({ text }: { text: string }) => {
-  return (
-    <span className="inline-block select-none">
-      {text.split("").map((char, index) => {
-        if (char === " ") {
-          return <span key={index} className="inline-block w-[0.25em]">&nbsp;</span>;
-        }
-        return (
-          <span
-            key={index}
-            className="inline-block transition-[color,transform] duration-200 ease-out text-[#666666] hover:text-[#ffffff] hover:scale-105 hover:[text-shadow:0_0_16px_rgba(255,255,255,0.7)] cursor-default transform-gpu"
-          >
-            {char}
-          </span>
-        );
-      })}
-    </span>
-  );
-};
-
-const About = ({ language }: AboutProps) => {
+const About = () => {
+  const { displayedLanguage: language } = useLanguage();
   const t = translations[language];
 
   const principleIcons = [
@@ -100,7 +27,7 @@ const About = ({ language }: AboutProps) => {
           className="text-center mb-12 md:mb-16 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
-            <InteractiveTitleText text={t.about.title} />
+            <InteractiveTitle text={t.about.title} />
           </h2>
           <div className="w-24 h-1 bg-white mx-auto rounded-full" />
         </motion.div>
@@ -147,7 +74,7 @@ const About = ({ language }: AboutProps) => {
                     <h3 className="text-lg font-display font-black text-white uppercase tracking-wider mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-xs font-tech text-[#888888] leading-relaxed">
+                    <p className="text-[13px] font-tech text-[#888888] leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
