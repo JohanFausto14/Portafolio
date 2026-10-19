@@ -50,7 +50,7 @@ export const en = {
   },
   projects: {
     title: "FEATURED PROJECTS",
-    exploreCaptures: "View Screenshots",
+    exploreCaptures: "View screenshots",
     labels: {
       problem: "Context",
       responsibility: "My Contribution",
@@ -110,7 +110,7 @@ export const en = {
       },
       {
         id: "lira",
-        title: "Ecosistema LIRA",
+        title: "LIRA Ecosystem",
         tagline:
           "Multiplatform system built to help children learn to read through interactive experiences on web, mobile, Android TV, and Alexa.",
         problem:
@@ -138,7 +138,7 @@ export const en = {
       },
       {
         id: "invernadero",
-        title: "Proyecto MicroGreen",
+        title: "MicroGreen Project",
         tagline:
           "IoT system developed to automate the monitoring and care of domestic greenhouses using sensors, ESP32, and a mobile app.",
         problem:
@@ -174,7 +174,7 @@ export const en = {
       {
         id: "lira",
         title: "Software Developer · Project Lead",
-        company: "LIRA Project (Independent Project)",
+        company: "LIRA Project (Self-Initiated)",
         period: "Jan 2025 - Nov 2025",
         description:
           "Led a team of 4 in developing an ecosystem that operates seamlessly across formats as diverse as a TV screen, a voice assistant, and a mobile device.",
@@ -194,7 +194,7 @@ export const en = {
       {
         id: "invernadero",
         title: "Software Developer · Project Lead",
-        company: "MicroGreen Project (Independent Project)",
+        company: "MicroGreen Project (Self-Initiated)",
         period: "Jan 2024 - Apr 2024",
         description:
           "Led a team of 5 in the design and construction of a domestic smart greenhouse, coordinating multidisciplinary development spanning physical structure, electronics, and software, culminating in a fully functional prototype.",
@@ -243,12 +243,12 @@ export const en = {
       {
         title: "Software Development & Management Engineering",
         period: "Sep 2024 – Apr 2026",
-        badge: "Bachelor's Degree",
+        badge: "Engineering Degree",
       },
       {
         title: "Associate Degree in Multiplatform Software Development (TSU)",
         period: "Sep 2022 – Aug 2024",
-        badge: "Associate Degree",
+        badge: "TSU Degree",
       },
     ],
     desc: "Academic path from Associate Degree to Engineering, consolidated in practice through real-world team projects, with agile methodologies (Scrum, Kanban, and Extreme Programming [XP]) as a consistent core of work.",

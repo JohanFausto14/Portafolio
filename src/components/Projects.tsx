@@ -417,14 +417,11 @@ const Projects = () => {
                         decoding="async"
                         className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
                       />
+                      {/* Subtle hover circle — matches the demoUrl overlay style
+                          but signals "expand" instead of "external link". Desktop only. */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-150 z-20 flex items-center justify-center rounded-2xl">
-                        <div className="px-5 py-2.5 bg-white text-[#0f0f0f] font-tech font-bold text-xs rounded-full flex items-center gap-2 uppercase shadow-xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
-                          <Maximize className="w-4 h-4" />
-                          <span>
-                            {project.gallery.length > 1
-                              ? t.projects.exploreCaptures
-                              : t.projects.labels.viewCapture}
-                          </span>
+                        <div className="w-14 h-14 bg-white text-[#0f0f0f] rounded-full flex items-center justify-center shadow-2xl transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-150 hidden sm:flex">
+                          <Maximize className="w-6 h-6 stroke-[2.2]" />
                         </div>
                       </div>
                     </button>

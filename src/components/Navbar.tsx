@@ -74,6 +74,16 @@ const Navbar = () => {
     setLanguage(language === "en" ? "es" : "en");
   };
 
+  const handleNavClick = (href: string) => {
+    setIsOpen(false);
+    if (href === "#home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    const element = document.querySelector(href);
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
@@ -89,14 +99,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Close the mobile menu as soon as the user scrolls.
-  useEffect(() => {
-    if (!isOpen) return;
-    const closeOnScroll = () => setIsOpen(false);
-    window.addEventListener("scroll", closeOnScroll, { passive: true });
-    return () => window.removeEventListener("scroll", closeOnScroll);
-  }, [isOpen]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -117,8 +119,8 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed w-full z-50 transition-colors duration-300 ${
-        scrolled
-          ? "bg-[#0f0f0f]/95 border-b border-[#222222] py-3 shadow-md"
+        scrolled || isOpen
+          ? "bg-[#0f0f0f] border-b border-[#222222] py-3 shadow-md"
           : "bg-transparent py-5"
       }`}
     >
@@ -127,6 +129,10 @@ const Navbar = () => {
           {/* Brand Logo */}
           <a
             href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#home");
+            }}
             className="flex items-center gap-2 group cursor-pointer"
           >
             <div className="flex items-center gap-2 text-white font-tech font-bold text-xl">
@@ -146,6 +152,10 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(link.href);
+                  }}
                   className={`px-3 py-2 rounded-md text-xs font-tech font-bold tracking-wider transition-colors duration-200 uppercase ${
                     activeSection === link.href.substring(1)
                       ? "text-white bg-[#171717] border border-[#333333]"
@@ -187,8 +197,9 @@ const Navbar = () => {
             />
 
             <button
+              type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-[#888888] hover:text-white hover:bg-[#171717] focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-[#888888] hover:text-white hover:bg-[#171717] focus:outline-none cursor-pointer transition-colors"
               aria-label={isOpen ? t.nav.menuClose : t.nav.menuOpen}
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
@@ -199,15 +210,16 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown Menu — Absolute overlay eliminates header height layout shifts */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0f0f0f] border-b border-[#222222]"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="md:hidden absolute top-full left-0 w-full bg-[#0f0f0f]/98 backdrop-blur-md border-b border-[#222222] shadow-2xl z-50"
           >
             <div
               className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 transition-opacity duration-300 ease-in-out ${
@@ -218,8 +230,11 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-sm font-tech font-bold uppercase ${
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(link.href);
+                  }}
+                  className={`block px-3 py-2 rounded-md text-sm font-tech font-bold uppercase cursor-pointer touch-manipulation active:bg-[#222222] ${
                     activeSection === link.href.substring(1)
                       ? "text-white bg-[#171717]"
                       : "text-[#888888] hover:text-white"

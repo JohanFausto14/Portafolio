@@ -52,7 +52,7 @@ export const es: typeof en = {
   },
   projects: {
     title: "PROYECTOS DESTACADOS",
-    exploreCaptures: "Explorar Capturas",
+    exploreCaptures: "Ver capturas",
     labels: {
       problem: "Contexto",
       responsibility: "Mi Aporte",

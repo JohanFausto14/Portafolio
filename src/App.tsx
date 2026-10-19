@@ -50,7 +50,7 @@ function App() {
   return (
     <MotionConfig reducedMotion="user">
       <LanguageContext.Provider value={languageValue}>
-        <div className="bg-[#0f0f0f] text-white min-h-screen font-sans selection:bg-white selection:text-[#0f0f0f] relative overflow-x-hidden">
+        <div className="bg-[#0f0f0f] text-white min-h-screen font-sans selection:bg-white selection:text-[#0f0f0f] relative overflow-x-clip">
           {/* Keyboard-only skip link: visible on focus */}
           <a
             href="#main-content"
