@@ -472,7 +472,7 @@ const Projects = () => {
 
               <div className="w-full lg:w-1/2">
                 <div className="mb-1">
-                  <span className="text-2xl font-display font-black text-[#444444] select-none">
+                  <span className="text-2xl font-display font-black text-[#707070] select-none">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>

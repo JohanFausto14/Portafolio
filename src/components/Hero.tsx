@@ -14,10 +14,10 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center bg-[#0f0f0f] pt-28 pb-16 overflow-hidden border-b border-[#222222]"
+      className="relative min-h-screen flex items-center justify-center bg-[#0f0f0f] pt-24 sm:pt-28 pb-16 overflow-hidden border-b border-[#222222]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-center lg:text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-center lg:text-left">
           {/* ── LEFT: Info ── */}
           <div className="lg:col-span-7 order-2 lg:order-1">
             {/* Available badge */}
@@ -38,7 +38,11 @@ const Hero = () => {
               transition={{ duration: 0.45, delay: 0.12, ease: "easeOut" }}
               className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-[clamp(2.75rem,5.3vw,5.25rem)] text-white tracking-normal mb-3 uppercase leading-none whitespace-nowrap"
             >
-              <InteractiveTitle text="FULL STACK DEVELOPER" charClassName="px-[0.01em]" />
+              <InteractiveTitle
+                text="FULL STACK DEVELOPER"
+                charClassName="px-[0.01em]"
+                baseColor="#c0c0c0"
+              />
             </motion.div>
 
             {/* Greeting */}
@@ -56,9 +60,9 @@ const Hero = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.28, ease: "easeOut" }}
-              className="h-12 flex items-center justify-center lg:justify-start mb-6"
+              className="h-10 sm:h-12 flex items-center justify-center lg:justify-start mb-6"
             >
-              <h2 className="text-xl sm:text-2xl font-tech font-semibold text-[#888888] hover:text-white transition-colors">
+              <h2 className="text-xl sm:text-2xl font-tech font-semibold text-[#aaaaaa] hover:text-white transition-colors">
                 {t.hero.role}
               </h2>
             </motion.div>
@@ -68,7 +72,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.35, ease: "easeOut" }}
-              className="text-sm sm:text-base font-tech text-[#888888] hover:text-white transition-colors duration-300 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed"
+              className="text-sm sm:text-base font-tech text-[#888888] hover:text-white transition-colors duration-300 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed max-[340px]:line-clamp-2"
             >
               {t.hero.description}
             </motion.p>
@@ -78,25 +82,25 @@ const Hero = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.42, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 items-center justify-center lg:justify-start mb-4 w-full"
+              className="grid grid-cols-1 min-[360px]:grid-cols-2 sm:flex sm:flex-row flex-wrap gap-3 sm:gap-4 items-center justify-center lg:justify-start mb-4 w-full"
             >
               <a
                 href="#projects"
-                className="group w-full sm:w-auto px-7 py-3 rounded-full bg-white text-[#0f0f0f] font-tech font-bold text-xs tracking-widest hover:bg-[#dddddd] transition-all duration-300 flex items-center justify-center gap-2 uppercase shadow-md"
+                className="group col-span-full sm:col-auto w-full sm:w-auto px-7 py-3 rounded-full bg-white text-[#0f0f0f] font-tech font-bold text-xs tracking-widest hover:bg-[#dddddd] transition-all duration-300 flex items-center justify-center gap-2 uppercase shadow-md"
               >
                 {t.hero.viewWork}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
                 href="#contact"
-                className="w-full sm:w-auto px-7 py-3 rounded-full bg-[#171717] text-white font-tech font-bold text-xs tracking-widest border border-[#333333] hover:border-white transition-all duration-300 flex items-center justify-center uppercase"
+                className="w-full sm:w-auto px-4 sm:px-7 py-3 rounded-full bg-[#171717] text-white font-tech font-bold text-xs tracking-[0.04em] sm:tracking-widest border border-[#333333] hover:border-white transition-all duration-300 flex items-center justify-center uppercase"
               >
                 {t.hero.contactMe}
               </a>
               <a
                 href={cvFile}
                 download
-                className="group w-full sm:w-auto px-7 py-3 rounded-full border border-[#444444] text-[#aaaaaa] hover:text-white hover:border-white font-tech font-bold text-xs tracking-widest transition-all duration-300 flex items-center justify-center gap-2 uppercase"
+                className="group w-full sm:w-auto px-4 sm:px-7 py-3 rounded-full border border-[#444444] text-[#aaaaaa] hover:text-white hover:border-white font-tech font-bold text-xs tracking-[0.04em] sm:tracking-widest transition-all duration-300 flex items-center justify-center gap-2 uppercase"
               >
                 <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
                 {t.hero.downloadCv}
@@ -111,7 +115,7 @@ const Hero = () => {
             transition={{ duration: 0.55, delay: 0.18, ease: "easeOut" }}
             className="lg:col-span-5 flex-shrink-0 flex justify-center order-1 lg:order-2"
           >
-            <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem]">
+            <div className="relative w-36 h-36 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem]">
               {/* Ambient glow */}
               <div className="absolute inset-0 rounded-full bg-white/5 blur-3xl scale-110 transform-gpu" />
 
@@ -148,7 +152,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2"
+        className="hidden sm:block absolute bottom-6 left-1/2 -translate-x-1/2"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

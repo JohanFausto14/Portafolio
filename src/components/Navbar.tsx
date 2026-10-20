@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Code2, Menu, X, Github } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import flagUS from "../assets/us.svg";
@@ -9,6 +9,61 @@ import { CONTACT_INFO } from "../constants/contact";
 import { useLanguage } from "../i18n/LanguageContext";
 import type { Language } from "../i18n/types";
 import { translations } from "../i18n";
+
+/* ═════════════════════════════════════════════════════════════════════
+   SECTION SCROLLING
+   `scrollIntoView({behavior:"smooth"})` is a no-op when the jump is larger
+   than the viewport, which silently broke the nav links on mobile: the
+   sections are up to 14 viewports away, so from the hero nothing moved at
+   all. These helpers compute an absolute position and ask for a scroll that
+   is guaranteed to land (see `scrollBehavior`).
+   ═════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Every section carries an 80px top padding (`py-20`) so the page breathes
+ * while scrolling by hand. Landing on the section box would therefore leave
+ * the title ~95px below the navbar, so instead the scroll aims at the
+ * section's own title: the navbar edge becomes the visual start of the
+ * section, as intended, and the padding is never touched.
+ */
+const TITLE_GAP = 24;
+
+/** Reads `scroll-padding-top`, the single source of truth for the navbar offset. */
+const navOffset = () => {
+  const root = getComputedStyle(document.documentElement);
+  const raw = root.scrollPaddingTop || root.getPropertyValue("scroll-padding-top");
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) ? value : 88;
+};
+
+/** Absolute scroll position that puts a section's title just below the navbar. */
+const navScrollTarget = (element: HTMLElement) => {
+  const offset = navOffset();
+  const sectionTop = element.getBoundingClientRect().top + window.scrollY;
+  const title = element.querySelector("h2, h1");
+  const titleTop = title ? title.getBoundingClientRect().top + window.scrollY : null;
+
+  // Land on the title when the document still has enough content below it to
+  // fill (almost) a whole viewport, so no dead space appears under the last
+  // section. When it does not, the scroll would stop at the very bottom of
+  // the document anyway: fall back to the section box, since aiming any
+  // higher only shifts content without changing where the scroll ends up.
+  if (titleTop !== null) {
+    const viewport = window.innerHeight - (titleTop - sectionTop);
+    const remaining = document.documentElement.scrollHeight - titleTop;
+    if (remaining >= viewport) {
+      return Math.max(titleTop - offset - TITLE_GAP, 0);
+    }
+  }
+  return Math.max(sectionTop - offset, 0);
+};
+
+/** Smooth only when the browser can actually deliver it; instant otherwise.
+ *  A smooth scroll that is refused stops mid-journey, so long jumps jump. */
+const scrollBehavior = (target: number): ScrollBehavior => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "auto";
+  return Math.abs(target - window.scrollY) > window.innerHeight ? "auto" : "smooth";
+};
 
 interface LanguageToggleProps {
   language: Language;
@@ -69,6 +124,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const toggleLanguage = () => {
     setLanguage(language === "en" ? "es" : "en");
@@ -76,13 +132,28 @@ const Navbar = () => {
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
+
     if (href === "#home") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: scrollBehavior(0) });
       return;
     }
+
     const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (!(element instanceof HTMLElement)) return;
+
+    const target = navScrollTarget(element);
+    window.scrollTo({ top: target, behavior: scrollBehavior(target) });
   };
+
+  useEffect(() => {
+    if (isOpen) return;
+
+    // The dropdown just unmounted and the focused link went with it, so focus
+    // fell back to <body>. Return it to the button that owns the menu: it is
+    // still on screen, and a page tabbed from <body> would start at the top.
+    // (Also true for a tap outside the menu, which closes it just the same.)
+    menuButtonRef.current?.focus({ preventScroll: true });
+  }, [isOpen]);
 
   useEffect(() => {
     let ticking = false;
@@ -197,6 +268,7 @@ const Navbar = () => {
             />
 
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-[#888888] hover:text-white hover:bg-[#171717] focus:outline-none cursor-pointer transition-colors"

@@ -63,7 +63,7 @@ const About = () => {
                   <div>
                     {/* Top bar with step number & icon */}
                     <div className="flex items-center justify-between mb-5">
-                      <span className="text-3xl font-display font-black text-[#333333] group-hover:text-white transition-colors">
+                      <span className="text-3xl font-display font-black text-[#707070] group-hover:text-white transition-colors">
                         {item.num}
                       </span>
                       <div className="p-3 rounded-2xl bg-[#0f0f0f] border border-[#222222] group-hover:border-[#444444] transition-colors">

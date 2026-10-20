@@ -47,10 +47,10 @@
 
   html {
     scroll-behavior: smooth;
-  }
-
-  section[id] {
-    scroll-margin-top: 4.5rem;
+    /* Offset for the fixed navbar. The rest state (88px) is the tallest case:
+       the navbar shrinks to 64px once scrolled, so 5.5rem never hides a title.
+       The JS in Navbar.tsx reads this same value before scrolling. */
+    scroll-padding-top: 5.5rem;
   }
 
   body {
@@ -71,6 +71,26 @@
 
 .font-tech {
   font-family: 'Space Grotesk', monospace;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   INTERACTIVE TITLE
+   The resting color is a custom property set on the title container, so a
+   section can tint its title without an inline style on every letter (an
+   inline color would win over :hover). Hover is gated behind
+   `@media (hover: hover)` so a tapped letter does not stay lit on touch.
+   ═════════════════════════════════════════════════════════════════════ */
+.title-char {
+  color: var(--title-base-color, #aaaaaa);
+  transition: color 200ms ease-out, transform 200ms ease-out;
+}
+
+@media (hover: hover) {
+  .title-char:hover {
+    color: #ffffff;
+    text-shadow: 0 0 16px rgba(255, 255, 255, 0.7);
+    transform: scale(1.05);
+  }
 }
 
 /* Smooth Scrolling */
