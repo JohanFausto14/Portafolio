@@ -13,14 +13,17 @@ const Skills = () => {
   const t = translations[language];
 
   return (
-    <section id="skills" className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
+    <section className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Anchor target. The title animates on mount (`animate`) rather than
+            on scroll (`whileInView`): it is the element the section anchors
+            point at, so it must never be able to land invisible. */}
+        <div id="skills">
         {/* Title with Letter Illumination */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-40px" }}
           className="text-center mb-16 md:mb-24 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3 max-w-4xl mx-auto">
@@ -28,6 +31,7 @@ const Skills = () => {
           </h2>
           <div className="w-24 h-1 bg-white mx-auto rounded-full" />
         </motion.div>
+        </div>
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -21,14 +21,17 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
+    <section className="py-20 md:py-28 bg-[#0f0f0f] border-b border-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Anchor target. The title animates on mount (`animate`) rather than
+            on scroll (`whileInView`): it is the element the section anchors
+            point at, so it must never be able to land invisible. */}
+        <div id="contact">
         {/* Title with Letter Illumination & tightened bottom margin */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-40px" }}
           className="text-center mb-8 md:mb-12 transform-gpu"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black tracking-wide mb-3">
@@ -39,6 +42,7 @@ const Contact = () => {
             {t.contact.subtitle}
           </p>
         </motion.div>
+        </div>
 
         {/* Contact Hub: Option C (2 Primary Direct Channels + 3 Secondary/Context Channels) */}
         <div className="max-w-4xl mx-auto space-y-4">

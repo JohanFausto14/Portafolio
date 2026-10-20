@@ -5,65 +5,11 @@ import flagUS from "../assets/us.svg";
 import flagMX from "../assets/mx.svg";
 
 import { CONTACT_INFO } from "../constants/contact";
+import scrollToHashOnLoad from "../utils/scrollToHashOnLoad";
 
 import { useLanguage } from "../i18n/LanguageContext";
 import type { Language } from "../i18n/types";
 import { translations } from "../i18n";
-
-/* ═════════════════════════════════════════════════════════════════════
-   SECTION SCROLLING
-   `scrollIntoView({behavior:"smooth"})` is a no-op when the jump is larger
-   than the viewport, which silently broke the nav links on mobile: the
-   sections are up to 14 viewports away, so from the hero nothing moved at
-   all. These helpers compute an absolute position and ask for a scroll that
-   is guaranteed to land (see `scrollBehavior`).
-   ═════════════════════════════════════════════════════════════════════ */
-
-/**
- * Every section carries an 80px top padding (`py-20`) so the page breathes
- * while scrolling by hand. Landing on the section box would therefore leave
- * the title ~95px below the navbar, so instead the scroll aims at the
- * section's own title: the navbar edge becomes the visual start of the
- * section, as intended, and the padding is never touched.
- */
-const TITLE_GAP = 24;
-
-/** Reads `scroll-padding-top`, the single source of truth for the navbar offset. */
-const navOffset = () => {
-  const root = getComputedStyle(document.documentElement);
-  const raw = root.scrollPaddingTop || root.getPropertyValue("scroll-padding-top");
-  const value = Number.parseFloat(raw);
-  return Number.isFinite(value) ? value : 88;
-};
-
-/** Absolute scroll position that puts a section's title just below the navbar. */
-const navScrollTarget = (element: HTMLElement) => {
-  const offset = navOffset();
-  const sectionTop = element.getBoundingClientRect().top + window.scrollY;
-  const title = element.querySelector("h2, h1");
-  const titleTop = title ? title.getBoundingClientRect().top + window.scrollY : null;
-
-  // Land on the title when the document still has enough content below it to
-  // fill (almost) a whole viewport, so no dead space appears under the last
-  // section. When it does not, the scroll would stop at the very bottom of
-  // the document anyway: fall back to the section box, since aiming any
-  // higher only shifts content without changing where the scroll ends up.
-  if (titleTop !== null) {
-    const viewport = window.innerHeight - (titleTop - sectionTop);
-    const remaining = document.documentElement.scrollHeight - titleTop;
-    if (remaining >= viewport) {
-      return Math.max(titleTop - offset - TITLE_GAP, 0);
-    }
-  }
-  return Math.max(sectionTop - offset, 0);
-};
-
-/** Smooth only when the browser can actually deliver it; instant otherwise.
- *  A smooth scroll that is refused stops mid-journey, so long jumps jump. */
-const scrollBehavior = (target: number): ScrollBehavior => {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "auto";
-  return Math.abs(target - window.scrollY) > window.innerHeight ? "auto" : "smooth";
-};
 
 interface LanguageToggleProps {
   language: Language;
@@ -130,20 +76,19 @@ const Navbar = () => {
     setLanguage(language === "en" ? "es" : "en");
   };
 
-  const handleNavClick = (href: string) => {
+  // The navigation itself is left to the browser: every link is a real anchor,
+  // so `#projects` and friends are handled natively (reduced motion, back
+  // button, focus, direct links, and interrupted taps included). Closing the
+  // menu is the only thing the app still does.
+  const handleNavClick = () => {
     setIsOpen(false);
-
-    if (href === "#home") {
-      window.scrollTo({ top: 0, behavior: scrollBehavior(0) });
-      return;
-    }
-
-    const element = document.querySelector(href);
-    if (!(element instanceof HTMLElement)) return;
-
-    const target = navScrollTarget(element);
-    window.scrollTo({ top: target, behavior: scrollBehavior(target) });
   };
+
+  // Opening the page straight onto a hash cannot rely on the browser alone:
+  // the sections do not exist yet when it tries, so it never jumps.
+  useEffect(() => {
+    scrollToHashOnLoad();
+  }, []);
 
   useEffect(() => {
     if (isOpen) return;
@@ -172,27 +117,39 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    // The ids moved onto a plain anchor div above each title so the navbar
+    // offset lands on the title, not on the section's 80px top padding. That
+    // leaves the anchor too short (~100px) to cross a 40% band: it would only
+    // be active for an instant, and none would be active while reading a
+    // section's body. So we observe the surrounding <section> (tall and
+    // stable) and report the id that sits inside it.
+    const anchors: { id: string; section: Element }[] = [];
+    t.nav.items.forEach((link) => {
+      const el = document.getElementById(link.href.slice(1));
+      if (!el) return;
+      anchors.push({ id: el.id, section: el.closest("section") ?? el });
+    });
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
+          if (!entry.isIntersecting) return;
+          const match = anchors.find((a) => a.section === entry.target);
+          if (match) setActiveSection(match.id);
         });
       },
       { rootMargin: "-40% 0px -40% 0px" },
     );
-    const sections = document.querySelectorAll("section[id]");
-    sections.forEach((section) => observer.observe(section));
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, []);
+    anchors.forEach((a) => observer.observe(a.section));
+    return () => observer.disconnect();
+  }, [t.nav.items]);
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-colors duration-300 ${
+      className={`fixed w-full z-50 transition-colors duration-300 border-b ${
         scrolled || isOpen
-          ? "bg-[#0f0f0f] border-b border-[#222222] py-3 shadow-md"
-          : "bg-transparent py-5"
+          ? "bg-[#0f0f0f] border-[#222222] py-3 shadow-md"
+          : "bg-transparent border-transparent py-3"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -200,10 +157,6 @@ const Navbar = () => {
           {/* Brand Logo */}
           <a
             href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick("#home");
-            }}
             className="flex items-center gap-2 group cursor-pointer"
           >
             <div className="flex items-center gap-2 text-white font-tech font-bold text-xl">
@@ -223,10 +176,7 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(link.href);
-                  }}
+                  onClick={handleNavClick}
                   className={`px-3 py-2 rounded-md text-xs font-tech font-bold tracking-wider transition-colors duration-200 uppercase ${
                     activeSection === link.href.substring(1)
                       ? "text-white bg-[#171717] border border-[#333333]"
@@ -302,10 +252,7 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(link.href);
-                  }}
+                  onClick={handleNavClick}
                   className={`block px-3 py-2 rounded-md text-sm font-tech font-bold uppercase cursor-pointer touch-manipulation active:bg-[#222222] ${
                     activeSection === link.href.substring(1)
                       ? "text-white bg-[#171717]"
