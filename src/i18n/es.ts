@@ -92,7 +92,7 @@ export const es: typeof en = {
         "Tecnosol ERP/CRM — Módulo de gestión de asesores comerciales",
       ],
       invernadero: [
-        "Proyecto MicroGreen — Prototipo IoT con ESP32 y sensores ambientales",
+        "MicroGreen — Prototipo IoT con ESP32 y sensores ambientales",
       ],
     },
     cases: [
@@ -108,7 +108,7 @@ export const es: typeof en = {
         solution:
           "Reúne lectura digital, evaluaciones dinámicas, gestión de licencias y seguimiento del progreso mediante paneles adaptados a cada tipo de usuario.",
         result:
-          "Unificó la operación de la plataforma en un solo lugar, simplificando el trabajo diario de docentes, directivos y familias.",
+          "Reunió en un solo lugar la lectura, las evaluaciones y el seguimiento, simplificando el trabajo diario de docentes, directivos y familias.",
       },
       {
         id: "lira",
@@ -140,7 +140,7 @@ export const es: typeof en = {
       },
       {
         id: "invernadero",
-        title: "Proyecto MicroGreen",
+        title: "MicroGreen",
         tagline:
           "Sistema IoT desarrollado para automatizar el monitoreo y cuidado de invernaderos domésticos mediante sensores, ESP32 y una aplicación móvil.",
         problem:
@@ -150,7 +150,7 @@ export const es: typeof en = {
         solution:
           "Combina sensores ambientales, un ESP32 y una aplicación móvil para visualizar información en tiempo real y apoyar la automatización del cultivo.",
         result:
-          "Demostró la viabilidad de automatizar el cuidado de invernaderos domésticos mediante un sistema accesible y escalable, replicable en otros cultivos.",
+          "Demostró la viabilidad de automatizar el cuidado de invernaderos domésticos mediante un sistema sencillo de usar y escalable, replicable en otros cultivos.",
       },
     ],
   },
@@ -176,7 +176,7 @@ export const es: typeof en = {
       {
         id: "lira",
         title: "Software Developer · Líder de Proyecto",
-        company: "Proyecto LIRA (proyecto propio)",
+        company: "LIRA (proyecto propio)",
         period: "Ene 2025 - Nov 2025",
         description:
           "Lideré a un equipo de 4 integrantes en el desarrollo de un ecosistema que funciona de forma coherente en formatos tan distintos como una pantalla de TV, un asistente de voz y un dispositivo móvil.",
@@ -196,14 +196,14 @@ export const es: typeof en = {
       {
         id: "invernadero",
         title: "Software Developer · Líder de Proyecto",
-        company: "Proyecto MicroGreen (proyecto propio)",
+        company: "MicroGreen (proyecto propio)",
         period: "Ene 2024 - Abr 2024",
         description:
           "Lideré a un equipo de 5 integrantes en el diseño y construcción de un invernadero inteligente doméstico, coordinando un desarrollo multidisciplinario que abarcó desde la estructura física hasta la electrónica y el software, culminando en un prototipo completamente funcional.",
       },
       {
         id: "utzmg",
-        title: "Software Developer",
+        title: "Web Developer",
         company: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
         period: "Sep 2022 - Ene 2023",
         description:
@@ -215,7 +215,7 @@ export const es: typeof en = {
     title: "TECNOLOGÍAS Y CAPACIDADES",
     categories: [
       {
-        name: "Interfaces",
+        name: "Frontend",
         capability:
           "Desarrollo de aplicaciones web y móviles responsivas, componentes reutilizables y experiencias centradas en el usuario.",
         skills: ["React", "Next.js", "React Native", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],

@@ -15,17 +15,17 @@
         .a4-page {
             width: 210mm;
             min-height: 297mm;
-            padding: 15mm 20mm;
+            padding: 12mm 18mm;
             box-sizing: border-box;
             margin: 0 auto;
             position: relative;
         }
         @page {
             size: A4;
-            margin: 0;
+            margin: 12mm 18mm;
         }
         @media print {
-            .a4-page { width: 100%; height: 100%; padding: 15mm 20mm; }
+            .a4-page { width: 100%; height: auto; padding: 0; margin: 0; }
         }
         .section-title {
             font-size: 0.95rem;
@@ -35,29 +35,33 @@
             color: #0369a1; /* sky-700 */
             border-bottom: 2px solid #0369a1;
             padding-bottom: 2px;
-            margin-bottom: 10px;
-            margin-top: 14px;
+            margin-bottom: 6px;
+            margin-top: 10px;
         }
         .job-title { font-weight: 700; color: #111827; }
         .job-meta { font-size: 0.85rem; color: #4b5563; font-weight: 500; white-space: nowrap; }
-        .job-desc { font-size: 0.85rem; color: #374151; line-height: 1.4; margin-top: 4px; }
-        .skills-category { font-weight: 600; color: #1f2937; font-size: 0.85rem; }
+        .job-desc { font-size: 0.85rem; color: #374151; line-height: 1.35; margin-top: 2px; }
+        .skills-category { font-weight: 700; color: #111827; font-size: 0.85rem; }
         .skills-list { font-size: 0.85rem; color: #374151; }
+        .experience-card { break-inside: avoid; page-break-inside: avoid; }
+        .skills-section { break-inside: avoid; page-break-inside: avoid; }
     </style>
 </head>
 <body>
 
 <div class="a4-page">
     <!-- Header -->
-    <header class="text-center mb-5">
+    <header class="text-center mb-3">
         <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Ari Johan Alvarado Fausto</h1>
-        <h2 class="text-lg font-semibold text-sky-700 mt-1">Software Developer</h2>
+        <h2 class="text-lg font-semibold text-sky-700 mt-0.5">Software Developer</h2>
         <p class="text-[0.85rem] text-gray-600 mt-1 flex justify-center items-center gap-2 flex-wrap">
             <span>+52 3320131621</span> | 
             <span>johanalvarado296@gmail.com</span> | 
             <a href="https://portafolio-johan-fausto.vercel.app/" target="_blank" class="text-sky-700 hover:underline">Portfolio</a> | 
             <a href="https://github.com/JohanFausto14" target="_blank" class="text-sky-700 hover:underline">GitHub</a> | 
-            <a href="https://www.linkedin.com/in/ari-johan-alvarado-fausto-a843b9427" target="_blank" class="text-sky-700 hover:underline">LinkedIn</a> | 
+            <a href="https://www.linkedin.com/in/ari-johan-alvarado-fausto-a843b9427" target="_blank" class="text-sky-700 hover:underline">LinkedIn</a>
+        </p>
+        <p class="text-[0.85rem] text-gray-600 mt-0.5">
             <span>Guadalajara, Jalisco, Mexico</span>
         </p>
     </header>
@@ -65,7 +69,7 @@
     <!-- Summary -->
     <section>
         <p class="job-desc text-justify">
-            Fullstack developer with experience in web application development using React and Next.js for frontend, and Node.js, NestJS, and Express for backend. Proficient in SQL and NoSQL databases such as PostgreSQL, MongoDB, MySQL, and SQL Server. Developed web applications from scratch tailored to client requirements, migrated desktop systems to web platforms, and integrated REST APIs with existing systems. Experienced in application deployment on cloud environments like Vercel and Render.
+            Fullstack developer with experience in web application development using React and Next.js for frontend, and Node.js, NestJS, and Express for backend. Work with SQL and NoSQL databases such as PostgreSQL, MongoDB, MySQL, and SQL Server. Built web applications from scratch based on client needs, migrated desktop systems to web platforms, and integrated REST APIs with existing systems. Experience deploying applications to the cloud with Vercel and Render.
         </p>
     </section>
 
@@ -73,12 +77,12 @@
     <section>
         <h3 class="section-title">Education</h3>
         
-        <div class="mb-3">
+        <div class="mb-2">
             <div class="flex justify-between items-baseline">
-                <span class="job-title text-[0.9rem]">Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)</span>
+                <span class="job-title text-[0.9rem]">Universidad Tecnológica de la Zona Metropolitana de Guadalajara</span>
                 <span class="job-meta">Sep 2022 – Apr 2026</span>
             </div>
-            <p class="job-meta text-sky-700">B.S. in Software Development and Management, successfully completed</p>
+            <p class="job-meta text-sky-700">Software Development and Management Engineering (Bachelor's level), completed</p>
         </div>
 
         <div>
@@ -86,7 +90,7 @@
                 <span class="job-title text-[0.9rem]">CONALEP Acatlán de Juárez</span>
                 <span class="job-meta">2019 – 2022</span>
             </div>
-            <p class="job-meta text-sky-700">Technical High School in Autotronics</p>
+            <p class="job-meta text-sky-700">Technical High School Diploma in Automotive Electronics</p>
         </div>
     </section>
 
@@ -94,65 +98,70 @@
     <section>
         <h3 class="section-title">Experience</h3>
         
-        <div class="mb-2.5">
+        <div class="mb-2 experience-card">
+            <div class="job-title text-[0.9rem]">Private Client (Freelance)</div>
             <div class="flex justify-between items-baseline">
-                <span class="job-title text-[0.9rem]">Private Client (Freelance) <span class="font-normal text-sky-700">— Front End Developer - Project Lead</span></span>
+                <span class="text-sky-700 font-medium text-[0.85rem]">Frontend Developer - Project Lead</span>
                 <span class="job-meta">Nov 2025 – Jul 2026</span>
             </div>
-            <p class="job-desc">Developed an interactive web reading platform for high school and higher education institutions. Frontend focused on UX, REST API integration, digital reader with annotations, automated assessments, PDF reporting, and role-based access control (student, teacher, director, and tutor).</p>
+            <p class="job-desc">Built an interactive web reading platform for high schools and universities. Built the frontend with a focus on user experience, integrated REST APIs, and developed a digital reader with annotations, automatic assessments, PDF reports, and role-based access (student, teacher, principal, and parent or guardian).</p>
         </div>
 
-        <div class="mb-2.5">
+        <div class="mb-2 experience-card">
+            <div class="job-title text-[0.9rem]">CONSOL NEGOCIOS SA DE CV SOFOM ENR (Contract)</div>
             <div class="flex justify-between items-baseline">
-                <span class="job-title text-[0.9rem]">CONSOL NEGOCIOS SA DE CV SOFOM ENR (Contract) <span class="font-normal text-sky-700">— Full Stack Developer</span></span>
+                <span class="text-sky-700 font-medium text-[0.85rem]">Full Stack Developer</span>
                 <span class="job-meta">Jan 2026 – Apr 2026</span>
             </div>
-            <p class="job-desc">Developed a web system for credit management and centralized financial information administration. Migrated features from desktop systems to web platforms, and built individual, group, and insurance credit modules.</p>
+            <p class="job-desc">Built a web system for managing credits and centralizing financial information. Migrated features from a desktop system to a web platform and built modules for individual credit, group credit, and insurance.</p>
         </div>
 
-        <div class="mb-2.5">
+        <div class="mb-2 experience-card">
+            <div class="job-title text-[0.9rem]">LIRA (Own Project)</div>
             <div class="flex justify-between items-baseline">
-                <span class="job-title text-[0.9rem]">LIRA Project (Self-Initiated) <span class="font-normal text-sky-700">— Software Developer - Project Lead</span></span>
+                <span class="text-sky-700 font-medium text-[0.85rem]">Software Developer - Project Lead</span>
                 <span class="job-meta">Jan 2025 – Nov 2025</span>
             </div>
-            <p class="job-desc">Developed the LIRA educational system, a multiplatform project available on Android TV, Alexa, web, and mobile app, designed to improve interactive learning for children. Presented at Innovation Fest 2025.</p>
+            <p class="job-desc">Built LIRA, an educational system to help children learn to read, available on Android TV, Alexa, web, and mobile. Presented at Innovation Fest 2025.</p>
         </div>
 
-        <div class="mb-2.5">
+        <div class="mb-2 experience-card">
+            <div class="job-title text-[0.9rem]">Tecnosol (Contract)</div>
             <div class="flex justify-between items-baseline">
-                <span class="job-title text-[0.9rem]">Tecnosol (Contract) <span class="font-normal text-sky-700">— Full Stack Developer</span></span>
+                <span class="text-sky-700 font-medium text-[0.85rem]">Full Stack Developer</span>
                 <span class="job-meta">May 2024 – Aug 2024</span>
             </div>
-            <p class="job-desc">Developed and implemented a web application for client and order management with an e-commerce focus, including administrative process automation, REST API integration, and application deployment and server administration via cPanel.</p>
+            <p class="job-desc">Built a web application for managing clients and orders, with an e-commerce focus. Automated administrative processes, integrated REST APIs, and deployed and managed the application on a server with cPanel.</p>
         </div>
 
-        <div class="mb-2.5">
+        <div class="mb-2 experience-card">
+            <div class="job-title text-[0.9rem]">MicroGreen (Own Project)</div>
             <div class="flex justify-between items-baseline">
-                <span class="job-title text-[0.9rem]">MicroGreen Project (Self-Initiated) <span class="font-normal text-sky-700">— Software Developer - Project Lead</span></span>
+                <span class="text-sky-700 font-medium text-[0.85rem]">Software Developer - Project Lead</span>
                 <span class="job-meta">Jan 2024 – Apr 2024</span>
             </div>
-            <p class="job-desc">Designed and implemented a greenhouse monitoring and automation system measuring humidity, light, and temperature, with irrigation control via a mobile app. Integration with MongoDB and IoT devices (Arduino and ESP32).</p>
+            <p class="job-desc">Designed and built a greenhouse monitoring and automation system that measures humidity, light, and temperature and controls irrigation from a mobile app. Integrated MongoDB and IoT devices (Arduino and ESP32).</p>
         </div>
 
-        <div class="mb-2">
+        <div class="mb-2 experience-card">
+            <div class="job-title text-[0.9rem]">UTZMG</div>
             <div class="flex justify-between items-baseline">
-                <span class="job-title text-[0.9rem]">UTZMG <span class="font-normal text-sky-700">— Web Developer</span></span>
+                <span class="text-sky-700 font-medium text-[0.85rem]">Web Developer</span>
                 <span class="job-meta">Sep 2022 – Jan 2023</span>
             </div>
-            <p class="job-desc">Complete development of the "Take Quick List" web application for student attendance registration and tracking. Involved in frontend, backend, and data validation implementation.</p>
+            <p class="job-desc">Built the "Take Quick List" web application for registering and tracking student attendance, working on the frontend, backend, and data validation.</p>
         </div>
     </section>
 
     <!-- Skills -->
-    <section class="break-before-page pt-10">
+    <section class="skills-section mt-4">
         <h3 class="section-title mt-2">Skills</h3>
         <div class="grid grid-cols-1 gap-1">
             <p><span class="skills-category">Programming:</span> <span class="skills-list">Python, C++, PHP, JavaScript, TypeScript, HTML, CSS</span></p>
-            <p><span class="skills-category">Frameworks:</span> <span class="skills-list">React, Next.js, React Native, Node.js, NestJS, Express, Tailwind CSS</span></p>
+            <p><span class="skills-category">Frameworks:</span> <span class="skills-list">React, Next.js, React Native, Node.js, NestJS, Express, Tailwind CSS, Prisma, TypeORM, JWT</span></p>
             <p><span class="skills-category">Databases:</span> <span class="skills-list">PostgreSQL, MongoDB, MySQL, SQL Server</span></p>
             <p><span class="skills-category">Tools:</span> <span class="skills-list">Docker, Vercel, Render, Git, GitHub, Linux, Postman, Android Studio, Arduino, ESP32</span></p>
-            <p><span class="skills-category">Soft Skills:</span> <span class="skills-list">Effective Communication, Leadership, Empathy, Critical Thinking, Emotional Intelligence</span></p>
-            <p><span class="skills-category">Languages:</span> <span class="skills-list">Spanish (Native), English — B2 Upper-Intermediate (CEFR) | <a href="https://cert.efset.org/es/cJAZXi" target="_blank" rel="noopener noreferrer" class="text-sky-700 underline font-semibold hover:text-sky-800">EF SET Certified ↗</a></span></p>
+            <p><span class="skills-category">Languages:</span> <span class="skills-list">Spanish (Native), English — B2 Upper-Intermediate (CEFR) | <a href="https://cert.efset.org/es/cJAZXi" target="_blank" rel="noopener noreferrer" class="text-sky-700 underline font-semibold hover:text-sky-800 whitespace-nowrap">EF SET Certified&nbsp;↗</a></span></p>
         </div>
     </section>
 

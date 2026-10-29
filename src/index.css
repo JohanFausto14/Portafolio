@@ -35,42 +35,34 @@
    Background: Soft Dark Graphite (#0f0f0f / #121212)
    ═════════════════════════════════════════════════════════════════════ */
 
-@layer base {
-  :root {
-    --bg-dark: #0f0f0f;
-    --bg-surface: #171717;
-    --text-dim: #999999;
-    --text-mid: #aaaaaa;
-    --text-bright: #ffffff;
-    --border-subtle: #262626;
-  }
+:root {
+  --bg-dark: #0f0f0f;
+  --bg-surface: #171717;
+  --text-dim: #999999;
+  --text-mid: #aaaaaa;
+  --text-bright: #ffffff;
+  --border-subtle: #262626;
+}
 
+/* Native smooth scrolling, and only for people who have not asked for less
+   motion. The browser owns the whole animation, so nothing competes with it
+   and a tap can interrupt it (measured: ~1.1s over 2.270px, ~1.8s over
+   11.700px, so a long jump is a little slower, not seconds).
+   A `prefers-reduced-motion` block at the end turns it back off. */
+@media (prefers-reduced-motion: no-preference) {
   html {
-    /* No `scroll-padding-top` here on purpose: the navbar offset lives in ONE
-       place, `scroll-margin-top` on the elements that own the section ids (see
-       below), so a jump cannot get two compensations added together. */
+    scroll-behavior: smooth;
   }
+}
 
-  /* Native smooth scrolling, and only for people who have not asked for less
-     motion. The browser owns the whole animation, so nothing competes with it
-     and a tap can interrupt it (measured: ~1.1s over 2.270px, ~1.8s over
-     11.700px, so a long jump is a little slower, not seconds).
-     A `prefers-reduced-motion` block at the end turns it back off. */
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
-
-  body {
-    margin: 0;
-    min-width: 320px;
-    min-height: 100vh;
-    overflow-x: clip;
-    background-color: var(--bg-dark);
-    color: var(--text-dim);
-    font-family: 'Inter', system-ui, sans-serif;
-  }
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg-dark);
+  color: var(--text-dim);
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
 /* Custom Font Utilities */

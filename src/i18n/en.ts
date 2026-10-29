@@ -20,7 +20,7 @@ export const en = {
     greeting: "Johan Fausto",
     role: "Software Engineer",
     description:
-      "I design and build web and mobile applications for organizations that need reliable, growth-ready software.",
+      "I design and build web and mobile applications for organizations that need reliable software that is ready to grow.",
     viewWork: "View Projects",
     contactMe: "Contact Me",
     downloadCv: "Download CV",
@@ -28,7 +28,7 @@ export const en = {
   about: {
     title: "MY APPROACH",
     tagline:
-      "Before writing code, I take time to understand the real problem behind the request. A system only provides value if the person using it every day can get their work done without friction.",
+      "Before writing code, I take time to understand the real problem behind the request. A system is only valuable if the people who use it every day can do their work without friction.",
     metrics: "3+ years of experience · 20+ projects built",
     principles: [
       {
@@ -90,7 +90,7 @@ export const en = {
         "Tecnosol ERP/CRM — Sales advisors management module",
       ],
       invernadero: [
-        "MicroGreen Project — IoT prototype with ESP32 and environmental sensors",
+        "MicroGreen — IoT prototype with ESP32 and environmental sensors",
       ],
     },
     cases: [
@@ -98,15 +98,15 @@ export const en = {
         id: "lector",
         title: "Proyecto Lector",
         tagline:
-          "Educational platform for high schools and universities, focused on strengthening reading comprehension and streamlining student progress tracking.",
+          "Educational platform for high schools and universities, focused on strengthening reading comprehension and making it easier to track student progress.",
         problem:
-          "Educational institutions struggled with low reading comprehension and a lack of centralized visibility into student performance.",
+          "Educational institutions struggled with low reading comprehension and had no single place to see how students were doing.",
         responsibility:
-          "Defined the project timeline and task allocation, contributed to frontend development across all modules —students, parents, teachers, schools, and administrator (access control and licensing)— and collaborated on database design.",
+          "Defined the project timeline and assigned tasks, worked on the frontend of all modules (students, parents, teachers, schools, and administrator for access control and licenses), and helped design the database.",
         solution:
-          "Combines digital reading, dynamic assessments, license management, and progress tracking through dashboards tailored to each user type.",
+          "Combines digital reading, dynamic assessments, license management, and progress tracking, with a dashboard for each type of user.",
         result:
-          "Unified platform operations into a single environment, streamlining daily workflows for teachers, administrators, and families.",
+          "Brought reading, assessments, and progress tracking into one place, making daily work easier for teachers, school administrators, and families.",
       },
       {
         id: "lira",
@@ -114,41 +114,41 @@ export const en = {
         tagline:
           "Multiplatform system built to help children learn to read through interactive experiences on web, mobile, Android TV, and Alexa.",
         problem:
-          "Traditional reading instruction methods offered low interactivity, limited personalization, and poor progress tracking.",
+          "Traditional reading instruction methods offered little interactivity, little personalization, and weak progress tracking.",
         responsibility:
-          "Led project planning and participated in architectural and development decisions, including component integration for Android TV, web, and interactive experiences, as well as database model design.",
+          "Led project planning, took part in architecture and development decisions (including components for Android TV, web, and interactive experiences), and helped design the data model.",
         solution:
           "Integrates gamified activities, progress tracking, and data synchronization across all devices in the ecosystem.",
         result:
-          "Enabled children to continue their learning from any device, giving parents and tutors ongoing visibility into their progress.",
+          "Let children continue learning from any device, and gave parents and guardians constant visibility into their progress.",
       },
       {
         id: "tecnosol",
         title: "Tecnosol ERP / CRM",
         tagline:
-          "Platform developed to replace manual processes and centralize company sales and administrative operations.",
+          "Platform built to replace manual processes and bring the company's sales and administrative work into one place.",
         problem:
-          "Managing operations through Excel spreadsheets created error risks, slow data lookups, and scaling bottlenecks.",
+          "Running operations in Excel caused errors, slow searches, and made it hard to grow.",
         responsibility:
-          "Implemented the authentication, payments, and statistics modules, multi-sector order logic across hospitality, industrial, healthcare, residential, pool, and photovoltaic sectors, and maintenance notifications.",
+          "Built the authentication, payments, and statistics modules, the order logic for several sectors (hotel, industrial, hospital, residential, swimming pool, and solar), and maintenance notifications.",
         solution:
-          "Unifies clients, operations, and maintenance into a single environment, featuring role-based access and real-time visibility.",
+          "Unifies clients, operations, and maintenance in one place, with role-based access and real-time visibility.",
         result:
-          "Replaced spreadsheets with a unified digital workflow, reducing errors and accelerating client response times.",
+          "Replaced spreadsheets with one digital workflow, which reduced errors and sped up client responses.",
       },
       {
         id: "invernadero",
-        title: "MicroGreen Project",
+        title: "MicroGreen",
         tagline:
-          "IoT system developed to automate the monitoring and care of domestic greenhouses using sensors, ESP32, and a mobile app.",
+          "IoT system built to automate the monitoring and care of home greenhouses using sensors, an ESP32, and a mobile app.",
         problem:
           "Small greenhouses lacked a simple way to monitor environmental conditions and optimize plant care.",
         responsibility:
-          "Coordinated the 5-member team in building the prototype, defined sensor placement, and programmed the communication logic between the ESP32 and the mobile app, validating measurements through integration testing.",
+          "Coordinated a team of 5 to build the prototype, decided where to place the sensors, and programmed the communication between the ESP32 and the mobile app, checking the measurements with integration tests.",
         solution:
-          "Combines environmental sensors, an ESP32, and a mobile app to display real-time data and support crop automation.",
+          "Combines environmental sensors, an ESP32, and a mobile app to show real-time data and support crop automation.",
         result:
-          "Demonstrated the feasibility of automating domestic greenhouse care through an accessible and scalable system, replicable across other crops.",
+          "Showed that home greenhouse care can be automated with an easy-to-use, scalable system that could be applied to other crops.",
       },
     ],
   },
@@ -161,7 +161,7 @@ export const en = {
         company: "Private Institutional Client — Proyecto Lector (Freelance)",
         period: "Nov 2025 - Jul 2026",
         description:
-          "Led a team of 3 in the development of this reading platform for high schools and higher education, stemming from an alliance formed during LIRA's presentation at Innovation Fest Guadalajara 2025.",
+          "Led a team of 3 to build this reading platform for high schools and universities. The project came from a partnership made when LIRA was presented at Innovation Fest Guadalajara 2025.",
       },
       {
         id: "consol",
@@ -169,15 +169,15 @@ export const en = {
         company: "CONSOL NEGOCIOS SA DE CV SOFOM ENR (Contract)",
         period: "Jan 2026 - Apr 2026",
         description:
-          "Participated in migrating a desktop financial system to a web platform during my professional internship, while continuing development on Proyecto Lector.",
+          "Took part in migrating a desktop financial system to a web platform during my professional internship, while continuing to work on Proyecto Lector.",
       },
       {
         id: "lira",
         title: "Software Developer · Project Lead",
-        company: "LIRA Project (Self-Initiated)",
+        company: "LIRA (Own Project)",
         period: "Jan 2025 - Nov 2025",
         description:
-          "Led a team of 4 in developing an ecosystem that operates seamlessly across formats as diverse as a TV screen, a voice assistant, and a mobile device.",
+          "Led a team of 4 to build an ecosystem that works consistently across very different devices: a TV, a voice assistant, and a phone.",
         link: {
           text: "Presented at Innovation Fest Guadalajara 2025",
           url: "https://innovationfest.jalisco.gob.mx/",
@@ -189,23 +189,23 @@ export const en = {
         company: "Tecnosol S.A. de C.V. (Contract)",
         period: "May 2024 - Aug 2024",
         description:
-          "Worked in a team of 3 developers with a completely flat structure, no hierarchies or fixed roles, jointly making every technical decision on the project.",
+          "Worked in a team of 3 developers with no hierarchy or fixed roles, making every technical decision together.",
       },
       {
         id: "invernadero",
         title: "Software Developer · Project Lead",
-        company: "MicroGreen Project (Self-Initiated)",
+        company: "MicroGreen (Own Project)",
         period: "Jan 2024 - Apr 2024",
         description:
-          "Led a team of 5 in the design and construction of a domestic smart greenhouse, coordinating multidisciplinary development spanning physical structure, electronics, and software, culminating in a fully functional prototype.",
+          "Led a team of 5 to design and build a smart home greenhouse, coordinating the physical structure, electronics, and software until we had a fully working prototype.",
       },
       {
         id: "utzmg",
-        title: "Software Developer",
+        title: "Web Developer",
         company: "Universidad Tecnológica de la Zona Metropolitana de Guadalajara (UTZMG)",
         period: "Sep 2022 - Jan 2023",
         description:
-          "Developed a web application for student attendance tracking, participating in building the solution from data modeling to user interface.",
+          "Built a web app for tracking student attendance, working on everything from the data model to the user interface.",
       },
     ],
   },
@@ -213,7 +213,7 @@ export const en = {
     title: "TECHNOLOGIES & CAPABILITIES",
     categories: [
       {
-        name: "Interfaces",
+        name: "Frontend",
         capability:
           "Development of responsive web and mobile applications, reusable components, and user-centered experiences.",
         skills: ["React", "Next.js", "React Native", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
@@ -251,7 +251,7 @@ export const en = {
         badge: "TSU Degree",
       },
     ],
-    desc: "Academic path from Associate Degree to Engineering, consolidated in practice through real-world team projects, with agile methodologies (Scrum, Kanban, and Extreme Programming [XP]) as a consistent core of work.",
+    desc: "From Associate Degree to Engineering, with real team projects and agile methods (Scrum, Kanban, and XP).",
     certCategory: "English",
     certSubtitle: "B2 · Upper Intermediate",
     certDesc:

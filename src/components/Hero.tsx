@@ -9,7 +9,7 @@ import { translations } from "../i18n";
 const Hero = () => {
   const { displayedLanguage: language } = useLanguage();
   const t = translations[language];
-  const cvFile = language === "en" ? "/CV_en.pdf?v=v4" : "/CV_es.pdf?v=v3";
+  const cvFile = language === "en" ? "/CV_en.pdf?v=v6" : "/CV_es.pdf?v=v5";
 
   return (
     <section
